@@ -13,7 +13,8 @@
     "allowJs": false,
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "moduleResolution": "Node"
   },
   "include": ["src"]
 }

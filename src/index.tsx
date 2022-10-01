@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-import AuthRouter from "./components/AuthRouter";
 import "./index.css";
 import rootReducer from "./redux/rootReducer";
 
