@@ -1,17 +1,17 @@
+import { configureStore } from "@reduxjs/toolkit";
 import "antd/dist/antd.css";
 import { setup } from "goober";
 import React, { createElement } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk";
 import "./index.css";
 import rootReducer from "./redux/rootReducer";
 
 setup(createElement);
 
-const store = createStore(rootReducer, undefined, composeWithDevTools(applyMiddleware(thunk)));
+const store = configureStore({
+  reducer: rootReducer,
+});
 
 ReactDOM.render(
   <React.StrictMode>
