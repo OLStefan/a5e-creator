@@ -1,0 +1,10 @@
+# Caches
+node_modules
+dist
+.parcel-cache
+
+# Project related
+.vscode
+*.code-workspace
+.git
+.gitignore
