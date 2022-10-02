@@ -1,3 +1,6 @@
+import { DamageDescription } from "../general";
+import { ShieldCategory } from "./equipment";
+
 export enum WeaponProperty {
   Breaker = "breaker",
   Compounding = "compounding",
@@ -24,21 +27,44 @@ interface BaseProperyDescription<Property extends WeaponProperty> {
   name: Property;
 }
 
-export interface BreakerDescription extends BaseProperyDescription<WeaponProperty.Range> {}
+export interface BreakerPropertyDescription extends BaseProperyDescription<WeaponProperty.Breaker> {
+  material?: string;
+}
 
-export interface DefensiveDescription extends BaseProperyDescription<WeaponProperty.Range> {}
+export interface DefensiveDescription extends BaseProperyDescription<WeaponProperty.Defensive> {
+  max: ShieldCategory;
+}
 
-export interface RangeDescription extends BaseProperyDescription<WeaponProperty.Range> {}
+export interface LoadingDescription extends BaseProperyDescription<WeaponProperty.Loading> {
+  amount?: number;
+}
+export interface MountedDescription extends BaseProperyDescription<WeaponProperty.Mounted> {
+  damage: Pick<DamageDescription, "amount" | "die">;
+  versatile?: Pick<DamageDescription, "amount" | "die">;
+}
 
-export interface ReachDescription extends BaseProperyDescription<WeaponProperty.Range> {}
+interface RangeDescription {
+  normal: number;
+  long: number;
+}
 
-export interface ThrownDescription extends BaseProperyDescription<WeaponProperty.Range> {}
+export interface RangePropertyDescription extends BaseProperyDescription<WeaponProperty.Range>, RangeDescription {}
 
-export interface VersatileDescription extends BaseProperyDescription<WeaponProperty.Range> {}
+export interface ReachDescription extends BaseProperyDescription<WeaponProperty.Reach> {
+  reach: number;
+}
+
+export interface ThrownDescription extends BaseProperyDescription<WeaponProperty.Thrown>, RangeDescription {}
+
+export interface VersatileDescription extends BaseProperyDescription<WeaponProperty.Versatile> {
+  damage: Pick<DamageDescription, "amount" | "die">;
+}
 
 interface ExtendedWeaponProperties {
-  [WeaponProperty.Breaker]: BreakerDescription;
+  [WeaponProperty.Breaker]: BreakerPropertyDescription;
   [WeaponProperty.Defensive]: DefensiveDescription;
+  [WeaponProperty.Loading]: LoadingDescription;
+  [WeaponProperty.Mounted]: MountedDescription;
   [WeaponProperty.Range]: RangeDescription;
   [WeaponProperty.Reach]: ReachDescription;
   [WeaponProperty.Thrown]: ThrownDescription;
