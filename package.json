@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "develop": "yarn install && parcel src/index.html -p 3000",
-    "build": "yarn parse:data-files && parcel build src/index.html",
+    "build": "parcel build src/index.html",
     "build:docker": "docker build . -t a5e-creator",
     "clean": "rm -rf dist",
     "test": "jest",
@@ -12,8 +12,7 @@
     "check:types": "tsc --noEmit",
     "check:style": "prettier --write .",
     "check:linter": "eslint . --ext .tsx --ext .ts",
-    "check:all": "yarn check:types && yarn check:style && yarn check:linter && yarn test",
-    "parse:data-files": "echo TODO"
+    "check:all": "yarn check:types && yarn check:style && yarn check:linter && yarn test"
   },
   "eslintConfig": {
     "extends": [
@@ -31,7 +30,6 @@
     "classnames": "^2.3.2",
     "goober": "^2.1.11",
     "lodash": "^4.17.21",
-    "myzod": "^1.8.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^8.0.4",

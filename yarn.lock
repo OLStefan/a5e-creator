@@ -4435,7 +4435,6 @@ __metadata:
     jest: ^29.1.2
     jest-environment-jsdom: ^29.1.2
     lodash: ^4.17.21
-    myzod: ^1.8.8
     parcel: ^2.7.0
     prettier: ^2.7.1
     process: ^0.11.10
@@ -10838,13 +10837,6 @@ __metadata:
   bin:
     multicast-dns: cli.js
   checksum: 00b8a57df152d4cd0297946320a94b7c3cdf75a46a2247f32f958a8927dea42958177f9b7fdae69fab2e4e033fb3416881af1f5e9055a3e1542888767139e2fb
-  languageName: node
-  linkType: hard
-
-"myzod@npm:^1.8.8":
-  version: 1.8.8
-  resolution: "myzod@npm:1.8.8"
-  checksum: 4a5b4d41e64b0df68fb113350796cd17753adaa6faf8f139cffcecdba7aa80e16e7c9343f5f6f306d93824b9edb5d0815d30bad362f25f2b9aeec71690d2c061
   languageName: node
   linkType: hard
 
