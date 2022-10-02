@@ -1,3 +1,2 @@
-export * from './BaseProps';
-export * from './spotify';
-export * from './state';
+export * from "./BaseProps";
+export * from "./state";

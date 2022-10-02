@@ -3626,7 +3626,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:^14.4.2, @testing-library/user-event@npm:^14.4.3":
+"@testing-library/user-event@npm:^14.4.3":
   version: 14.4.3
   resolution: "@testing-library/user-event@npm:14.4.3"
   peerDependencies:
@@ -4421,7 +4421,7 @@ __metadata:
     "@types/node": ^18.7.23
     "@types/react": ^17.0.50
     "@types/react-dom": ^17.0.17
-    antd: ^4.23.3
+    antd: ^4.23.4
     classnames: ^2.3.2
     csstype: ^3.1.1
     eslint: ^8.24.0
@@ -4435,6 +4435,7 @@ __metadata:
     jest: ^29.1.2
     jest-environment-jsdom: ^29.1.2
     lodash: ^4.17.21
+    myzod: ^1.8.8
     parcel: ^2.7.0
     prettier: ^2.7.1
     process: ^0.11.10
@@ -4445,7 +4446,8 @@ __metadata:
     redux: ^4.2.0
     redux-devtools-extension: ^2.13.9
     redux-thunk: ^2.4.1
-    typescript: ^4.8.4
+    type-fest: ^3.0.0
+    typescript: 4.8.4
     use-updating-callbacks: ^1.0.1
   languageName: unknown
   linkType: soft
@@ -4724,16 +4726,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"antd@npm:^4.23.3":
-  version: 4.23.3
-  resolution: "antd@npm:4.23.3"
+"antd@npm:^4.23.4":
+  version: 4.23.4
+  resolution: "antd@npm:4.23.4"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@ant-design/icons": ^4.7.0
     "@ant-design/react-slick": ~0.29.1
     "@babel/runtime": ^7.18.3
     "@ctrl/tinycolor": ^3.4.0
-    "@testing-library/user-event": ^14.4.2
     classnames: ^2.2.6
     copy-to-clipboard: ^3.2.0
     lodash: ^4.17.21
@@ -4776,7 +4777,7 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: e6cc635c54f9cf3736572a2242c7ee0105bab06577c3898e2358c3b3d50b37e853e0e8df327af1a2c6f2db52e1323175307b41a01797480cb18431fc4b9c0877
+  checksum: 32f2fada5314cc0b5231ac1abd72fed2944e18e2efecf30f249913a784795e84e35ea620b7fd491df029d309634b970b82e538ac9e83cc9aae93af5a1d854cf7
   languageName: node
   linkType: hard
 
@@ -10840,6 +10841,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"myzod@npm:^1.8.8":
+  version: 1.8.8
+  resolution: "myzod@npm:1.8.8"
+  checksum: 4a5b4d41e64b0df68fb113350796cd17753adaa6faf8f139cffcecdba7aa80e16e7c9343f5f6f306d93824b9edb5d0815d30bad362f25f2b9aeec71690d2c061
+  languageName: node
+  linkType: hard
+
 "nanoid@npm:^3.3.4":
   version: 3.3.4
   resolution: "nanoid@npm:3.3.4"
@@ -14969,6 +14977,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-fest@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "type-fest@npm:3.0.0"
+  checksum: 04c00bb3db91d7b98cddb948840926e5703384fb240550a2f1a152cf0781e293efd7001bb013ad84bd7b388cdb052bb6445afdc2d2be8f5529e3bc0ba03bb938
+  languageName: node
+  linkType: hard
+
 "type-is@npm:~1.6.18":
   version: 1.6.18
   resolution: "type-is@npm:1.6.18"
@@ -14988,7 +15003,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.8.4":
+"typescript@npm:4.8.4":
   version: 4.8.4
   resolution: "typescript@npm:4.8.4"
   bin:
@@ -14998,7 +15013,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.8.4#~builtin<compat/typescript>":
+"typescript@patch:typescript@4.8.4#~builtin<compat/typescript>":
   version: 4.8.4
   resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=a1c5e5"
   bin:
