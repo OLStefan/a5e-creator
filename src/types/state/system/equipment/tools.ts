@@ -1,40 +1,59 @@
-import { EquipmentPiece, EquipmentType } from './equipment';
+import myzod, { Infer } from 'myzod';
+import { equipmentPieceSchema, EquipmentType } from './equipment';
 
 export enum ToolType {
 	Artisan = "artisan's tool",
 	Gaming = 'gaming set',
-	Musical = 'muscial ionstrument',
-	Other = 'miscellanous tools',
+	Musical = 'muscial instrument',
+	Other = 'miscellaneous tools',
 }
 
-interface BaseTool extends EquipmentPiece {
-	type: EquipmentType.Tool;
-	toolType: ToolType;
-}
+const baseToolSchema = equipmentPieceSchema.and(
+	myzod.object({
+		type: myzod.literal(EquipmentType.Tool),
+		toolType: myzod.enum(ToolType),
+	}),
+);
 
-export interface ArtisanTool extends BaseTool {
-	toolType: ToolType.Artisan;
-	genericTrade: {
-		material: {
-			amount: number;
-			name: string;
-		};
-		time: {
-			amount: number;
-			unit: string;
-		};
-		profit: [number, number, number];
-	};
-}
+const artisanToolSchema = baseToolSchema.and(
+	myzod.object({
+		toolType: myzod.literal(ToolType.Artisan),
+		genericTrade: myzod.object({
+			material: myzod.object({
+				amount: myzod.number(),
+				name: myzod.string(),
+			}),
+			time: myzod.object({
+				amount: myzod.number(),
+				unit: myzod.literals('hours', 'weeks', 'month'),
+				delay: myzod.string().optional(),
+			}),
+		}),
+		profit: myzod.tuple([myzod.number(), myzod.number(), myzod.number()]),
+	}),
+);
+export type ArtisanTool = Infer<typeof artisanToolSchema>;
 
-export interface GamingSet extends BaseTool {
-	toolType: ToolType.Gaming;
-}
-export interface MusicalInstrument extends BaseTool {
-	toolType: ToolType.Musical;
-}
-export interface OtherTool extends BaseTool {
-	toolType: ToolType.Other;
-}
+const gamingSetSchema = baseToolSchema.and(
+	myzod.object({
+		toolType: myzod.literal(ToolType.Gaming),
+	}),
+);
+export type GamingSet = Infer<typeof gamingSetSchema>;
 
-export type AnyTool = ArtisanTool;
+const musicalInstrumentSchema = baseToolSchema.and(
+	myzod.object({
+		toolType: myzod.literal(ToolType.Gaming),
+	}),
+);
+export type MusicalInstrument = Infer<typeof musicalInstrumentSchema>;
+
+const otherToolSchema = baseToolSchema.and(
+	myzod.object({
+		toolType: myzod.literal(ToolType.Gaming),
+	}),
+);
+export type OtherTool = Infer<typeof otherToolSchema>;
+
+export const anyToolSchema = artisanToolSchema.or(gamingSetSchema).or(musicalInstrumentSchema).or(otherToolSchema);
+export type AnyTool = Infer<typeof anyToolSchema>;

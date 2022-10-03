@@ -1,11 +1,11 @@
-import { armorSchema, shieldSchema } from './armor';
+import { anyArmorSchema } from './armor';
+import { anyToolSchema } from './tools';
 import { anyWeaponSchema } from './weapons';
 
 export * from './armor';
 export * from './equipment';
-export * from './weapons';
-export * from './weaponProperties';
 export * from './tools';
+export * from './weaponProperties';
+export * from './weapons';
 
-// TODO
-export const anyEquipmentSchema = anyWeaponSchema.or(armorSchema).or(shieldSchema);
+export const anyEquipmentSchema = anyWeaponSchema.or(anyArmorSchema).or(anyToolSchema);

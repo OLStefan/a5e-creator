@@ -1,4 +1,4 @@
-import { ArmorCategory, WeaponProficiency } from './equipment';
+import { ArmorType, WeaponProficiency } from './equipment';
 import { Attributes, DieSize } from './general';
 
 export interface Class {
@@ -8,7 +8,7 @@ export interface Class {
 	hitDie: DieSize;
 	proficiencies: {
 		savingThrows: Array<Attributes>;
-		armor: Array<ArmorCategory>;
+		armor: Array<ArmorType>;
 		weapons: {
 			categories: Array<WeaponProficiency>;
 			individualWeapons: Array<string>;
