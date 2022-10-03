@@ -3,4 +3,4 @@ import { State } from '../types';
 
 export type AnyAction = Action;
 
-export default combineReducers<State>({});
+export default combineReducers<State>({ todo: () => 'remove me' });

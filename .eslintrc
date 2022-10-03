@@ -19,5 +19,8 @@
 		"sourceType": "module"
 	},
 	"plugins": ["react", "@typescript-eslint"],
-	"rules": { "no-mixed-spaces-and-tabs": "off" }
+	"rules": { "no-mixed-spaces-and-tabs": "off" },
+	"settings": {
+		"react": { "version": "17" }
+	}
 }
