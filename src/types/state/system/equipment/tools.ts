@@ -57,3 +57,6 @@ export type OtherTool = Infer<typeof otherToolSchema>;
 
 export const anyToolSchema = artisanToolSchema.or(gamingSetSchema).or(musicalInstrumentSchema).or(otherToolSchema);
 export type AnyTool = Infer<typeof anyToolSchema>;
+
+export const toolReferenceSchema = myzod.object({ tool: myzod.string() });
+export type ToolReference = Infer<typeof toolReferenceSchema>;

@@ -1,6 +1,6 @@
 import { isUndefined } from 'lodash';
 import myzod, { Infer } from 'myzod';
-import { descriptionSchema } from '../general';
+import { descriptionSchema, sourceReferenceSchema } from '../general';
 
 export enum WeaponProperty {
 	Breaker = 'breaker',
@@ -27,6 +27,7 @@ export enum WeaponProperty {
 export const weaponPropertyDescriptionSchema = descriptionSchema.and(
 	myzod.object({
 		name: myzod.enum(WeaponProperty),
+		source: sourceReferenceSchema,
 	}),
 );
 export type WeaponPropertyDescription = Infer<typeof weaponPropertyDescriptionSchema>;

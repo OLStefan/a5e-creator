@@ -1,5 +1,5 @@
 import myzod, { Infer } from 'myzod';
-import { descriptionSchema } from '../general';
+import { descriptionSchema, sourceReferenceSchema } from '../general';
 
 export enum Material {
 	Adamantine = 'adamantine',
@@ -20,6 +20,7 @@ export enum Material {
 export const materialDescriptionSchema = descriptionSchema.and(
 	myzod.object({
 		name: myzod.enum(Material),
+		source: sourceReferenceSchema,
 	}),
 );
 export type MaterialDescription = Infer<typeof materialDescriptionSchema>;
