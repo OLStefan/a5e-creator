@@ -1,49 +1,21 @@
-import { AnyWeapon } from "./weapons";
-
-export interface EquipmentPiece {
-  name: string;
-  weight: number;
-  price: number;
-  type: EquipmentType;
-}
+import myzod, { Infer } from 'myzod';
+import { Material } from './material';
+import { anyWeaponSchema } from './weapons';
 
 export enum EquipmentType {
-  Weapon = "weapon",
-  Armor = "armor",
-  Tool = "tool",
+	Weapon = 'weapon',
+	Armor = 'armor',
+	Tool = 'tool',
 }
 
-export enum WeaponProficiency {
-  Simple = "simple",
-  Martial = "martial",
-  Rare = "rare",
-}
+export const equipmentPieceSchema = myzod.object({
+	name: myzod.string(),
+	description: myzod.string(),
+	weight: myzod.number(),
+	price: myzod.number(),
+	type: myzod.enum(EquipmentType),
+	material: myzod.enum(Material).optional(),
+});
+export type EquipmentPiece = Infer<typeof equipmentPieceSchema>;
 
-export enum WeaponRange {
-  Melee = "melee",
-  Ranged = "ranged",
-  Special = "special",
-}
-
-export enum ArmorCategory {
-  Light = "light",
-  Medium = "medium",
-  Heavy = "heavy",
-  Shield = "shield",
-}
-
-export enum ShieldCategory {
-  Light = "light",
-  Medium = "medium",
-  Heavy = "heavy",
-  Tower = "tower",
-}
-
-export interface Armor extends EquipmentPiece {
-  type: EquipmentType.Armor;
-}
-export interface Tool extends EquipmentPiece {
-  type: EquipmentType.Tool;
-}
-
-export type AnyEquipment = AnyWeapon;
+export const anyEquipmentPieceSchema = anyWeaponSchema;

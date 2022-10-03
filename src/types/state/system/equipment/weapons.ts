@@ -1,39 +1,65 @@
-import { DamageDescription, SpecialDamageDescription } from "../general";
-import { EquipmentPiece, EquipmentType, WeaponProficiency, WeaponRange } from "./equipment";
-import { WeaponProperty, WeaponPropertyDescription } from "./weaponProperties";
+import myzod, { Infer } from 'myzod';
+import { damageDescriptionSchema, specialdamageDescriptionSchema } from '../general';
+import { equipmentPieceSchema, EquipmentType } from './equipment';
+import { Material } from './material';
+import { WeaponProperty, weaponPropertyDescriptionSchema } from './weaponProperties';
 
-interface BaseWeapon extends EquipmentPiece {
-  name: string;
-  proficiency: WeaponProficiency;
-  damage: DamageDescription | SpecialDamageDescription;
-  properties: Array<WeaponPropertyDescription>;
-  type: EquipmentType.Weapon;
-  weaponType: WeaponRange;
+export enum WeaponProficiency {
+	Simple = 'simple',
+	Martial = 'martial',
+	Rare = 'rare',
 }
 
-type MeleeWeaponProperties = Array<
-  Exclude<WeaponPropertyDescription, Extract<WeaponPropertyDescription, { name: WeaponProperty.Range }>>
->;
-type RangedWeaponProperties = [
-  Extract<WeaponPropertyDescription, { name: WeaponProperty.Range }>,
-  ...MeleeWeaponProperties
-];
-
-export interface RangedWeapon extends BaseWeapon {
-  weaponType: WeaponRange.Ranged;
-  properties: RangedWeaponProperties;
-  damage: DamageDescription;
+export enum WeaponType {
+	Melee = 'melee',
+	Ranged = 'ranged',
+	Special = 'special',
 }
 
-export interface MeleeWeapon extends BaseWeapon {
-  weaponType: WeaponRange.Melee;
-  properties: MeleeWeaponProperties;
-  damage: DamageDescription;
-}
+const baseWeaponSchema = equipmentPieceSchema.and(
+	myzod.object({
+		proficiency: myzod.enum(WeaponProficiency),
+		damage: damageDescriptionSchema.or(specialdamageDescriptionSchema),
+		properties: myzod.array(weaponPropertyDescriptionSchema),
+		type: myzod.literal(EquipmentType.Weapon),
+		weaponType: myzod.enum(WeaponType),
+		material: myzod.enum(Material),
+	}),
+);
 
-export interface SpecialWeapon extends BaseWeapon {
-  weaponType: WeaponRange.Special;
-  specialProperties: string;
-}
+const meleeWeaponSchema = baseWeaponSchema
+	.and(
+		myzod.object({
+			weaponType: myzod.literal(WeaponType.Melee),
+			damage: damageDescriptionSchema,
+		}),
+	)
+	.withPredicate((meleeWeapon) => !meleeWeapon.properties.some((property) => property.name === WeaponProperty.Range));
+/**
+ * Verified to have no 'range' property
+ */
+export type MeleeWeapon = Infer<typeof meleeWeaponSchema>;
 
-export type AnyWeapon = RangedWeapon | MeleeWeapon | SpecialWeapon;
+const rangedWeaponSchema = baseWeaponSchema
+	.and(
+		myzod.object({
+			weaponType: myzod.literal(WeaponType.Ranged),
+			damage: damageDescriptionSchema,
+		}),
+	)
+	.withPredicate((rangedWeapon) => rangedWeapon.properties.some((property) => property.name === WeaponProperty.Range));
+/**
+ * Verified to have a 'range' property
+ */
+export type RangedWeapon = Infer<typeof rangedWeaponSchema>;
+
+const specialWeaponSchema = baseWeaponSchema.and(
+	myzod.object({
+		weaponType: myzod.literal(WeaponType.Special),
+		damage: specialdamageDescriptionSchema,
+	}),
+);
+export type SpecialWeapon = Infer<typeof specialWeaponSchema>;
+
+export const anyWeaponSchema = meleeWeaponSchema.or(rangedWeaponSchema).or(specialWeaponSchema);
+export type AnyWeapon = Infer<typeof anyWeaponSchema>;

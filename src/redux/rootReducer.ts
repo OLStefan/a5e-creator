@@ -1,5 +1,5 @@
-import { Action, combineReducers } from "redux";
-import { State } from "../types";
+import { Action, combineReducers } from 'redux';
+import { State } from '../types';
 
 export type AnyAction = Action;
 
