@@ -1,8 +1,8 @@
 import myzod, { Infer } from 'myzod';
 import { damageDescriptionSchema, specialdamageDescriptionSchema } from '../general';
-import { equipmentPieceSchema, EquipmentType } from './equipment';
-import { Material } from './material';
-import { WeaponProperty, weaponPropertyDescriptionSchema } from './weaponProperties';
+import { equipmentPieceSchema, EquipmentType } from './base';
+import { materialReferenceSchema } from './material';
+import { WeaponProperty, weaponPropertyReferenceSchema } from './weaponProperties';
 
 export enum WeaponProficiency {
 	Simple = 'simple',
@@ -20,10 +20,10 @@ const baseWeaponSchema = equipmentPieceSchema.and(
 	myzod.object({
 		proficiency: myzod.enum(WeaponProficiency),
 		damage: damageDescriptionSchema.or(specialdamageDescriptionSchema),
-		properties: myzod.array(weaponPropertyDescriptionSchema),
+		properties: myzod.array(weaponPropertyReferenceSchema),
 		type: myzod.literal(EquipmentType.Weapon),
 		weaponType: myzod.enum(WeaponType),
-		material: myzod.enum(Material),
+		material: materialReferenceSchema,
 	}),
 );
 
@@ -34,7 +34,7 @@ const meleeWeaponSchema = baseWeaponSchema
 			damage: damageDescriptionSchema,
 		}),
 	)
-	.withPredicate((meleeWeapon) => !meleeWeapon.properties.some((property) => property.name === WeaponProperty.Range));
+	.withPredicate((meleeWeapon) => !meleeWeapon.properties.some(({ property }) => property === WeaponProperty.Range));
 /**
  * Verified to have no 'range' property
  */
@@ -47,7 +47,7 @@ const rangedWeaponSchema = baseWeaponSchema
 			damage: damageDescriptionSchema,
 		}),
 	)
-	.withPredicate((rangedWeapon) => rangedWeapon.properties.some((property) => property.name === WeaponProperty.Range));
+	.withPredicate((rangedWeapon) => rangedWeapon.properties.some(({ property }) => property === WeaponProperty.Range));
 /**
  * Verified to have a 'range' property
  */

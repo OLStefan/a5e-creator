@@ -1,5 +1,6 @@
 import { isUndefined } from 'lodash';
 import myzod, { Infer } from 'myzod';
+import { descriptionSchema } from '../general';
 
 export enum WeaponProperty {
 	Breaker = 'breaker',
@@ -23,11 +24,17 @@ export enum WeaponProperty {
 	Vicious = 'vicious',
 }
 
-const additionalInformationRegex = /\$(\w+)/g;
-
-export const weaponPropertyDescriptionSchema = myzod
-	.object({
+export const weaponPropertyDescriptionSchema = descriptionSchema.and(
+	myzod.object({
 		name: myzod.enum(WeaponProperty),
+	}),
+);
+export type WeaponPropertyDescription = Infer<typeof weaponPropertyDescriptionSchema>;
+
+const additionalInformationRegex = /\$(\w+)/g;
+export const weaponPropertyReferenceSchema = myzod
+	.object({
+		property: myzod.enum(WeaponProperty),
 		additional: myzod.record(myzod.string().or(myzod.number())),
 		asString: myzod.string(),
 	})
@@ -40,4 +47,4 @@ export const weaponPropertyDescriptionSchema = myzod
 		return properties.every((prop) => !isUndefined(description.additional[prop]));
 	}, "Not all properties from 'asString' found in additional properties");
 
-export type WeaponPropertyDescription = Infer<typeof weaponPropertyDescriptionSchema>;
+export type WeaponPropertyReference = Infer<typeof weaponPropertyReferenceSchema>;

@@ -1,5 +1,5 @@
 import myzod, { Infer } from 'myzod';
-import { equipmentPieceSchema, EquipmentType } from './equipment';
+import { equipmentPieceSchema, EquipmentType } from './base';
 
 export enum ToolType {
 	Artisan = "artisan's tool",

@@ -42,3 +42,21 @@ export const specialdamageDescriptionSchema = myzod.omit(damageDescriptionSchema
 	}),
 );
 export type SpecialDamageDescription = Infer<typeof specialdamageDescriptionSchema>;
+
+export const descriptionSchema = myzod.object({
+	name: myzod.string(),
+	description: myzod.string(),
+});
+export type Description = Infer<typeof descriptionSchema>;
+
+export enum SourceBook {
+	AG = "adventurer's guide",
+	TT = 'trials & treasures',
+	DDG = "dungeon delver's guide",
+	ZG = 'adventures in Zeitgeist',
+	GPG = 'gate pass gazette',
+}
+export const sourceReferenceSchema = myzod.object({
+	book: myzod.enum(SourceBook),
+	page: myzod.number().optional(),
+});

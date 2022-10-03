@@ -1,6 +1,6 @@
 import myzod, { Infer } from 'myzod';
-import { equipmentPieceSchema, EquipmentType } from './equipment';
-import { Material } from './material';
+import { equipmentPieceSchema, EquipmentType } from './base';
+import { materialReferenceSchema } from './material';
 
 export enum ArmorType {
 	Light = 'light',
@@ -19,12 +19,12 @@ export enum ShieldType {
 const baseArmorSchema = equipmentPieceSchema.and(
 	myzod.object({
 		type: myzod.literal(EquipmentType.Armor),
-		material: myzod.enum(Material),
+		material: materialReferenceSchema,
 		armorType: myzod.enum(ArmorType),
 	}),
 );
 
-export const armorSchema = baseArmorSchema.and(
+const armorSchema = baseArmorSchema.and(
 	myzod.object({
 		armorType: myzod.literals(ArmorType.Light, ArmorType.Medium, ArmorType.Heavy),
 		ac: myzod.object({
@@ -35,7 +35,7 @@ export const armorSchema = baseArmorSchema.and(
 );
 export type Armor = Infer<typeof armorSchema>;
 
-export const shieldSchema = baseArmorSchema.and(
+const shieldSchema = baseArmorSchema.and(
 	myzod.object({
 		armorType: myzod.literal(ArmorType.Shield),
 		shieldType: myzod.enum(ShieldType),
