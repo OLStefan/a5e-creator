@@ -1,5 +1,5 @@
-import { DamageDescription } from "../general";
-import { ShieldCategory } from "./equipment";
+import { isUndefined } from "lodash";
+import myzod, { Infer } from "myzod";
 
 export enum WeaponProperty {
   Breaker = "breaker",
@@ -23,56 +23,17 @@ export enum WeaponProperty {
   Vicious = "vicious",
 }
 
-interface BaseProperyDescription<Property extends WeaponProperty> {
-  name: Property;
-}
+const additionalInformationRegex = /\$(\w+)/g;
 
-export interface BreakerPropertyDescription extends BaseProperyDescription<WeaponProperty.Breaker> {
-  material?: string;
-}
+export const weaponPropertyDescriptionSchema = myzod
+  .object({
+    name: myzod.enum(WeaponProperty),
+    additional: myzod.record(myzod.string().or(myzod.number())),
+    asString: myzod.string(),
+  })
+  .withPredicate((description) => {
+    const properties = [...description.asString.matchAll(additionalInformationRegex)].map(([, match]) => match!);
+    return properties.every((prop) => !isUndefined(description.additional[prop]));
+  }, "Not all properties from 'asString' found in additional properties");
 
-export interface DefensiveDescription extends BaseProperyDescription<WeaponProperty.Defensive> {
-  max: ShieldCategory;
-}
-
-export interface LoadingDescription extends BaseProperyDescription<WeaponProperty.Loading> {
-  amount?: number;
-}
-export interface MountedDescription extends BaseProperyDescription<WeaponProperty.Mounted> {
-  damage: Pick<DamageDescription, "amount" | "die">;
-  versatile?: Pick<DamageDescription, "amount" | "die">;
-}
-
-interface RangeDescription {
-  normal: number;
-  long: number;
-}
-
-export interface RangePropertyDescription extends BaseProperyDescription<WeaponProperty.Range>, RangeDescription {}
-
-export interface ReachDescription extends BaseProperyDescription<WeaponProperty.Reach> {
-  reach: number;
-}
-
-export interface ThrownDescription extends BaseProperyDescription<WeaponProperty.Thrown>, RangeDescription {}
-
-export interface VersatileDescription extends BaseProperyDescription<WeaponProperty.Versatile> {
-  damage: Pick<DamageDescription, "amount" | "die">;
-}
-
-interface ExtendedWeaponProperties {
-  [WeaponProperty.Breaker]: BreakerPropertyDescription;
-  [WeaponProperty.Defensive]: DefensiveDescription;
-  [WeaponProperty.Loading]: LoadingDescription;
-  [WeaponProperty.Mounted]: MountedDescription;
-  [WeaponProperty.Range]: RangeDescription;
-  [WeaponProperty.Reach]: ReachDescription;
-  [WeaponProperty.Thrown]: ThrownDescription;
-  [WeaponProperty.Versatile]: VersatileDescription;
-}
-
-export type WeaponPropertyDescription = {
-  [Property in WeaponProperty]: Property extends keyof ExtendedWeaponProperties
-    ? ExtendedWeaponProperties[Property]
-    : BaseProperyDescription<Property>;
-}[WeaponProperty];
+export type WeaponPropertyDescription = Infer<typeof weaponPropertyDescriptionSchema>;
