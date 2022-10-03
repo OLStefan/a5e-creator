@@ -1,6 +1,5 @@
 import myzod, { Infer } from 'myzod';
 import { Material } from './material';
-import { anyWeaponSchema } from './weapons';
 
 export enum EquipmentType {
 	Weapon = 'weapon',
@@ -17,5 +16,3 @@ export const equipmentPieceSchema = myzod.object({
 	material: myzod.enum(Material).optional(),
 });
 export type EquipmentPiece = Infer<typeof equipmentPieceSchema>;
-
-export const anyEquipmentPieceSchema = anyWeaponSchema;

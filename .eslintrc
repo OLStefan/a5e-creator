@@ -19,7 +19,11 @@
 		"sourceType": "module"
 	},
 	"plugins": ["react", "@typescript-eslint"],
-	"rules": { "no-mixed-spaces-and-tabs": "off" },
+	"rules": {
+		"no-mixed-spaces-and-tabs": "off",
+		"import/no-cycle": "warn",
+		"import/no-self-import": "error"
+	},
 	"settings": {
 		"react": { "version": "17" }
 	}
