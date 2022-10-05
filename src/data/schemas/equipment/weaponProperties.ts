@@ -1,6 +1,7 @@
 import { isUndefined } from 'lodash';
 import myzod, { Infer } from 'myzod';
 import { descriptionSchema, sourceReferenceSchema } from '../general';
+import { additionalReferenceSchema } from '../reference';
 
 export enum WeaponProperty {
 	Breaker = 'breaker',
@@ -28,17 +29,19 @@ export const weaponPropertyDescriptionSchema = descriptionSchema.and(
 	myzod.object({
 		name: myzod.enum(WeaponProperty),
 		source: sourceReferenceSchema,
+		asString: myzod.string(),
 	}),
 );
 export type WeaponPropertyDescription = Infer<typeof weaponPropertyDescriptionSchema>;
 
 const additionalInformationRegex = /\$(\w+)/g;
-export const weaponPropertyReferenceSchema = myzod
-	.object({
-		property: myzod.enum(WeaponProperty),
-		additional: myzod.record(myzod.string().or(myzod.number())),
-		asString: myzod.string(),
-	})
+export const weaponPropertyReferenceSchema = additionalReferenceSchema
+	.and(
+		myzod.object({
+			ref: myzod.enum(WeaponProperty),
+			asString: myzod.string(),
+		}),
+	)
 	.withPredicate((description) => {
 		const properties = [...description.asString.matchAll(additionalInformationRegex)].map(
 			// Every map will have a group match here, since that is all the regex does

@@ -1,5 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { descriptionSchema, sourceReferenceSchema } from '../general';
+import { referenceSchema } from '../reference';
 
 export enum Material {
 	Adamantine = 'adamantine',
@@ -25,5 +26,5 @@ export const materialDescriptionSchema = descriptionSchema.and(
 );
 export type MaterialDescription = Infer<typeof materialDescriptionSchema>;
 
-export const materialReferenceSchema = myzod.object({ material: myzod.enum(Material) });
+export const materialReferenceSchema = referenceSchema.and(myzod.object({ ref: myzod.enum(Material) }));
 export type MaterialReference = Infer<typeof materialReferenceSchema>;

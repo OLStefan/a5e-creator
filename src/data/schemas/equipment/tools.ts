@@ -1,4 +1,5 @@
 import myzod, { Infer } from 'myzod';
+import { referenceSchema } from '../reference';
 import { equipmentPieceSchema, EquipmentType } from './base';
 
 export enum ToolType {
@@ -58,5 +59,5 @@ export type OtherTool = Infer<typeof otherToolSchema>;
 export const anyToolSchema = artisanToolSchema.or(gamingSetSchema).or(musicalInstrumentSchema).or(otherToolSchema);
 export type AnyTool = Infer<typeof anyToolSchema>;
 
-export const toolReferenceSchema = myzod.object({ tool: myzod.string() });
+export const toolReferenceSchema = referenceSchema;
 export type ToolReference = Infer<typeof toolReferenceSchema>;

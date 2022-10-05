@@ -34,7 +34,7 @@ const meleeWeaponSchema = baseWeaponSchema
 			damage: damageDescriptionSchema,
 		}),
 	)
-	.withPredicate((meleeWeapon) => !meleeWeapon.properties.some(({ property }) => property === WeaponProperty.Range));
+	.withPredicate((meleeWeapon) => !meleeWeapon.properties.some(({ ref }) => ref === WeaponProperty.Range));
 /**
  * Verified to have no 'range' property
  */
@@ -47,7 +47,7 @@ const rangedWeaponSchema = baseWeaponSchema
 			damage: damageDescriptionSchema,
 		}),
 	)
-	.withPredicate((rangedWeapon) => rangedWeapon.properties.some(({ property }) => property === WeaponProperty.Range));
+	.withPredicate((rangedWeapon) => rangedWeapon.properties.some(({ ref }) => ref === WeaponProperty.Range));
 /**
  * Verified to have a 'range' property
  */

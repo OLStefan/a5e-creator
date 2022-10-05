@@ -36,7 +36,7 @@ export const damageDescriptionSchema = myzod.object({
 });
 export type DamageDescription = Infer<typeof damageDescriptionSchema>;
 
-export const specialdamageDescriptionSchema = myzod.omit(damageDescriptionSchema, ['type']).and(
+export const specialdamageDescriptionSchema = myzod.partial(myzod.omit(damageDescriptionSchema, ['type'])).and(
 	myzod.object({
 		type: myzod.literal('special'),
 	}),
