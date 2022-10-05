@@ -1,6 +1,9 @@
 import myzod, { Infer } from 'myzod';
-import { referenceSchema } from '../reference';
+import { Opaque } from 'type-fest';
+import { referenceSchema } from '../util/reference';
 import { equipmentPieceSchema, EquipmentType } from './base';
+
+export type ToolName = Opaque<string, 'tool'>;
 
 export enum ToolType {
 	Artisan = "artisan's tool",
@@ -16,48 +19,59 @@ const baseToolSchema = equipmentPieceSchema.and(
 	}),
 );
 
-const artisanToolSchema = baseToolSchema.and(
-	myzod.object({
-		toolType: myzod.literal(ToolType.Artisan),
-		genericTrade: myzod.object({
-			material: myzod.object({
-				amount: myzod.number(),
-				name: myzod.string(),
+const artisanToolSchema = baseToolSchema
+	.and(
+		myzod.object({
+			toolType: myzod.literal(ToolType.Artisan),
+			genericTrade: myzod.object({
+				material: myzod.object({
+					amount: myzod.number(),
+					name: myzod.string(),
+				}),
+				time: myzod.object({
+					amount: myzod.number(),
+					unit: myzod.literals('hours', 'weeks', 'month'),
+					delay: myzod.string().optional(),
+				}),
 			}),
-			time: myzod.object({
-				amount: myzod.number(),
-				unit: myzod.literals('hours', 'weeks', 'month'),
-				delay: myzod.string().optional(),
-			}),
+			profit: myzod.tuple([myzod.number(), myzod.number(), myzod.number()]),
 		}),
-		profit: myzod.tuple([myzod.number(), myzod.number(), myzod.number()]),
-	}),
-);
+	)
+	.map((desc) => ({ ...desc, name: desc.name as ToolName }));
 export type ArtisanTool = Infer<typeof artisanToolSchema>;
 
-const gamingSetSchema = baseToolSchema.and(
-	myzod.object({
-		toolType: myzod.literal(ToolType.Gaming),
-	}),
-);
+const gamingSetSchema = baseToolSchema
+	.and(
+		myzod.object({
+			toolType: myzod.literal(ToolType.Gaming),
+		}),
+	)
+	.map((desc) => ({ ...desc, name: desc.name as ToolName }));
 export type GamingSet = Infer<typeof gamingSetSchema>;
 
-const musicalInstrumentSchema = baseToolSchema.and(
-	myzod.object({
-		toolType: myzod.literal(ToolType.Gaming),
-	}),
-);
+const musicalInstrumentSchema = baseToolSchema
+	.and(
+		myzod.object({
+			toolType: myzod.literal(ToolType.Gaming),
+		}),
+	)
+	.map((desc) => ({ ...desc, name: desc.name as ToolName }));
 export type MusicalInstrument = Infer<typeof musicalInstrumentSchema>;
 
-const otherToolSchema = baseToolSchema.and(
-	myzod.object({
-		toolType: myzod.literal(ToolType.Gaming),
-	}),
-);
+const otherToolSchema = baseToolSchema
+	.and(
+		myzod.object({
+			toolType: myzod.literal(ToolType.Gaming),
+		}),
+	)
+	.map((desc) => ({ ...desc, name: desc.name as ToolName }));
 export type OtherTool = Infer<typeof otherToolSchema>;
 
 export const anyToolSchema = artisanToolSchema.or(gamingSetSchema).or(musicalInstrumentSchema).or(otherToolSchema);
 export type AnyTool = Infer<typeof anyToolSchema>;
 
-export const toolReferenceSchema = referenceSchema;
+export const toolReferenceSchema = referenceSchema.map((refObject) => ({
+	...refObject,
+	ref: refObject.ref as ToolName,
+}));
 export type ToolReference = Infer<typeof toolReferenceSchema>;

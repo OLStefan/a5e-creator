@@ -1,5 +1,5 @@
 import myzod, { Infer } from 'myzod';
-import { referenceSchema } from './reference';
+import { referenceSchema } from './util/reference';
 
 export enum Attribute {
 	Str = 'strength',
@@ -46,11 +46,7 @@ export const specialdamageDescriptionSchema = myzod.partial(myzod.omit(damageDes
 );
 export type SpecialDamageDescription = Infer<typeof specialdamageDescriptionSchema>;
 
-export const descriptionSchema = myzod.object({
-	name: myzod.string(),
-	description: myzod.string(),
-});
-export type Description = Infer<typeof descriptionSchema>;
+
 
 export enum SourceBook {
 	AG = "adventurer's guide",

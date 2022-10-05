@@ -1,9 +1,10 @@
 import myzod, { Infer } from 'myzod';
+import { Opaque } from 'type-fest';
 import { damageDescriptionSchema, specialdamageDescriptionSchema } from '../general';
-import { referenceSchema } from '../reference';
+import { referenceSchema } from '../util/reference';
 import { equipmentPieceSchema, EquipmentType } from './base';
 import { materialReferenceSchema } from './material';
-import { WeaponProperty, weaponPropertyReferenceSchema } from './weaponProperties';
+import { weaponPropertyReferenceSchema } from './weaponProperties';
 
 export enum WeaponProficiency {
 	Simple = 'simple',
@@ -16,6 +17,8 @@ export enum WeaponType {
 	Ranged = 'ranged',
 	Special = 'special',
 }
+
+export type WeaponName = Opaque<string, 'weapon'>;
 
 const baseWeaponSchema = equipmentPieceSchema.and(
 	myzod.object({
@@ -35,10 +38,7 @@ const meleeWeaponSchema = baseWeaponSchema
 			damage: damageDescriptionSchema,
 		}),
 	)
-	.withPredicate((meleeWeapon) => !meleeWeapon.properties.some(({ ref }) => ref === WeaponProperty.Range));
-/**
- * Verified to have no 'range' property
- */
+	.map((desc) => ({ ...desc, name: desc.name as WeaponName }));
 export type MeleeWeapon = Infer<typeof meleeWeaponSchema>;
 
 const rangedWeaponSchema = baseWeaponSchema
@@ -48,18 +48,17 @@ const rangedWeaponSchema = baseWeaponSchema
 			damage: damageDescriptionSchema,
 		}),
 	)
-	.withPredicate((rangedWeapon) => rangedWeapon.properties.some(({ ref }) => ref === WeaponProperty.Range));
-/**
- * Verified to have a 'range' property
- */
+	.map((desc) => ({ ...desc, name: desc.name as WeaponName }));
 export type RangedWeapon = Infer<typeof rangedWeaponSchema>;
 
-const specialWeaponSchema = baseWeaponSchema.and(
-	myzod.object({
-		weaponType: myzod.literal(WeaponType.Special),
-		damage: specialdamageDescriptionSchema,
-	}),
-);
+const specialWeaponSchema = baseWeaponSchema
+	.and(
+		myzod.object({
+			weaponType: myzod.literal(WeaponType.Special),
+			damage: specialdamageDescriptionSchema,
+		}),
+	)
+	.map((desc) => ({ ...desc, name: desc.name as WeaponName }));
 export type SpecialWeapon = Infer<typeof specialWeaponSchema>;
 
 export const anyWeaponSchema = meleeWeaponSchema.or(rangedWeaponSchema).or(specialWeaponSchema);
@@ -68,6 +67,10 @@ export type AnyWeapon = Infer<typeof anyWeaponSchema>;
 export const weaponReferenceSchema = referenceSchema.and(
 	myzod
 		.object({ ref: myzod.enum(WeaponProficiency) })
-		.or(myzod.object({ ref: myzod.literal('Individual'), name: myzod.string() })),
+		.or(
+			myzod
+				.object({ ref: myzod.literal('Individual'), name: myzod.string() })
+				.map((desc) => ({ ...desc, name: desc.name as WeaponName })),
+		),
 );
 export type WeaponReference = Infer<typeof weaponReferenceSchema>;

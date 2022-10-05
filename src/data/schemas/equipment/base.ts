@@ -1,5 +1,5 @@
 import myzod from 'myzod';
-import { descriptionSchema, sourceReferenceSchema } from '../general';
+import { descriptionSchema } from '../util/description';
 import { materialReferenceSchema } from './material';
 
 export enum EquipmentType {
@@ -19,6 +19,5 @@ export const equipmentPieceSchema = descriptionSchema.and(
 		price: myzod.number(),
 		type: myzod.enum(EquipmentType),
 		material: materialReferenceSchema.optional(),
-		source: sourceReferenceSchema,
 	}),
 );

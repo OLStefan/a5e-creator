@@ -1,30 +1,22 @@
 import myzod, { Infer } from 'myzod';
-import { descriptionSchema, sourceReferenceSchema } from '../general';
-import { referenceSchema } from '../reference';
+import { Opaque } from 'type-fest';
+import { descriptionSchema } from '../util/description';
+import { referenceSchema } from '../util/reference';
 
-export enum Material {
-	Adamantine = 'adamantine',
-	Bone = 'bone',
-	Bronze = 'brone',
-	Cloth = 'cloth',
-	ColdIron = 'cold iron',
-	Hide = 'hide',
-	Iron = 'iron',
-	Leather = 'leather',
-	Mithral = 'mithral',
-	Silver = 'silver',
-	Steel = 'steel',
-	Stone = 'stone',
-	Wood = 'wood',
-}
+export type MaterialName = Opaque<string, 'material'>;
 
-export const materialDescriptionSchema = descriptionSchema.and(
-	myzod.object({
-		name: myzod.enum(Material),
-		source: sourceReferenceSchema,
-	}),
-);
-export type MaterialDescription = Infer<typeof materialDescriptionSchema>;
+const materialSchema = descriptionSchema
+	.and(
+		myzod.object({
+			weightFactor: myzod.number().default(1),
+			costFactor: myzod.number().default(1),
+		}),
+	)
+	.map((desc) => ({ ...desc, name: desc.name as MaterialName }));
+export type Material = Infer<typeof materialSchema>;
 
-export const materialReferenceSchema = referenceSchema.and(myzod.object({ ref: myzod.enum(Material) }));
+export const materialReferenceSchema = referenceSchema.map((refObject) => ({
+	...refObject,
+	ref: refObject.ref as MaterialName,
+}));
 export type MaterialReference = Infer<typeof materialReferenceSchema>;

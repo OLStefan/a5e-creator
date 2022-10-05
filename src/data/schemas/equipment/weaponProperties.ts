@@ -1,47 +1,28 @@
 import { isUndefined } from 'lodash';
 import myzod, { Infer } from 'myzod';
-import { descriptionSchema, sourceReferenceSchema } from '../general';
-import { additionalReferenceSchema } from '../reference';
+import { Opaque } from 'type-fest';
+import { descriptionSchema } from '../util/description';
+import { additionalReferenceSchema } from '../util/reference';
 
-export enum WeaponProperty {
-	Breaker = 'breaker',
-	Compounding = 'compounding',
-	Defensive = 'defensive',
-	DualWielding = 'dual-wielding',
-	Finesse = 'finess',
-	HandMounted = 'hand-mounted',
-	Heavy = 'heavy',
-	Loading = 'loading',
-	Mounted = 'mounted',
-	Parrying = 'parrying',
-	ParryingImmunity = 'parrying immunity',
-	Range = 'range',
-	Reach = 'reach',
-	Simple = 'simple',
-	Thrown = 'thrown',
-	Trip = 'trip',
-	TwoHanded = 'two-handed',
-	Versatile = 'versatile',
-	Vicious = 'vicious',
-}
+export type WeaponPropertyName = Opaque<string, 'WeaponProperty'>;
 
-export const weaponPropertyDescriptionSchema = descriptionSchema.and(
-	myzod.object({
-		name: myzod.enum(WeaponProperty),
-		source: sourceReferenceSchema,
-		asString: myzod.string(),
-	}),
-);
-export type WeaponPropertyDescription = Infer<typeof weaponPropertyDescriptionSchema>;
+export const weaponPropertySchema = descriptionSchema
+	.and(
+		myzod.object({
+			asString: myzod.string().optional(),
+		}),
+	)
+	.map((desc) => ({ ...desc, name: desc.name as WeaponPropertyName }));
+export type WeaponProperty = Infer<typeof weaponPropertySchema>;
 
 const additionalInformationRegex = /\$(\w+)/g;
 export const weaponPropertyReferenceSchema = additionalReferenceSchema
 	.and(
 		myzod.object({
-			ref: myzod.enum(WeaponProperty),
 			asString: myzod.string(),
 		}),
 	)
+	.map((refObject) => ({ ...refObject, ref: refObject.ref as WeaponPropertyName }))
 	.withPredicate((description) => {
 		const properties = [...description.asString.matchAll(additionalInformationRegex)].map(
 			// Every map will have a group match here, since that is all the regex does
