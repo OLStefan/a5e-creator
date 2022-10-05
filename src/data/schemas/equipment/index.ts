@@ -1,17 +1,33 @@
-import { Infer } from 'myzod';
-import { anyArmorSchema } from './armor';
-import { anyToolSchema } from './tools';
-import { anyWeaponSchema } from './weapons';
+import { AnyArmor } from './armor';
+import { AnyTool } from './tools';
+import { AnyWeapon } from './weapons';
 
-export { ArmorType, ShieldType } from './armor';
-export type { AnyArmor, Armor, Shield } from './armor';
+export { AdventuringGearType, verifyAdventuringGearReference } from './adventuringGear';
+export type {
+	AdventuringGearName,
+	AdventuringGearReference,
+	AnyAdventuringGear,
+	Container,
+	Medicine,
+	OtherAdventuringGear,
+	Poison,
+	SpellcastingFocus,
+	SurvivalGear,
+} from './adventuringGear';
+export { ArmorType, ShieldType, verifyArmorReference } from './armor';
+export type { AnyArmor, Armor, ArmorName, Shield } from './armor';
 export { EquipmentType } from './base';
-export type { Material as MaterialDescription, MaterialName as Material, MaterialReference } from './material';
-export { ToolType } from './tools';
-export type { AnyTool, ArtisanTool, GamingSet, MusicalInstrument, OtherTool } from './tools';
-export type { WeaponProperty as WeaponPropertyDescription, WeaponPropertyName as WeaponProperty, WeaponPropertyReference } from './weaponProperties';
-export { WeaponProficiency, WeaponType } from './weapons';
-export type { AnyWeapon, MeleeWeapon, RangedWeapon, SpecialWeapon } from './weapons';
+export { verifyMaterialReference } from './material';
+export type { Material, MaterialName, MaterialReference } from './material';
+export { verifyMaterialPropertyReference } from './materialProperties';
+export type { MaterialProperty, MaterialPropertyName, MaterialPropertyReference } from './materialProperties';
+export { parseEquipment } from './parseEquipment';
+export { ToolType, verifyToolReference } from './tools';
+export type { AnyTool, ArtisanTool, GamingSet, MusicalInstrument, OtherTool, ToolName } from './tools';
+export { verifyWeaponPropertyReference } from './weaponProperties';
+export type { WeaponProperty, WeaponPropertyName, WeaponPropertyReference } from './weaponProperties';
+export { verifyWeaponReference, WeaponProficiency, WeaponType } from './weapons';
+export type { AnyWeapon, MeleeWeapon, RangedWeapon, SpecialWeapon, WeaponName } from './weapons';
 
-export const anyEquipmentSchema = anyWeaponSchema.or(anyArmorSchema).or(anyToolSchema);
-export type AnyEquipment = Infer<typeof anyEquipmentSchema>;
+// TODO
+export type AnyEquipment = AnyArmor | AnyTool | AnyWeapon;

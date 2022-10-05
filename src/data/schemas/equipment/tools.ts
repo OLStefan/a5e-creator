@@ -1,6 +1,6 @@
 import myzod, { Infer } from 'myzod';
-import { Opaque } from 'type-fest';
-import { referenceSchema } from '../util/reference';
+import { Opaque, ReadonlyDeep } from 'type-fest';
+import { findReferencedElement, referenceSchema } from '../util/reference';
 import { equipmentPieceSchema, EquipmentType } from './base';
 
 export type ToolName = Opaque<string, 'tool'>;
@@ -67,7 +67,12 @@ const otherToolSchema = baseToolSchema
 	.map((desc) => ({ ...desc, name: desc.name as ToolName }));
 export type OtherTool = Infer<typeof otherToolSchema>;
 
-export const anyToolSchema = artisanToolSchema.or(gamingSetSchema).or(musicalInstrumentSchema).or(otherToolSchema);
+export const anyToolSchema = myzod.union([
+	artisanToolSchema,
+	gamingSetSchema,
+	musicalInstrumentSchema,
+	otherToolSchema,
+]);
 export type AnyTool = Infer<typeof anyToolSchema>;
 
 export const toolReferenceSchema = referenceSchema.map((refObject) => ({
@@ -75,3 +80,11 @@ export const toolReferenceSchema = referenceSchema.map((refObject) => ({
 	ref: refObject.ref as ToolName,
 }));
 export type ToolReference = Infer<typeof toolReferenceSchema>;
+
+export function parseTools(tools: ReadonlyArray<unknown>) {
+	return myzod.array(anyToolSchema).parse(tools);
+}
+
+export function verifyToolReference(ref: ReadonlyDeep<ToolReference>, parsedTools: ReadonlyArray<AnyTool>) {
+	return !!findReferencedElement(ref, parsedTools);
+}
