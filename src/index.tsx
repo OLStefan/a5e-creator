@@ -6,11 +6,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import './index.css';
 import rootReducer from './redux/rootReducer';
+import isDev from './util/isDev';
 
 setup(createElement);
 
 const store = configureStore({
 	reducer: rootReducer,
+	devTools: isDev(),
 });
 
 ReactDOM.render(
