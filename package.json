@@ -15,12 +15,6 @@
 		"check:all": "yarn check:types && yarn check:style && yarn check:lint && yarn test",
 		"parse:data-files": "yarn test 'src/data/schemas/'"
 	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
-	},
 	"browserslist": "> 0.5%, last 2 versions, not dead",
 	"dependencies": {
 		"@ant-design/icons": "~4.7.0",
