@@ -1,5 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { descriptionSchema, sourceReferenceSchema } from './general';
+import { referenceSchema } from './reference';
 
 export enum Skill {
 	Acrobatics = 'acrobatics',
@@ -23,7 +24,7 @@ export enum Skill {
 	Survival = 'survival',
 }
 
-export const skillReferenceSchema = myzod.object({ skill: myzod.enum(Skill) });
+export const skillReferenceSchema = referenceSchema.and(myzod.object({ ref: myzod.enum(Skill) }));
 export type SkillReference = Infer<typeof skillReferenceSchema>;
 
 export const skillDescription = descriptionSchema.and(

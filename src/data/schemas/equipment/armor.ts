@@ -1,4 +1,5 @@
 import myzod, { Infer } from 'myzod';
+import { referenceSchema } from '../reference';
 import { equipmentPieceSchema, EquipmentType } from './base';
 import { materialReferenceSchema } from './material';
 
@@ -46,3 +47,10 @@ export type Shield = Infer<typeof shieldSchema>;
 
 export const anyArmorSchema = armorSchema.or(shieldSchema);
 export type AnyArmor = Infer<typeof anyArmorSchema>;
+
+export const armorReferenceSchema = referenceSchema.and(
+	myzod
+		.object({ ref: myzod.literals(ArmorType.Light, ArmorType.Medium, ArmorType.Heavy) })
+		.or(myzod.object({ ref: myzod.literal(ArmorType.Shield), shieldType: myzod.enum(ShieldType).optional() })),
+);
+export type ArmorReference = Infer<typeof armorReferenceSchema>;

@@ -1,6 +1,7 @@
 import myzod, { Infer } from 'myzod';
+import { referenceSchema } from './reference';
 
-export enum Attributes {
+export enum Attribute {
 	Str = 'strength',
 	Dex = 'sexterity',
 	Con = 'constitution',
@@ -8,6 +9,8 @@ export enum Attributes {
 	Wis = 'wisdom',
 	Cha = 'charisma',
 }
+
+export const attributeReferenceSchema = referenceSchema.and(myzod.object({ ref: myzod.enum(Attribute) }));
 
 export enum DamageType {
 	Acid = 'acid',

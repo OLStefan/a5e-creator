@@ -1,7 +1,8 @@
 import myzod, { Infer, ObjectShape, ObjectType } from 'myzod';
-import { ArmorType, WeaponProficiency } from './equipment';
+import { armorReferenceSchema } from './equipment/armor';
 import { toolReferenceSchema } from './equipment/tools';
-import { Attributes, descriptionSchema, dieSizeSchema, sourceReferenceSchema } from './general';
+import { weaponReferenceSchema } from './equipment/weapons';
+import { attributeReferenceSchema, descriptionSchema, dieSizeSchema, sourceReferenceSchema } from './general';
 import { skillReferenceSchema } from './skills';
 
 function createProficiencyChoiceSchema<T extends ObjectShape>(reference: ObjectType<T>) {
@@ -17,12 +18,9 @@ export const classSchema = descriptionSchema.and(
 		startingGold: myzod.number(),
 		hitDie: dieSizeSchema,
 		proficiencies: myzod.object({
-			savingThrows: myzod.array(myzod.enum(Attributes)),
-			armor: myzod.array(myzod.enum(ArmorType)),
-			weapons: myzod.object({
-				categories: myzod.array(myzod.enum(WeaponProficiency)),
-				individual: myzod.array(myzod.string()),
-			}),
+			savingThrows: myzod.array(attributeReferenceSchema),
+			armor: myzod.array(armorReferenceSchema),
+			weapons: myzod.array(weaponReferenceSchema),
 			tools: createProficiencyChoiceSchema(toolReferenceSchema),
 			skills: createProficiencyChoiceSchema(skillReferenceSchema),
 		}),

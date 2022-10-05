@@ -1,5 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { damageDescriptionSchema, specialdamageDescriptionSchema } from '../general';
+import { referenceSchema } from '../reference';
 import { equipmentPieceSchema, EquipmentType } from './base';
 import { materialReferenceSchema } from './material';
 import { WeaponProperty, weaponPropertyReferenceSchema } from './weaponProperties';
@@ -63,3 +64,10 @@ export type SpecialWeapon = Infer<typeof specialWeaponSchema>;
 
 export const anyWeaponSchema = meleeWeaponSchema.or(rangedWeaponSchema).or(specialWeaponSchema);
 export type AnyWeapon = Infer<typeof anyWeaponSchema>;
+
+export const weaponReferenceSchema = referenceSchema.and(
+	myzod
+		.object({ ref: myzod.enum(WeaponProficiency) })
+		.or(myzod.object({ ref: myzod.literal('Individual'), name: myzod.string() })),
+);
+export type WeaponReference = Infer<typeof weaponReferenceSchema>;
