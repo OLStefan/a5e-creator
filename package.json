@@ -33,9 +33,12 @@
 		"myzod": "~1.8.8",
 		"react": "~17.0.2",
 		"react-dom": "~17.0.2",
+		"react-redux": "^8.0.4",
 		"use-updating-callbacks": "~1.0.1"
 	},
 	"devDependencies": {
+		"@parcel/packager-raw-url": "2.7.0",
+		"@parcel/transformer-webmanifest": "2.7.0",
 		"@testing-library/dom": "~8.18.1",
 		"@testing-library/jest-dom": "~5.16.5",
 		"@testing-library/react": "~12.1.5",
