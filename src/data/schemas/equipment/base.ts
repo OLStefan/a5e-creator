@@ -1,5 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { descriptionSchema } from '../util/description';
+import { referenceSchema } from '../util/reference';
 
 export enum EquipmentType {
 	Weapon = 'weapon',
@@ -23,7 +24,13 @@ export const equipmentPieceSchema = descriptionSchema.and(
 		weight: myzod.number().default(0),
 		price: myzod.number().default(0),
 		type: myzod.enum(EquipmentType),
-		quality: myzod.enum(EquipmentQuality).default(EquipmentQuality.Normal),
 	}),
 );
 export type EquipmentPiece = Infer<typeof equipmentPieceSchema>;
+
+export const equipmentPieceReference = referenceSchema.and(
+	myzod.object({
+		quality: myzod.enum(EquipmentQuality).default(EquipmentQuality.Normal),
+	}),
+);
+export type EquipmentPieceReference = Infer<typeof equipmentPieceReference>;

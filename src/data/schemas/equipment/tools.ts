@@ -1,7 +1,7 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { findReferencedElement, referenceSchema } from '../util/reference';
-import { equipmentPieceSchema, EquipmentType } from './base';
+import { findReferencedElement } from '../util/reference';
+import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
 
 export type ToolName = Opaque<string, 'tool'>;
 
@@ -75,7 +75,7 @@ export const anyToolSchema = myzod.union([
 ]);
 export type AnyTool = Infer<typeof anyToolSchema>;
 
-export const toolReferenceSchema = referenceSchema.map((refObject) => ({
+export const toolReferenceSchema = equipmentPieceReference.map((refObject) => ({
 	...refObject,
 	ref: refObject.ref as ToolName,
 }));

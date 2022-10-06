@@ -1,7 +1,7 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { findReferencedElement, referenceSchema } from '../util/reference';
-import { equipmentPieceSchema, EquipmentType } from './base';
+import { findReferencedElement } from '../util/reference';
+import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
 
 export type AdventuringGearName = Opaque<string, 'adventuringGear'>;
 
@@ -86,7 +86,7 @@ export const anyAdventuringGearSchema = myzod.union([
 ]);
 export type AnyAdventuringGear = Infer<typeof anyAdventuringGearSchema>;
 
-export const adventuringGearReferenceSchema = referenceSchema.map((refObject) => ({
+export const adventuringGearReferenceSchema = equipmentPieceReference.map((refObject) => ({
 	...refObject,
 	ref: refObject.ref as AdventuringGearName,
 }));

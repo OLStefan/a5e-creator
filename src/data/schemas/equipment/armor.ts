@@ -1,7 +1,7 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
 import { findReferencedElement, referenceSchema } from '../util/reference';
-import { equipmentPieceSchema, EquipmentType } from './base';
+import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
 import { Material, materialReferenceSchema, verifyMaterialReference } from './material';
 
 export enum ArmorType {
@@ -55,14 +55,14 @@ export type Shield = Infer<typeof shieldSchema>;
 export const anyArmorSchema = myzod.union([armorSchema, shieldSchema]);
 export type AnyArmor = Infer<typeof anyArmorSchema>;
 
-export const armorReferenceSchema = referenceSchema
-	.and(
-		myzod
-			.object({ ref: myzod.literals(ArmorType.Light, ArmorType.Medium, ArmorType.Heavy) })
-			.or(myzod.object({ ref: myzod.literal(ArmorType.Shield), shieldType: myzod.enum(ShieldType).optional() })),
-	)
-	.map((desc) => ({ ...desc, name: desc.ref as ArmorName }));
+export const armorReferenceSchema = equipmentPieceReference.map((refObject) => ({
+	...refObject,
+	ref: refObject.ref as ArmorName,
+}));
 export type ArmorReference = Infer<typeof armorReferenceSchema>;
+
+export const armorProficiencySchema = referenceSchema.and(myzod.object({ ref: myzod.enum(ArmorType) }));
+export type ArmorProficiency = Infer<typeof armorProficiencySchema>;
 
 export function parseArmors(armors: ReadonlyArray<unknown>, parsedMaterials: ReadonlyArray<Material>) {
 	return myzod
