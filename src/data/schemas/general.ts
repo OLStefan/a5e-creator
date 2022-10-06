@@ -28,6 +28,15 @@ export enum DamageType {
 	Thunder = 'thunder',
 }
 
+export enum Size {
+	Tiny = 'tiny',
+	Small = 'small',
+	Medium = 'medium',
+	Large = 'large',
+	Huge = 'huge',
+	Gargantuan = 'gargantuan',
+}
+
 export const dieSizeSchema = myzod.literals('d4', 'd6', 'd8', 'd10', 'd12', 'd100');
 export type DieSize = Infer<typeof dieSizeSchema>;
 
