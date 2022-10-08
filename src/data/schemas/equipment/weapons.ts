@@ -1,12 +1,14 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
 import { damageDescriptionSchema, specialdamageDescriptionSchema } from '../general';
-import { findReferencedElement, referenceSchema } from '../util/reference';
+import { createIndividualProficiencySchema, verifyProficiency } from '../proficiency';
+import { findReferencedElement } from '../util';
 import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
 import { Material, materialReferenceSchema, verifyMaterialReference } from './material';
 import { verifyWeaponPropertyReference, WeaponProperty, weaponPropertyReferenceSchema } from './weaponProperties';
 
 export enum WeaponCategory {
+	Improvised = 'improvised',
 	Simple = 'simple',
 	Martial = 'martial',
 	Rare = 'rare',
@@ -61,7 +63,7 @@ const specialWeaponSchema = baseWeaponSchema
 	.map((desc) => ({ ...desc, name: desc.name as WeaponName }));
 export type SpecialWeapon = Infer<typeof specialWeaponSchema>;
 
-export const anyWeaponSchema = myzod.union([meleeWeaponSchema, rangedWeaponSchema, specialWeaponSchema]);
+const anyWeaponSchema = myzod.union([meleeWeaponSchema, rangedWeaponSchema, specialWeaponSchema]);
 export type AnyWeapon = Infer<typeof anyWeaponSchema>;
 
 export const weaponReferenceSchema = equipmentPieceReference.map((refObject) => ({
@@ -70,18 +72,12 @@ export const weaponReferenceSchema = equipmentPieceReference.map((refObject) => 
 }));
 export type WeaponReference = Infer<typeof weaponReferenceSchema>;
 
-export const weaponProficiencySchema = referenceSchema
-	.and(
-		myzod
-			.object({ ref: myzod.enum(WeaponCategory) })
-			.or(myzod.object({ ref: myzod.literal('Individual'), name: myzod.string() })),
-	)
-	.map((ref) => {
-		if (ref.ref === 'Individual') {
-			return { ...ref, name: ref.name as WeaponName };
-		}
-		return ref;
-	});
+export const weaponProficiencySchema = createIndividualProficiencySchema(Object.values(WeaponCategory)).map((ref) => {
+	if (ref.ref === 'Individual') {
+		return { ...ref, name: ref.name as WeaponName };
+	}
+	return ref;
+});
 export type WeaponProficiency = Infer<typeof weaponProficiencySchema>;
 
 export function parseWeapons(
@@ -91,8 +87,8 @@ export function parseWeapons(
 ) {
 	return myzod
 		.array(anyWeaponSchema)
-		.withPredicate((weapons) =>
-			weapons.every(
+		.withPredicate((parsedWeapons) =>
+			parsedWeapons.every(
 				(weapon) =>
 					verifyMaterialReference(weapon.material, parsedMaterials) &&
 					weapon.properties.every((ref) => verifyWeaponPropertyReference(ref, parsedWeaponProperties)),
@@ -105,10 +101,4 @@ export function verifyWeaponReference(ref: ReadonlyDeep<WeaponReference>, parsed
 	return !!findReferencedElement(ref, parsedWeapons);
 }
 
-export function verifyWeaponProficiency(ref: ReadonlyDeep<WeaponProficiency>, parsedWeapons: ReadonlyArray<AnyWeapon>) {
-	if (ref.ref !== 'Individual') {
-		return true;
-	}
-
-	return !!findReferencedElement(ref, parsedWeapons);
-}
+export const verifyWeaponProficiency = verifyProficiency<WeaponProficiency, AnyWeapon>;

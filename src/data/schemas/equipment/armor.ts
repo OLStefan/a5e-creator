@@ -1,6 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { findReferencedElement, referenceSchema } from '../util/reference';
+import { findReferencedElement, referenceSchema } from '../util';
 import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
 import { Material, materialReferenceSchema, verifyMaterialReference } from './material';
 
@@ -52,7 +52,7 @@ const shieldSchema = baseArmorSchema
 	.map((desc) => ({ ...desc, name: desc.name as ArmorName }));
 export type Shield = Infer<typeof shieldSchema>;
 
-export const anyArmorSchema = myzod.union([armorSchema, shieldSchema]);
+const anyArmorSchema = myzod.union([armorSchema, shieldSchema]);
 export type AnyArmor = Infer<typeof anyArmorSchema>;
 
 export const armorReferenceSchema = equipmentPieceReference.map((refObject) => ({
@@ -67,7 +67,9 @@ export type ArmorProficiency = Infer<typeof armorProficiencySchema>;
 export function parseArmors(armors: ReadonlyArray<unknown>, parsedMaterials: ReadonlyArray<Material>) {
 	return myzod
 		.array(anyArmorSchema)
-		.withPredicate((Armors) => Armors.every((Armor) => verifyMaterialReference(Armor.material, parsedMaterials)))
+		.withPredicate((parsedArmors) =>
+			parsedArmors.every((Armor) => verifyMaterialReference(Armor.material, parsedMaterials)),
+		)
 		.parse(armors);
 }
 

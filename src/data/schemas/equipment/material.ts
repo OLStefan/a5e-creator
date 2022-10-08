@@ -1,7 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { descriptionSchema } from '../util/description';
-import { findReferencedElement, referenceSchema } from '../util/reference';
+import { descriptionSchema, findReferencedElement, referenceSchema } from '../util';
 import {
 	MaterialProperty,
 	materialPropertyReferenceSchema,
@@ -33,8 +32,8 @@ export function parseMaterials(
 ) {
 	return myzod
 		.array(materialSchema)
-		.withPredicate((materials) =>
-			materials.every((material) =>
+		.withPredicate((parsedMaterials) =>
+			parsedMaterials.every((material) =>
 				material.properties.every((ref) => verifyMaterialPropertyReference(ref, parsedMaterialProperties)),
 			),
 		)

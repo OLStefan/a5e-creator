@@ -1,7 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { additionalDescriptionSchema } from '../util/description';
-import { additionalReferenceSchema, verifyAdditionalReferences } from '../util/reference';
+import { additionalDescriptionSchema, additionalReferenceSchema, verifyAdditionalReferences } from '../util';
 
 export type WeaponPropertyName = Opaque<string, 'WeaponProperty'>;
 

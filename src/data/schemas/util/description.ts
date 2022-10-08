@@ -21,7 +21,7 @@ export type Description = Infer<typeof descriptionSchema>;
 
 export const additionalDescriptionSchema = descriptionSchema.and(
 	myzod.object({
-		asString: myzod.string().optional(),
+		additionalString: myzod.string().default(''),
 	}),
 );
 export type AdditionalDescription = Infer<typeof additionalDescriptionSchema>;

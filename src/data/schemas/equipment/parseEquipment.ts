@@ -5,15 +5,25 @@ import materialsJson from '../../resources/equipment/materials.json';
 import toolsJson from '../../resources/equipment/tools.json';
 import weaponPropertiesJson from '../../resources/equipment/weaponProperties.json';
 import weaponsJson from '../../resources/equipment/weapons.json';
-import { parseAdventuringGear } from './adventuringGear';
-import { parseArmors } from './armor';
-import { parseMaterials } from './material';
-import { parseMaterialProperties } from './materialProperties';
-import { parseTools } from './tools';
-import { parseWeaponProperties } from './weaponProperties';
-import { parseWeapons } from './weapons';
+import { AnyAdventuringGear, parseAdventuringGear } from './adventuringGear';
+import { AnyArmor, parseArmors } from './armor';
+import { Material, parseMaterials } from './material';
+import { MaterialProperty, parseMaterialProperties } from './materialProperties';
+import { AnyTool, parseTools } from './tools';
+import { parseWeaponProperties, WeaponProperty } from './weaponProperties';
+import { AnyWeapon, parseWeapons } from './weapons';
 
-export function parseEquipment() {
+export interface Equipment {
+	adventuringGear: Array<AnyAdventuringGear>;
+	armors: Array<AnyArmor>;
+	materialProperties: Array<MaterialProperty>;
+	materials: Array<Material>;
+	tools: Array<AnyTool>;
+	weaponProperties: Array<WeaponProperty>;
+	weapons: Array<AnyWeapon>;
+}
+
+export function parseEquipment(): Equipment {
 	const adventuringGear = parseAdventuringGear(adventuringGearJson);
 
 	const tools = parseTools(toolsJson);

@@ -1,6 +1,5 @@
 import myzod, { Infer } from 'myzod';
-import { descriptionSchema } from '../util/description';
-import { referenceSchema } from '../util/reference';
+import { descriptionSchema, referenceSchema } from '../util';
 
 export enum EquipmentType {
 	Weapon = 'weapon',
