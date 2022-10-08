@@ -1,6 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { descriptionSchema, findReferencedElement, referenceSchema } from '../util';
+import { descriptionSchema, findReferencedElement, parse, referenceSchema } from '../util';
 import {
 	MaterialProperty,
 	materialPropertyReferenceSchema,
@@ -30,14 +30,14 @@ export function parseMaterials(
 	materials: ReadonlyArray<unknown>,
 	parsedMaterialProperties: ReadonlyArray<MaterialProperty>,
 ) {
-	return myzod
-		.array(materialSchema)
-		.withPredicate((parsedMaterials) =>
+	return parse({
+		schema: materialSchema,
+		data: materials,
+		predicate: (parsedMaterials) =>
 			parsedMaterials.every((material) =>
 				material.properties.every((ref) => verifyMaterialPropertyReference(ref, parsedMaterialProperties)),
 			),
-		)
-		.parse(materials);
+	});
 }
 
 export function verifyMaterialReference(

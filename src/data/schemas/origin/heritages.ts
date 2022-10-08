@@ -2,7 +2,7 @@ import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
 import { featureSchema } from '../feature';
 import { Size } from '../general';
-import { descriptionSchema, findReferencedElement, referenceSchema } from '../util';
+import { descriptionSchema, findReferencedElement, parse, referenceSchema } from '../util';
 import { Culture, cultureReferenceSchema, verifyCultureReference } from './cultures';
 
 export type HeritageName = Opaque<string, 'heritage'>;
@@ -32,14 +32,14 @@ export const heritageReferenceSchema = referenceSchema.map((refObject) => ({
 export type HeritageReference = Infer<typeof heritageReferenceSchema>;
 
 export function parseHeritages(heritages: ReadonlyArray<unknown>, parsedCultures: ReadonlyArray<Culture>) {
-	return myzod
-		.array(heritageSchema)
-		.withPredicate((parsedHeritages) =>
+	return parse({
+		schema: heritageSchema,
+		data: heritages,
+		predicate: (parsedHeritages) =>
 			parsedHeritages.every((heritage) =>
 				heritage.suggestedCultures.every((ref) => verifyCultureReference(ref, parsedCultures)),
 			),
-		)
-		.parse(heritages);
+	});
 }
 
 export function verifyHeritageReference(

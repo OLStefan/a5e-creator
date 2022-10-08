@@ -2,7 +2,7 @@ import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
 import { damageDescriptionSchema, specialdamageDescriptionSchema } from '../general';
 import { createIndividualProficiencySchema, verifyProficiency } from '../proficiency';
-import { findReferencedElement } from '../util';
+import { findReferencedElement, parse } from '../util';
 import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
 import { Material, materialReferenceSchema, verifyMaterialReference } from './material';
 import { verifyWeaponPropertyReference, WeaponProperty, weaponPropertyReferenceSchema } from './weaponProperties';
@@ -85,16 +85,16 @@ export function parseWeapons(
 	parsedWeaponProperties: ReadonlyArray<WeaponProperty>,
 	parsedMaterials: ReadonlyArray<Material>,
 ) {
-	return myzod
-		.array(anyWeaponSchema)
-		.withPredicate((parsedWeapons) =>
+	return parse({
+		schema: anyWeaponSchema,
+		data: weapons,
+		predicate: (parsedWeapons) =>
 			parsedWeapons.every(
 				(weapon) =>
 					verifyMaterialReference(weapon.material, parsedMaterials) &&
 					weapon.properties.every((ref) => verifyWeaponPropertyReference(ref, parsedWeaponProperties)),
 			),
-		)
-		.parse(weapons);
+	});
 }
 
 export function verifyWeaponReference(ref: ReadonlyDeep<WeaponReference>, parsedWeapons: ReadonlyArray<AnyWeapon>) {

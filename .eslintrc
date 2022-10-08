@@ -22,7 +22,8 @@
 		"no-mixed-spaces-and-tabs": "off",
 		"import/no-cycle": "warn",
 		"@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }],
-		"import/no-named-as-default-member": "off"
+		"import/no-named-as-default-member": "off",
+		"no-console": "warn"
 	},
 	"settings": {
 		"react": { "version": "17" },

@@ -2,7 +2,7 @@ import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
 import { featureSchema } from '../feature';
 import { languageSchema } from '../language';
-import { descriptionSchema, findReferencedElement, referenceSchema } from '../util';
+import { descriptionSchema, findReferencedElement, parse, referenceSchema } from '../util';
 
 export type BackgroundName = Opaque<string, 'background'>;
 
@@ -23,7 +23,7 @@ export const backgroundReferenceSchema = referenceSchema.map((refObject) => ({
 export type BackgroundReference = Infer<typeof backgroundReferenceSchema>;
 
 export function parseBackgrounds(backgrounds: ReadonlyArray<unknown>) {
-	return myzod.array(backgroundSchema).parse(backgrounds);
+	return parse({ schema: backgroundSchema, data: backgrounds });
 }
 
 export function verifyBackgroundReference(

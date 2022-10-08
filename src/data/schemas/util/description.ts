@@ -1,11 +1,12 @@
 import myzod, { Infer } from 'myzod';
 
 export enum SourceBook {
-	AG = "adventurer's guide",
-	TT = 'trials & treasures',
-	DDG = "dungeon delver's guide",
-	ZG = 'adventures in Zeitgeist',
-	GPG = 'gate pass gazette',
+	AG = 'AG',
+	TT = 'TT',
+	DDG = 'DDG',
+	ZG = 'ZG',
+	GPG = 'GPG',
+	Homebrew = 'homebrew',
 }
 export const sourceReferenceSchema = myzod.object({
 	book: myzod.enum(SourceBook),
@@ -16,6 +17,7 @@ export const descriptionSchema = myzod.object({
 	name: myzod.string(),
 	description: myzod.string(),
 	source: sourceReferenceSchema,
+	disabled: myzod.literal(false).optional(),
 });
 export type Description = Infer<typeof descriptionSchema>;
 

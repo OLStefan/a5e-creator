@@ -6,7 +6,7 @@ import { featureSchema } from './feature';
 import { attributeReferenceSchema, dieSizeSchema } from './general';
 import { createProficiencyChoiceSchema } from './proficiency';
 import { Skill, skillProficiencySchema } from './skills';
-import { descriptionSchema, findReferencedElement, referenceSchema } from './util';
+import { descriptionSchema, findReferencedElement, parse, referenceSchema } from './util';
 
 export type ClassName = Opaque<string, 'class'>;
 export type SubClassName = Opaque<string, 'subclass'>;
@@ -44,10 +44,11 @@ export function parseClasses(
 	parsedEquipment: ReadonlyDeep<Equipment>,
 	parsedSkills: ReadonlyArray<Skill>,
 ) {
-	return myzod
-		.array(classSchema)
-		.withPredicate((parsedClasses) => parsedClasses.every(stubFalse))
-		.parse(classes);
+	return parse({
+		schema: classSchema,
+		data: classes,
+		predicate: (parsedClasses) => parsedClasses.every(stubFalse),
+	});
 }
 
 export function verifyClassReference(ref: ReadonlyDeep<ClassReference>, parsedClasses: ReadonlyArray<Class>) {

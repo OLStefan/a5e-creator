@@ -1,6 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { findReferencedElement } from '../util';
+import { findReferencedElement, parse } from '../util';
 import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
 
 export type AdventuringGearName = Opaque<string, 'adventuringGear'>;
@@ -24,7 +24,7 @@ const baseAdventuringGearSchema = equipmentPieceSchema.and(
 const medicineSchema = baseAdventuringGearSchema
 	.and(
 		myzod.object({
-			AdventuringGearType: myzod.literal(AdventuringGearType.Medicine),
+			gearType: myzod.literal(AdventuringGearType.Medicine),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
@@ -33,7 +33,7 @@ export type Medicine = Infer<typeof medicineSchema>;
 const spellcastingFocusSchema = baseAdventuringGearSchema
 	.and(
 		myzod.object({
-			AdventuringGearType: myzod.literal(AdventuringGearType.SpellcastingFocus),
+			gearType: myzod.literal(AdventuringGearType.SpellcastingFocus),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
@@ -42,7 +42,7 @@ export type SpellcastingFocus = Infer<typeof spellcastingFocusSchema>;
 const poisonSchema = baseAdventuringGearSchema
 	.and(
 		myzod.object({
-			AdventuringGearType: myzod.literal(AdventuringGearType.Poison),
+			gearType: myzod.literal(AdventuringGearType.Poison),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
@@ -51,7 +51,7 @@ export type Poison = Infer<typeof poisonSchema>;
 const survivalGearSchema = baseAdventuringGearSchema
 	.and(
 		myzod.object({
-			AdventuringGearType: myzod.literal(AdventuringGearType.SurvivalGear),
+			gearType: myzod.literal(AdventuringGearType.SurvivalGear),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
@@ -60,7 +60,7 @@ export type SurvivalGear = Infer<typeof survivalGearSchema>;
 const containerSchema = baseAdventuringGearSchema
 	.and(
 		myzod.object({
-			AdventuringGearType: myzod.literal(AdventuringGearType.Container),
+			gearType: myzod.literal(AdventuringGearType.Container),
 			capacity: myzod.string(),
 		}),
 	)
@@ -70,7 +70,7 @@ export type Container = Infer<typeof containerSchema>;
 const otherAdventuringGearSchema = baseAdventuringGearSchema
 	.and(
 		myzod.object({
-			AdventuringGearType: myzod.literal(AdventuringGearType.Miscellaneous),
+			gearType: myzod.literal(AdventuringGearType.Miscellaneous),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
@@ -92,8 +92,8 @@ export const adventuringGearReferenceSchema = equipmentPieceReference.map((refOb
 }));
 export type AdventuringGearReference = Infer<typeof adventuringGearReferenceSchema>;
 
-export function parseAdventuringGear(AdventuringGears: ReadonlyArray<unknown>) {
-	return myzod.array(anyAdventuringGearSchema).parse(AdventuringGears);
+export function parseAdventuringGear(adventuringGear: ReadonlyArray<unknown>) {
+	return parse({ schema: anyAdventuringGearSchema, data: adventuringGear });
 }
 
 export function verifyAdventuringGearReference(

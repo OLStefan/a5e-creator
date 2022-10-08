@@ -1,6 +1,6 @@
-import myzod, { Infer } from 'myzod';
+import { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { additionalDescriptionSchema, additionalReferenceSchema, verifyAdditionalReferences } from '../util';
+import { additionalDescriptionSchema, additionalReferenceSchema, parse, verifyAdditionalReferences } from '../util';
 
 export type MaterialPropertyName = Opaque<string, 'MaterialProperty'>;
 
@@ -17,8 +17,8 @@ export const materialPropertyReferenceSchema = additionalReferenceSchema.map((re
 
 export type MaterialPropertyReference = Infer<typeof materialPropertyReferenceSchema>;
 
-export function parseMaterialProperties(materials: ReadonlyArray<unknown>) {
-	return myzod.array(materialPropertySchema).parse(materials);
+export function parseMaterialProperties(materialProperties: ReadonlyArray<unknown>) {
+	return parse({ schema: materialPropertySchema, data: materialProperties });
 }
 
 export function verifyMaterialPropertyReference(

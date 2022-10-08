@@ -42,9 +42,9 @@ export type DieSize = Infer<typeof dieSizeSchema>;
 
 export const damageDescriptionSchema = myzod.object({
 	die: dieSizeSchema,
-	amount: myzod.number({ min: 0 }),
+	amount: myzod.number({ min: 0 }).default(1),
 	damageType: myzod.enum(DamageType),
-	type: myzod.literal('normal'),
+	type: myzod.literal('normal').optional(),
 });
 export type DamageDescription = Infer<typeof damageDescriptionSchema>;
 

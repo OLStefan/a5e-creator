@@ -1,7 +1,7 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
 import { createIndividualProficiencySchema, verifyProficiency } from '../proficiency';
-import { findReferencedElement } from '../util';
+import { findReferencedElement, parse } from '../util';
 import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
 
 export type ToolName = Opaque<string, 'tool'>;
@@ -86,7 +86,7 @@ export const toolProficiencySchema = createIndividualProficiencySchema(Object.va
 export type ToolProficiency = Infer<typeof toolProficiencySchema>;
 
 export function parseTools(tools: ReadonlyArray<unknown>) {
-	return myzod.array(anyToolSchema).parse(tools);
+	return parse({ schema: anyToolSchema, data: tools });
 }
 
 export function verifyToolReference(ref: ReadonlyDeep<ToolReference>, parsedTools: ReadonlyArray<AnyTool>) {

@@ -1,1 +1,21 @@
-[]
+[
+	{
+		"name": "Longsword",
+		"description": "",
+		"source": {
+			"book": "AG",
+			"page": 310
+		},
+		"weight": 3,
+		"price": 20,
+		"type": "weapon",
+		"proficiency": "martial",
+		"weaponType": "melee",
+		"damage": {
+			"die": "d8",
+			"damageType": "slashing"
+		},
+		"material": { "ref": "Steel" },
+		"properties": []
+	}
+]

@@ -2,7 +2,7 @@ import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
 import { featureSchema } from '../feature';
 import { languageSchema } from '../language';
-import { descriptionSchema, findReferencedElement, referenceSchema } from '../util';
+import { descriptionSchema, findReferencedElement, parse, referenceSchema } from '../util';
 
 export type CultureName = Opaque<string, 'culture'>;
 
@@ -22,8 +22,8 @@ export const cultureReferenceSchema = referenceSchema.map((refObject) => ({
 }));
 export type CultureReference = Infer<typeof cultureReferenceSchema>;
 
-export function parseCultures(Cultures: ReadonlyArray<unknown>) {
-	return myzod.array(cultureSchema).parse(Cultures);
+export function parseCultures(cultures: ReadonlyArray<unknown>) {
+	return parse({ schema: cultureSchema, data: cultures });
 }
 
 export function verifyCultureReference(ref: ReadonlyDeep<CultureReference>, parsedCultures: ReadonlyArray<Culture>) {
