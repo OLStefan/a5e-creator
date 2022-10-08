@@ -1,25 +1,31 @@
-import myzod, { AnyType } from 'myzod';
-import { armorProficiencySchema } from './equipment/armor';
-import { toolReferenceSchema } from './equipment/tools';
-import { weaponProficiencySchema } from './equipment/weapons';
-import { attributeReferenceSchema } from './general';
-import { skillReferenceSchema } from './skills';
+import myzod, { AnyType, Infer } from 'myzod';
+import { ReadonlyDeep } from 'type-fest';
+import { findReferencedElement, referenceSchema } from './util';
+import { Description } from './util/description';
 
-function createProficiencyChoiceSchema<T extends AnyType>(reference: T) {
-	return myzod
-		.object({
-			allOf: myzod.array(reference).default([]),
-			choice: myzod.array(reference).default([]),
-		})
-		.default({
-			allOf: [],
-			choice: [],
-		});
+export function createProficiencyChoiceSchema<T extends AnyType>(reference: T) {
+	return myzod.object({
+		allOf: myzod.array(reference).default([]),
+		choice: myzod.object({ options: myzod.array(reference).default([]), amount: myzod.number().default(1) }),
+	});
 }
-export const proficiencyReferenceSchema = myzod.object({
-	savingThrows: createProficiencyChoiceSchema(attributeReferenceSchema),
-	armor: createProficiencyChoiceSchema(armorProficiencySchema),
-	weapons: createProficiencyChoiceSchema(weaponProficiencySchema),
-	tools: createProficiencyChoiceSchema(toolReferenceSchema),
-	skills: createProficiencyChoiceSchema(skillReferenceSchema),
-});
+
+export function createIndividualProficiencySchema<Category extends string>(categories: Array<Category>) {
+	return referenceSchema.and(
+		myzod
+			.object({ ref: myzod.literals(...categories) })
+			.or(myzod.object({ ref: myzod.literal('Individual'), name: myzod.string() })),
+	);
+}
+type IndividualProficiency = Infer<ReturnType<typeof createIndividualProficiencySchema>>;
+
+export function verifyProficiency<Prof extends IndividualProficiency, Element extends Description>(
+	ref: ReadonlyDeep<Prof>,
+	descriptions: ReadonlyArray<Element>,
+) {
+	if (ref.ref !== 'Individual') {
+		return true;
+	}
+
+	return !!findReferencedElement(ref, descriptions);
+}

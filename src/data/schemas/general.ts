@@ -1,5 +1,5 @@
 import myzod, { Infer } from 'myzod';
-import { referenceSchema } from './util/reference';
+import { referenceSchema } from './util';
 
 export enum Attribute {
 	Str = 'strength',
