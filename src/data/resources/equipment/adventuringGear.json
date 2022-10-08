@@ -1,1 +1,14 @@
-[]
+[
+	{
+		"name": "Bedroll",
+		"description": "This essential commodity provides insulation and comfortable sleep on rocky, wet, or uneven terrain.",
+		"source": {
+			"book": "AG",
+			"page": 329
+		},
+		"weight": 7,
+		"price": 1,
+		"type": "adventuring gear",
+		"gearType": "survival gear"
+	}
+]

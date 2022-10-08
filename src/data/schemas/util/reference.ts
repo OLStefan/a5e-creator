@@ -23,9 +23,9 @@ export function findReferencedElement<Element extends Description>(
 }
 
 const additionalInformationRegex = /\$(\w+)/g;
-export function verifyAdditionalReferences(
-	ref: ReadonlyDeep<AdditionalReference>,
-	parsedDescriptions: ReadonlyArray<AdditionalDescription>,
+export function verifyAdditionalReferences<Ref extends AdditionalReference, Desc extends AdditionalDescription>(
+	ref: ReadonlyDeep<Ref>,
+	parsedDescriptions: ReadonlyArray<Desc>,
 ) {
 	const referencedProperty = findReferencedElement(ref, parsedDescriptions);
 	if (!referencedProperty) {

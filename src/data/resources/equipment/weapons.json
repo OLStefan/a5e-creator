@@ -15,7 +15,14 @@
 			"die": "d8",
 			"damageType": "slashing"
 		},
-		"material": { "ref": "Steel" },
-		"properties": []
+		"defaultMaterial": { "ref": "steel" },
+		"properties": [
+			{
+				"ref": "defensive",
+				"additional": {
+					"shieldSize": "medium"
+				}
+			}
+		]
 	}
 ]

@@ -1,1 +1,18 @@
-[]
+[
+	{
+		"name": "leather brigandine",
+		"description": "A tunic made of cloth, leather, or hide which has small panels of metal, scale, or bone stitched to the interior for extra protection. When the panels are external and overlap closely, the brigandine is termed  mail.",
+		"source": {
+			"book": "AG",
+			"page": 319
+		},
+		"weight": 10,
+		"price": 20,
+		"type": "armor",
+		"defaultMaterial": { "ref": "leather" },
+		"armorType": "light",
+		"ac": {
+			"base": 13
+		}
+	}
+]

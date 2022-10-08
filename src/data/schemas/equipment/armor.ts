@@ -23,7 +23,7 @@ export type ArmorName = Opaque<string, 'armor'>;
 const baseArmorSchema = equipmentPieceSchema.and(
 	myzod.object({
 		type: myzod.literal(EquipmentType.Armor),
-		material: materialReferenceSchema,
+		defaultMaterial: materialReferenceSchema,
 		armorType: myzod.enum(ArmorType),
 	}),
 );
@@ -55,10 +55,12 @@ export type Shield = Infer<typeof shieldSchema>;
 const anyArmorSchema = myzod.union([armorSchema, shieldSchema]);
 export type AnyArmor = Infer<typeof anyArmorSchema>;
 
-export const armorReferenceSchema = equipmentPieceReference.map((refObject) => ({
-	...refObject,
-	ref: refObject.ref as ArmorName,
-}));
+export const armorReferenceSchema = equipmentPieceReference
+	.and(myzod.object({ material: materialReferenceSchema }))
+	.map((refObject) => ({
+		...refObject,
+		ref: refObject.ref as ArmorName,
+	}));
 export type ArmorReference = Infer<typeof armorReferenceSchema>;
 
 export const armorProficiencySchema = referenceSchema.and(myzod.object({ ref: myzod.enum(ArmorType) }));
@@ -69,10 +71,14 @@ export function parseArmors(armors: ReadonlyArray<unknown>, parsedMaterials: Rea
 		schema: anyArmorSchema,
 		data: armors,
 		predicate: (parsedArmors) =>
-			parsedArmors.every((Armor) => verifyMaterialReference(Armor.material, parsedMaterials)),
+			parsedArmors.every((armor) => verifyMaterialReference(armor.defaultMaterial, parsedMaterials)),
 	});
 }
 
-export function verifyArmorReference(ref: ReadonlyDeep<ArmorReference>, parsedArmors: ReadonlyArray<AnyArmor>) {
-	return !!findReferencedElement(ref, parsedArmors);
+export function verifyArmorReference(
+	ref: ReadonlyDeep<ArmorReference>,
+	parsedArmors: ReadonlyArray<AnyArmor>,
+	parsedMaterials: ReadonlyArray<Material>,
+) {
+	return !!findReferencedElement(ref, parsedArmors) && verifyMaterialReference(ref.material, parsedMaterials);
 }

@@ -1,1 +1,28 @@
-[{ "name": "Steel", "description": "", "source": { "book": "AG", "page": 323 }, "properties": [] }]
+[
+	{
+		"name": "steel",
+		"description": "",
+		"source": { "book": "AG", "page": 323 },
+		"properties": [
+			{
+				"ref": "low-maintenance",
+				"additional": {
+					"advantageOrExpertise": "expertise die"
+				}
+			}
+		]
+	},
+	{
+		"name": "leather",
+		"description": "",
+		"source": { "book": "AG", "page": 323 },
+		"properties": [
+			{
+				"ref": "flaw",
+				"additional": {
+					"damageType": "piercing"
+				}
+			}
+		]
+	}
+]

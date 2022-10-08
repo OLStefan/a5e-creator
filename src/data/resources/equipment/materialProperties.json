@@ -1,1 +1,20 @@
-[]
+[
+	{
+		"name": "low-maintenance",
+		"description": "You gain advantage or an expertise die on maintenance checks made on low-maintenance gear.",
+		"source": {
+			"book": "AG",
+			"page": 325
+		},
+		"additionalString": " ($advantageOrExpertise)"
+	},
+	{
+		"name": "flaw",
+		"description": "A weapon with the flaw property breaks when you roll a natural 1 on an attack made with it. Armors break when you take a critical hit or roll a natural 1 on a Dexterity. If a damage type is noted in parentheses, the armor only breaks on a critical hit from that damage type, or the weapon only breaks if it does damage of that damage type.",
+		"source": {
+			"book": "AG",
+			"page": 325
+		},
+		"additionalString": " ($damageType)"
+	}
+]

@@ -10,7 +10,7 @@ export enum ToolType {
 	Artisan = "artisan's tool",
 	Gaming = 'gaming set',
 	Musical = 'muscial instrument',
-	Other = 'miscellaneous tools',
+	Other = 'miscellaneous tool',
 }
 
 const baseToolSchema = equipmentPieceSchema.and(
@@ -62,7 +62,7 @@ export type MusicalInstrument = Infer<typeof musicalInstrumentSchema>;
 const otherToolSchema = baseToolSchema
 	.and(
 		myzod.object({
-			toolType: myzod.literal(ToolType.Gaming),
+			toolType: myzod.literal(ToolType.Other),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as ToolName }));

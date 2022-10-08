@@ -1,16 +1,13 @@
-import myzod, { Infer } from 'myzod';
-import { Opaque, ReadonlyDeep } from 'type-fest';
+import { Infer } from 'myzod';
+import { Opaque } from 'type-fest';
 import { additionalDescriptionSchema, additionalReferenceSchema, parse, verifyAdditionalReferences } from '../util';
 
 export type WeaponPropertyName = Opaque<string, 'WeaponProperty'>;
 
-export const weaponPropertySchema = additionalDescriptionSchema
-	.and(
-		myzod.object({
-			asString: myzod.string().optional(),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as WeaponPropertyName }));
+export const weaponPropertySchema = additionalDescriptionSchema.map((desc) => ({
+	...desc,
+	name: desc.name as WeaponPropertyName,
+}));
 export type WeaponProperty = Infer<typeof weaponPropertySchema>;
 
 export const weaponPropertyReferenceSchema = additionalReferenceSchema.map((refObject) => ({
@@ -24,9 +21,4 @@ export function parseWeaponProperties(weaponProperties: ReadonlyArray<unknown>) 
 	return parse({ schema: weaponPropertySchema, data: weaponProperties });
 }
 
-export function verifyWeaponPropertyReference(
-	ref: ReadonlyDeep<WeaponPropertyReference>,
-	parsedWeaponProperties: ReadonlyArray<WeaponProperty>,
-) {
-	verifyAdditionalReferences(ref, parsedWeaponProperties);
-}
+export const verifyWeaponPropertyReference = verifyAdditionalReferences<WeaponPropertyReference, WeaponProperty>;
