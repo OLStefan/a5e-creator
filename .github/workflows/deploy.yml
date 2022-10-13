@@ -16,18 +16,18 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-        
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile    
-     
-      - name: Static Checks    
-        run: yarn check:all
-      
-      - name: Build   
-        run: yarn build
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Static Checks
+        run: yarn check:all
+
+      # - name: Build
+      #   run: yarn build
+
+      # - name: Deploy
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #     folder: dist
+      #     token: ${{ secrets.GITHUB_TOKEN }}
