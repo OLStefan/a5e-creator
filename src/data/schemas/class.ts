@@ -1,17 +1,25 @@
-import { stubFalse } from 'lodash';
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { armorProficiencySchema, toolProficiencySchema, weaponProficiencySchema } from './equipment';
-import { featureSchema } from './feature';
+import {
+	AnyArmor,
+	AnyWeapon,
+	armorProficiencySchema,
+	toolProficiencySchema,
+	verifyArmorProficiency,
+	verifyWeaponProficiency,
+	weaponProficiencySchema,
+} from './equipment';
+import { AnyTool } from './equipment/tools';
+import { featureSetSchema } from './feature';
 import { attributeReferenceSchema, dieSizeSchema } from './general';
-import { createProficiencyChoiceSchema } from './proficiency';
-import { skillProficiencySchema } from './skills';
+import { createProficiencyChoiceSchema, verifyProficiencyChoice } from './proficiency';
+import { Skill, skillProficiencySchema } from './skills';
 import { descriptionSchema, findReferencedElement, parse, referenceSchema } from './util';
 
 export type ClassName = Opaque<string, 'class'>;
 export type SubClassName = Opaque<string, 'subclass'>;
 
-const subclassSchema = descriptionSchema.and(myzod.object({}));
+const subclassSchema = descriptionSchema.and(featureSetSchema);
 
 const classSchema = descriptionSchema.and(
 	myzod.object({
@@ -19,12 +27,12 @@ const classSchema = descriptionSchema.and(
 		hitDie: dieSizeSchema,
 		proficiencies: myzod.object({
 			savingThrows: myzod.array(attributeReferenceSchema),
-			armor: myzod.array(armorProficiencySchema),
+			armors: myzod.array(armorProficiencySchema),
 			weapons: myzod.array(weaponProficiencySchema),
 			tools: createProficiencyChoiceSchema(toolProficiencySchema),
 			skills: createProficiencyChoiceSchema(skillProficiencySchema),
 		}),
-		features: myzod.array(featureSchema),
+		features: featureSetSchema,
 		subclasses: myzod.object({
 			level: myzod.number().default(3),
 			options: myzod.array(subclassSchema),
@@ -39,11 +47,33 @@ export const classReferenceSchema = referenceSchema.map((refObject) => ({
 }));
 export type ClassReference = Infer<typeof classReferenceSchema>;
 
-export function parseClasses(classes: ReadonlyArray<unknown>) {
+export function parseClasses(
+	classes: ReadonlyArray<unknown>,
+	parsedData: {
+		armors: ReadonlyArray<AnyArmor>;
+		weapons: ReadonlyArray<AnyWeapon>;
+		tools: ReadonlyArray<AnyTool>;
+		skills: ReadonlyArray<Skill>;
+	},
+) {
 	return parse({
 		schema: classSchema,
 		data: classes,
-		predicate: (parsedClasses) => parsedClasses.every(stubFalse),
+		predicate: (parsedClasses) =>
+			parsedClasses.every((aClass) => {
+				const armorProficienciesValid = aClass.proficiencies.armors.every((armorProf) =>
+					verifyArmorProficiency(armorProf, parsedData.armors),
+				);
+				const weaponProficienciesValid = aClass.proficiencies.weapons.every((weaponProf) =>
+					verifyWeaponProficiency(weaponProf, parsedData.weapons),
+				);
+				const toolProficienciesValid = verifyProficiencyChoice(aClass.proficiencies.tools, parsedData.tools);
+				const skillProficienciesValid = verifyProficiencyChoice(aClass.proficiencies.skills, parsedData.skills);
+
+				const proficienciesValid =
+					armorProficienciesValid && weaponProficienciesValid && toolProficienciesValid && skillProficienciesValid;
+				return proficienciesValid;
+			}),
 	});
 }
 

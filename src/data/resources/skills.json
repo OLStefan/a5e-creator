@@ -1,1 +1,11 @@
-[]
+[
+	{
+		"name": "Acrobatics",
+		"description": "An Acrobatics check allows a character to perform gymnastic feats such as rolling under a closing gate, swinging across a chasm on a rope, or keeping their balance on a narrow ledge. The most commonly used score is Dexterity. A character might use Strength to perform acrobatics while carrying a heavy burden, Constitution to do so against a heavy wind, or any other ability score as circumstances warrant.",
+		"source": {
+			"book": "AG",
+			"page": 408
+		},
+		"specialties": ["balancing", "escape artistry", "swinging", "tumbling"]
+	}
+]

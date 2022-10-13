@@ -14,7 +14,8 @@ export function createIndividualProficiencySchema<Category extends string>(categ
 	return referenceSchema.and(
 		myzod
 			.object({ ref: myzod.literals(...categories) })
-			.or(myzod.object({ ref: myzod.literal('Individual'), name: myzod.string() })),
+			.or(myzod.object({ ref: myzod.literal('Individual'), name: myzod.string() }))
+			.or(myzod.object({ ref: myzod.literal('Type'), name: myzod.literals(...categories) })),
 	);
 }
 type IndividualProficiency = Infer<ReturnType<typeof createIndividualProficiencySchema>>;
@@ -23,9 +24,18 @@ export function verifyProficiency<Prof extends IndividualProficiency, Element ex
 	ref: ReadonlyDeep<Prof>,
 	descriptions: ReadonlyArray<Element>,
 ) {
-	if (ref.ref !== 'Individual') {
-		return true;
+	if (ref.ref === 'Individual') {
+		return 'name' in ref && !!findReferencedElement({ ref: ref.name }, descriptions);
 	}
+	return true;
+}
 
-	return !!findReferencedElement(ref, descriptions);
+export function verifyProficiencyChoice(
+	ref: ReadonlyDeep<Infer<ReturnType<typeof createProficiencyChoiceSchema>>>,
+	descriptions: ReadonlyArray<Description>,
+) {
+	return (
+		ref.allOf.every((prof) => verifyProficiency(prof, descriptions)) &&
+		ref.choice.options.every((prof) => verifyProficiency(prof, descriptions))
+	);
 }

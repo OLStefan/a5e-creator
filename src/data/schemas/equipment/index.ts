@@ -15,7 +15,7 @@ export type {
 	SpellcastingFocus,
 	SurvivalGear,
 } from './adventuringGear';
-export { armorProficiencySchema, ArmorType, ShieldType, verifyArmorReference } from './armor';
+export { armorProficiencySchema, ArmorType, ShieldType, verifyArmorProficiency, verifyArmorReference } from './armor';
 export type { AnyArmor, Armor, ArmorName, ArmorProficiency, Shield } from './armor';
 export { EquipmentType } from './base';
 export { verifyMaterialReference } from './material';

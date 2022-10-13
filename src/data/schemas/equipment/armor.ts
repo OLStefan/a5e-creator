@@ -1,5 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
+import { verifyProficiency } from '../proficiency';
 import { findReferencedElement, parse, referenceSchema } from '../util';
 import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
 import { Material, materialReferenceSchema, verifyMaterialReference } from './material';
@@ -82,3 +83,5 @@ export function verifyArmorReference(
 ) {
 	return !!findReferencedElement(ref, parsedArmors) && verifyMaterialReference(ref.material, parsedMaterials);
 }
+
+export const verifyArmorProficiency = verifyProficiency<ArmorProficiency, AnyArmor>;

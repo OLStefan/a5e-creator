@@ -1,1 +1,47 @@
-[]
+[
+	{
+		"name": "adept",
+		"description": "A living weapon that hones their control over body and mind, and channels their unwavering focus to achieve amazing feats.",
+		"source": {
+			"book": "AG",
+			"page": 107
+		},
+		"startingGold": 30,
+		"hitDie": "d8",
+		"proficiencies": {
+			"savingThrows": [{ "ref": "strength" }, { "ref": "dexterity" }],
+			"armors": [],
+			"weapons": [{ "ref": "simple" }],
+			"tools": {
+				"choice": {
+					"amount": 1,
+					"options": [
+						{
+							"ref": "Type",
+							"name": "artisan's tool"
+						},
+						{
+							"ref": "Type",
+							"name": "muscial instrument"
+						}
+					]
+				}
+			},
+			"skills": {
+				"choice": {
+					"amount": 2,
+					"options": [
+						{
+							"ref": "acrobatics"
+						}
+					]
+				}
+			}
+		},
+		"features": {},
+		"subclasses": {
+			"level": 3,
+			"options": []
+		}
+	}
+]

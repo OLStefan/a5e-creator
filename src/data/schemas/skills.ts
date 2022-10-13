@@ -1,4 +1,4 @@
-import { Infer } from 'myzod';
+import myzod, { Infer } from 'myzod';
 import type { Opaque, ReadonlyDeep } from 'type-fest';
 import { verifyProficiency } from './proficiency';
 import { findReferencedElement, parse, referenceSchema } from './util';
@@ -6,7 +6,13 @@ import { descriptionSchema } from './util/description';
 
 export type SkillName = Opaque<string, 'skill'>;
 
-const skillSchema = descriptionSchema.map((desc) => ({ ...desc, name: desc.name as SkillName }));
+const skillSchema = descriptionSchema
+	.and(
+		myzod.object({
+			specialties: myzod.array(myzod.string()).default([]),
+		}),
+	)
+	.map((desc) => ({ ...desc, name: desc.name as SkillName }));
 export type Skill = Infer<typeof skillSchema>;
 
 export const skillReferenceSchema = referenceSchema.map((refObject) => ({

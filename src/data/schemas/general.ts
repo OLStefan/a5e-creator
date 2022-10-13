@@ -3,7 +3,7 @@ import { referenceSchema } from './util';
 
 export enum Attribute {
 	Str = 'strength',
-	Dex = 'sexterity',
+	Dex = 'dexterity',
 	Con = 'constitution',
 	Int = 'intelligence',
 	Wis = 'wisdom',
