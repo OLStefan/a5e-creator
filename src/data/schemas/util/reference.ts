@@ -10,7 +10,7 @@ export type Reference = Infer<typeof referenceSchema>;
 
 export const additionalReferenceSchema = referenceSchema.and(
 	myzod.object({
-		additional: myzod.record(myzod.string().or(myzod.number())),
+		additional: myzod.record(myzod.string().or(myzod.number())).optional(),
 	}),
 );
 export type AdditionalReference = Infer<typeof additionalReferenceSchema>;
@@ -41,5 +41,5 @@ export function verifyAdditionalReferences<Ref extends AdditionalReference, Desc
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		([, groupMatch]) => groupMatch!,
 	);
-	return requiredProperties.every((prop) => !isUndefined(ref.additional[prop]));
+	return requiredProperties.every((prop) => !isUndefined(ref.additional?.[prop]));
 }

@@ -1,6 +1,41 @@
 [
 	{
-		"name": "Bedroll",
+		"name": "adderwort roots",
+		"description": "Chewing these dark roots bolsters your body’s natural defenses, and after you eat it you gain an expertise die on Constitution saving throws for 1 hour.",
+		"source": {
+			"book": "AG",
+			"page": 325
+		},
+		"price": 10,
+		"type": "adventuring gear",
+		"gearType": "medicinal"
+	},
+	{
+		"name": "Amulet",
+		"source": {
+			"book": "AG",
+			"page": 327
+		},
+		"weight": 1,
+		"price": 5,
+		"type": "adventuring gear",
+		"gearType": "spellcasting focus",
+		"defaultMaterial": { "ref": "steel" }
+	},
+	{
+		"name": "curare (vial)",
+		"description": "You can use the poison in this vial to coat one slashing or piercing weapon, or up to three pieces of ammunition. The poison retains its potency for 1 minute or until you hit with the weapon or ammunition. When a creature takes damage from the coated weapon or ammunition, it makes a DC 13 Constitution saving throw or is stunned until the end of its next turn.",
+		"source": {
+			"book": "AG",
+			"page": 328
+		},
+		"weight": 1,
+		"price": 5,
+		"type": "adventuring gear",
+		"gearType": "poison"
+	},
+	{
+		"name": "bedroll",
 		"description": "This essential commodity provides insulation and comfortable sleep on rocky, wet, or uneven terrain.",
 		"source": {
 			"book": "AG",
@@ -10,5 +45,29 @@
 		"price": 1,
 		"type": "adventuring gear",
 		"gearType": "survival gear"
+	},
+	{
+		"name": "backpack",
+		"description": "You can also strap items, such as a bedroll or a coil of rope, to the outside of a backpack.",
+		"source": {
+			"book": "AG",
+			"page": 331
+		},
+		"weight": 5,
+		"price": 2,
+		"type": "adventuring gear",
+		"gearType": "container",
+		"capacity": "30 pounds of gear or 1 cubic foot"
+	},
+	{
+		"name": "abacus",
+		"source": {
+			"book": "AG",
+			"page": 332
+		},
+		"weight": 2,
+		"price": 2,
+		"type": "adventuring gear",
+		"gearType": "miscellaneous gear"
 	}
 ]

@@ -1,7 +1,18 @@
 [
 	{
+		"name": "leather",
+		"source": { "book": "AG", "page": 323 },
+		"properties": [
+			{
+				"ref": "flaw",
+				"additional": {
+					"damageType": "piercing"
+				}
+			}
+		]
+	},
+	{
 		"name": "steel",
-		"description": "",
 		"source": { "book": "AG", "page": 323 },
 		"properties": [
 			{
@@ -13,14 +24,13 @@
 		]
 	},
 	{
-		"name": "leather",
-		"description": "",
+		"name": "wood",
 		"source": { "book": "AG", "page": 323 },
 		"properties": [
 			{
 				"ref": "flaw",
 				"additional": {
-					"damageType": "piercing"
+					"damageType": "armor only"
 				}
 			}
 		]

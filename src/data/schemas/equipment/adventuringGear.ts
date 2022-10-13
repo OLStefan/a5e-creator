@@ -2,6 +2,7 @@ import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
 import { findReferencedElement, parse } from '../util';
 import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
+import { materialReferenceSchema } from './material';
 
 export type AdventuringGearName = Opaque<string, 'adventuringGear'>;
 
@@ -11,7 +12,7 @@ export enum AdventuringGearType {
 	Poison = 'poison',
 	SurvivalGear = 'survival gear',
 	Container = 'container',
-	Miscellaneous = 'miscellaneous',
+	Miscellaneous = 'miscellaneous gear',
 }
 
 const baseAdventuringGearSchema = equipmentPieceSchema.and(
@@ -34,6 +35,7 @@ const spellcastingFocusSchema = baseAdventuringGearSchema
 	.and(
 		myzod.object({
 			gearType: myzod.literal(AdventuringGearType.SpellcastingFocus),
+			defaultMaterial: materialReferenceSchema,
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
@@ -62,6 +64,7 @@ const containerSchema = baseAdventuringGearSchema
 		myzod.object({
 			gearType: myzod.literal(AdventuringGearType.Container),
 			capacity: myzod.string(),
+			defaultMaterial: materialReferenceSchema.optional(),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
@@ -71,6 +74,7 @@ const otherAdventuringGearSchema = baseAdventuringGearSchema
 	.and(
 		myzod.object({
 			gearType: myzod.literal(AdventuringGearType.Miscellaneous),
+			defaultMaterial: materialReferenceSchema.optional(),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));

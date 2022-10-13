@@ -15,7 +15,7 @@ export const sourceReferenceSchema = myzod.object({
 
 export const descriptionSchema = myzod.object({
 	name: myzod.string(),
-	description: myzod.string(),
+	description: myzod.string().default(''),
 	source: sourceReferenceSchema,
 	disabled: myzod.literal(false).optional(),
 });

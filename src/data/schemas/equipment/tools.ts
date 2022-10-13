@@ -32,10 +32,10 @@ const artisanToolSchema = baseToolSchema
 				time: myzod.object({
 					amount: myzod.number(),
 					unit: myzod.literals('hours', 'weeks', 'month'),
-					delay: myzod.string().optional(),
+					additional: myzod.string().optional(),
 				}),
+				profit: myzod.tuple([myzod.number(), myzod.number(), myzod.number()]),
 			}),
-			profit: myzod.tuple([myzod.number(), myzod.number(), myzod.number()]),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as ToolName }));

@@ -1,6 +1,51 @@
 [
 	{
-		"name": "Bedroll",
+		"name": "alchemist's supplies",
+		"source": {
+			"book": "AG",
+			"page": 348
+		},
+		"weight": 8,
+		"price": 50,
+		"type": "tool",
+		"toolType": "artisan's tool",
+		"genericTrade": {
+			"material": {
+				"amount": 10,
+				"name": "alchemical ingridients"
+			},
+			"time": {
+				"amount": 8,
+				"unit": "hours"
+			},
+			"profit": [15, 20, 30]
+		}
+	},
+	{
+		"name": "brewer's supplies",
+		"source": {
+			"book": "AG",
+			"page": 348
+		},
+		"weight": 9,
+		"price": 20,
+		"type": "tool",
+		"toolType": "artisan's tool",
+		"genericTrade": {
+			"material": {
+				"amount": 0.05,
+				"name": "malt, hops, and yeat"
+			},
+			"time": {
+				"amount": 8,
+				"unit": "hours",
+				"additional": "2 week delay"
+			},
+			"profit": [2, 5, 20]
+		}
+	},
+	{
+		"name": "smith's tools",
 		"description": "These hammers and clamps are a poor replacement for a full forge but can be for repairing metal items. With 1 hour of work you can use smith's tools to mend many weapons and armors. The DC of a smith's tools check is determined by the material being worked (pages 322-323).",
 		"source": {
 			"book": "AG",

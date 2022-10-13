@@ -1,11 +1,11 @@
 import { stubFalse } from 'lodash';
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
-import { armorProficiencySchema, Equipment, toolProficiencySchema, weaponProficiencySchema } from './equipment';
+import { armorProficiencySchema, toolProficiencySchema, weaponProficiencySchema } from './equipment';
 import { featureSchema } from './feature';
 import { attributeReferenceSchema, dieSizeSchema } from './general';
 import { createProficiencyChoiceSchema } from './proficiency';
-import { Skill, skillProficiencySchema } from './skills';
+import { skillProficiencySchema } from './skills';
 import { descriptionSchema, findReferencedElement, parse, referenceSchema } from './util';
 
 export type ClassName = Opaque<string, 'class'>;
@@ -39,11 +39,7 @@ export const classReferenceSchema = referenceSchema.map((refObject) => ({
 }));
 export type ClassReference = Infer<typeof classReferenceSchema>;
 
-export function parseClasses(
-	classes: ReadonlyArray<unknown>,
-	parsedEquipment: ReadonlyDeep<Equipment>,
-	parsedSkills: ReadonlyArray<Skill>,
-) {
+export function parseClasses(classes: ReadonlyArray<unknown>) {
 	return parse({
 		schema: classSchema,
 		data: classes,

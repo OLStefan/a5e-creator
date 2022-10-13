@@ -10,9 +10,10 @@
 		"test": "jest --",
 		"test:watch": "yarn test --watch",
 		"check:types": "tsc --noEmit",
-		"check:style": "prettier --write ./src",
+		"check:style": "prettier --check ./src",
 		"check:lint": "eslint . --ext .tsx --ext .ts",
 		"check:all": "yarn check:types && yarn check:style && yarn check:lint && yarn test",
+		"fix:style": "prettier --write ./src",
 		"parse:data-files": "yarn test 'src/data/schemas/'"
 	},
 	"browserslist": "> 0.5%, last 2 versions, not dead",

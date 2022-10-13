@@ -14,5 +14,20 @@
 		"ac": {
 			"base": 13
 		}
+	},
+	{
+		"name": "medium shield",
+		"description": "Medium shields increase your Armor Class by 2.",
+		"source": {
+			"book": "AG",
+			"page": 317
+		},
+		"weight": 8,
+		"price": 20,
+		"type": "armor",
+		"defaultMaterial": { "ref": "steel" },
+		"armorType": "shield",
+		"shieldType": "medium",
+		"ac": 2
 	}
 ]

@@ -1,7 +1,6 @@
 [
 	{
-		"name": "Longsword",
-		"description": "",
+		"name": "longsword",
 		"source": {
 			"book": "AG",
 			"page": 310
@@ -22,6 +21,38 @@
 				"additional": {
 					"shieldSize": "medium"
 				}
+			}
+		]
+	},
+	{
+		"name": "longbow",
+		"source": {
+			"book": "AG",
+			"page": 311
+		},
+		"weight": 2,
+		"price": 50,
+		"type": "weapon",
+		"proficiency": "martial",
+		"weaponType": "ranged",
+		"damage": {
+			"die": "d8",
+			"damageType": "piercing"
+		},
+		"defaultMaterial": { "ref": "wood" },
+		"properties": [
+			{
+				"ref": "heavy"
+			},
+			{
+				"ref": "range",
+				"additional": {
+					"normal": 150,
+					"long": 600
+				}
+			},
+			{
+				"ref": "two handed"
 			}
 		]
 	}
