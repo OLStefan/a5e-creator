@@ -7,20 +7,38 @@ on:
     branches: ['main']
 
 jobs:
+  checkout:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile    
+        
+  static:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    needs: checkout
+
+    steps:
+      - name: Static Checks    
+        run: yarn check:all
+        
   build-and-deploy:
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
+    needs: static
 
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
+      - name: Build   
+        run: yarn build
 
-      - name: Install and Build 🔧
-        run: |
-          yarn install --frozen-lockfile
-          yarn build
-
-      - name: Deploy 🚀
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
+          token: ${{ secrets.GITHUB_TOKEN }}
