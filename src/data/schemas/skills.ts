@@ -21,10 +21,7 @@ export const skillReferenceSchema = referenceSchema.map((refObject) => ({
 }));
 export type SkillReference = Infer<typeof skillReferenceSchema>;
 
-export const skillProficiencySchema = referenceSchema.map((refObject) => ({
-	...refObject,
-	ref: refObject.ref as SkillName,
-}));
+export const skillProficiencySchema = skillReferenceSchema;
 export type SkillProficiency = Infer<typeof skillProficiencySchema>;
 
 export function parseSkills(skills: ReadonlyDeep<Array<unknown>>) {

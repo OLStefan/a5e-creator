@@ -10,6 +10,8 @@ export enum Attribute {
 	Cha = 'charisma',
 }
 
+export const allAttributeReferences = Object.values(Attribute).map((attr) => ({ ref: attr }));
+
 export const attributeReferenceSchema = referenceSchema.and(myzod.object({ ref: myzod.enum(Attribute) }));
 
 export enum DamageType {

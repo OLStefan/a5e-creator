@@ -7,20 +7,22 @@ import { Description } from './util/description';
 export function createProficiencyChoiceSchema<T extends AnyType>(reference: T, allChoices: Array<Infer<T>>) {
 	return myzod.object({
 		allOf: myzod.array(reference).default([]),
-		choice: myzod.object({
-			options: myzod
-				.literal('all')
-				.or(myzod.array(reference))
-				.default([])
-				.map((options) => {
-					if (isArray(options)) {
-						return options;
-					}
+		choice: myzod
+			.object({
+				options: myzod
+					.literal('all')
+					.or(myzod.array(reference))
+					.default([])
+					.map((options) => {
+						if (isArray(options)) {
+							return options;
+						}
 
-					return allChoices;
-				}),
-			amount: myzod.number({ min: 1 }).default(1),
-		}),
+						return allChoices;
+					}),
+				amount: myzod.number({ min: 1 }).default(1),
+			})
+			.optional(),
 	});
 }
 
@@ -49,7 +51,7 @@ export function verifyProficiencyChoice(
 	descriptions: ReadonlyDeep<Array<Description>>,
 ) {
 	const allOfValid = ref.allOf.every((prof) => verifyProficiency(prof, descriptions));
-	const choicesValid = ref.choice.options.every((prof) => verifyProficiency(prof, descriptions));
+	const choicesValid = ref.choice && ref.choice.options.every((prof) => verifyProficiency(prof, descriptions));
 
 	return allOfValid && choicesValid;
 }

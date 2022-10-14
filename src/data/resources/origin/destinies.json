@@ -1,0 +1,35 @@
+[
+	{
+		"name": "chaos",
+		"description": "Those destined for Chaos don’t live by the rules binding ordinary folk. They with authority and tradition all their lives, either in minor acts of subversion or outright rebellion. Tricksters are rarely mere rulebreakers — their ideology signals change for both the meek and mighty.",
+		"source": {
+			"book": "AG",
+			"page": 97
+		},
+		"inspiration": {
+			"source": {
+				"name": "chaos",
+				"description": "You sow disorder, play tricks, and subvert tradition. You gain inspiration whenever you successfully subvert law and order, so long as it benefits your allies or moves the story forward. \n*Successfully lie to or humiliate an authority figure, commit a punishable crime, indulge in base pleasures to ill-advised extremes.*"
+			},
+			"feature": {
+				"name": "ingenoius doubletalk",
+				"description": "Undaunted by momentary setbacks, you twist conversations in any with an inspired turn of phrase and confusing doubletalk that plays off bold lies and impertinent proposals as jokes, obfuscates or redirects accidentally slipped information, or quells outrage with diffusing flattery. Whenever you or a friendly creature you can hear fails a Deception or a Persuasion check, you can use your reaction to spend your inspiration and undo any consequences of that failed check."
+			}
+		},
+		"fullfillment": {
+			"condition": "You fulfill your destiny of Chaos when you overturn a world or cosmic order. \n*Greatly destabilize a nation or extremely large organization, subvert or trick a deity-level entity, upset the status quo for a vast number of people.*",
+			"feature": {
+				"name": "agent of chaos",
+				"description": "The whims of chaos flow through you and everything you do. Whenever you roll one or more dice to determine the damage of an attack or spell or the random effects of a spell or feature, you may choose to reroll those dice; if you do you must use the new rolls. \nIn addition, you gain the Chaotic alignment and emit a strong chaotic aura for the purposes of any feature, spell, or trait that detects or affects Chaotic creatures."
+			}
+		},
+		"motivations": [
+			{ "name": "Freedom", "description": "Following orders is akin to slavery." },
+			{ "name": "Excitement", "description": "A day of calm is a day wasted." },
+			{ "name": "Exploit", "description": "Life is a game and you plan on cheating." },
+			{ "name": "Fun", "description": "Following orders is akin to slavery." },
+			{ "name": "LiberationLiberation", "description": "Everyone should be free to choose their own path." },
+			{ "name": "Misanthropy", "description": "You want to watch the world burn." }
+		]
+	}
+]

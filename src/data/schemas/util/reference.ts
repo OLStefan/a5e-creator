@@ -17,9 +17,9 @@ export type AdditionalReference = Infer<typeof additionalReferenceSchema>;
 
 export function findReferencedElement<Element extends Description>(
 	ref: ReadonlyDeep<Reference>,
-	parsedWeaponProperties: ReadonlyDeep<Array<Element>>,
+	parsedElements: ReadonlyDeep<Array<Element>>,
 ) {
-	return parsedWeaponProperties.find(({ name }) => name === ref.ref);
+	return parsedElements.find(({ name }) => name === ref.ref);
 }
 
 const additionalInformationRegex = /\$(\w+)/g;

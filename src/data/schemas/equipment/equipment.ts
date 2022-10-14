@@ -93,6 +93,7 @@ export function verifyEquipmentReference(
 ) {
 	const allParsedEquipment = [
 		...parsedData.armors,
+		...parsedData.adventuringGear,
 		...parsedData.equipmentPacks,
 		...parsedData.mounts,
 		...parsedData.tools,

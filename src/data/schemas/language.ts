@@ -25,8 +25,12 @@ export enum Language {
 	Undercommon = 'undercommon',
 }
 
+export const allLanguageProficiencies = Object.values(Language).map((attr) => ({ ref: attr }));
+
 //MAYBE create more in-depth schema and reference
 export const languageSchema = myzod.enum(Language);
 
 export const languageReferenceSchema = referenceSchema.and(myzod.object({ ref: myzod.enum(Language) }));
 export type LanguageReference = Infer<typeof languageReferenceSchema>;
+export const languageProficiencySchema = languageReferenceSchema;
+export type LanguageProficiency = Infer<typeof languageReferenceSchema>;

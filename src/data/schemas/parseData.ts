@@ -6,9 +6,9 @@ import { parseOrigin } from './origin';
 import { parseSkills } from './skills';
 
 export function parseData() {
-	const origin = parseOrigin();
 	const equipment = parseEquipment();
 	const skills = parseSkills(skillsJson);
+	const origin = parseOrigin({ ...equipment, skills });
 	const classes = parseClasses(classesJson, { ...equipment, skills });
 
 	return {
