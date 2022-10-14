@@ -85,11 +85,11 @@ export const toolProficiencySchema = createIndividualProficiencySchema(Object.va
 });
 export type ToolProficiency = Infer<typeof toolProficiencySchema>;
 
-export function parseTools(tools: ReadonlyArray<unknown>) {
+export function parseTools(tools: ReadonlyDeep<Array<unknown>>) {
 	return parse({ schema: anyToolSchema, data: tools });
 }
 
-export function verifyToolReference(ref: ReadonlyDeep<ToolReference>, parsedTools: ReadonlyArray<AnyTool>) {
+export function verifyToolReference(ref: ReadonlyDeep<ToolReference>, parsedTools: ReadonlyDeep<Array<AnyTool>>) {
 	return !!findReferencedElement(ref, parsedTools);
 }
 

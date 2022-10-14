@@ -31,7 +31,7 @@ export const heritageReferenceSchema = referenceSchema.map((refObject) => ({
 }));
 export type HeritageReference = Infer<typeof heritageReferenceSchema>;
 
-export function parseHeritages(heritages: ReadonlyArray<unknown>, parsedCultures: ReadonlyArray<Culture>) {
+export function parseHeritages(heritages: ReadonlyDeep<Array<unknown>>, parsedCultures: ReadonlyDeep<Array<Culture>>) {
 	return parse({
 		schema: heritageSchema,
 		data: heritages,
@@ -44,7 +44,7 @@ export function parseHeritages(heritages: ReadonlyArray<unknown>, parsedCultures
 
 export function verifyHeritageReference(
 	ref: ReadonlyDeep<HeritageReference>,
-	parsedHeritages: ReadonlyArray<Heritage>,
+	parsedHeritages: ReadonlyDeep<Array<Heritage>>,
 ) {
 	return !!findReferencedElement(ref, parsedHeritages);
 }

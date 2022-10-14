@@ -83,9 +83,9 @@ export const weaponProficiencySchema = createIndividualProficiencySchema(Object.
 export type WeaponProficiency = Infer<typeof weaponProficiencySchema>;
 
 export function parseWeapons(
-	weapons: ReadonlyArray<unknown>,
-	parsedWeaponProperties: ReadonlyArray<WeaponProperty>,
-	parsedMaterials: ReadonlyArray<Material>,
+	weapons: ReadonlyDeep<Array<unknown>>,
+	parsedWeaponProperties: ReadonlyDeep<Array<WeaponProperty>>,
+	parsedMaterials: ReadonlyDeep<Array<Material>>,
 ) {
 	return parse({
 		schema: anyWeaponSchema,
@@ -101,8 +101,8 @@ export function parseWeapons(
 
 export function verifyWeaponReference(
 	ref: ReadonlyDeep<WeaponReference>,
-	parsedWeapons: ReadonlyArray<AnyWeapon>,
-	parsedMaterials: ReadonlyArray<Material>,
+	parsedWeapons: ReadonlyDeep<Array<AnyWeapon>>,
+	parsedMaterials: ReadonlyDeep<Array<Material>>,
 ) {
 	const verifiedMaterial = !ref.material || verifyMaterialReference(ref.material, parsedMaterials);
 	return verifiedMaterial && !!findReferencedElement(ref, parsedWeapons);

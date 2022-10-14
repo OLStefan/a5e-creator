@@ -17,13 +17,13 @@ export const mountPropertyReferenceSchema = referenceSchema.map((refObject) => (
 
 export type MountPropertyReference = Infer<typeof mountPropertyReferenceSchema>;
 
-export function parseMountProperties(mountProperties: ReadonlyArray<unknown>) {
+export function parseMountProperties(mountProperties: ReadonlyDeep<Array<unknown>>) {
 	return parse({ schema: mountPropertySchema, data: mountProperties });
 }
 
 export function verifyMountPropertyReference(
 	ref: ReadonlyDeep<MountPropertyReference>,
-	parsedMountProperties: ReadonlyArray<MountProperty>,
+	parsedMountProperties: ReadonlyDeep<Array<MountProperty>>,
 ) {
 	return !!findReferencedElement(ref, parsedMountProperties);
 }

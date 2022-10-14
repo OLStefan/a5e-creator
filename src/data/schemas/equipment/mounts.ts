@@ -26,14 +26,14 @@ export const mountReferenceSchema = equipmentPieceReference
 	}));
 export type MountReference = Infer<typeof mountReferenceSchema>;
 
-export function parseMounts(mounts: ReadonlyArray<unknown>) {
+export function parseMounts(mounts: ReadonlyDeep<Array<unknown>>) {
 	return parse({ schema: mountSchema, data: mounts });
 }
 
 export function verifyMountReference(
 	ref: ReadonlyDeep<MountReference>,
-	parsedMounts: ReadonlyArray<Mount>,
-	parsedMountProperties: ReadonlyArray<MountProperty>,
+	parsedMounts: ReadonlyDeep<Array<Mount>>,
+	parsedMountProperties: ReadonlyDeep<Array<MountProperty>>,
 ) {
 	const verifiedProperty = !ref.property || verifyMountPropertyReference(ref.property, parsedMountProperties);
 	return verifiedProperty && !!findReferencedElement(ref, parsedMounts);

@@ -27,8 +27,8 @@ export const materialReferenceSchema = referenceSchema.map((refObject) => ({
 export type MaterialReference = Infer<typeof materialReferenceSchema>;
 
 export function parseMaterials(
-	materials: ReadonlyArray<unknown>,
-	parsedMaterialProperties: ReadonlyArray<MaterialProperty>,
+	materials: ReadonlyDeep<Array<unknown>>,
+	parsedMaterialProperties: ReadonlyDeep<Array<MaterialProperty>>,
 ) {
 	return parse({
 		schema: materialSchema,
@@ -42,7 +42,7 @@ export function parseMaterials(
 
 export function verifyMaterialReference(
 	ref: ReadonlyDeep<MaterialReference>,
-	parsedMaterials: ReadonlyArray<Material>,
+	parsedMaterials: ReadonlyDeep<Array<Material>>,
 ) {
 	return !!findReferencedElement(ref, parsedMaterials);
 }

@@ -36,7 +36,7 @@ export type IndividualProficiency = Infer<ReturnType<typeof createIndividualProf
 
 export function verifyProficiency<Prof extends IndividualProficiency, Element extends Description>(
 	ref: ReadonlyDeep<Prof>,
-	descriptions: ReadonlyArray<Element>,
+	descriptions: ReadonlyDeep<Array<Element>>,
 ) {
 	if (ref.ref === 'Individual') {
 		return 'name' in ref && !!findReferencedElement({ ref: ref.name }, descriptions);
@@ -46,7 +46,7 @@ export function verifyProficiency<Prof extends IndividualProficiency, Element ex
 
 export function verifyProficiencyChoice(
 	ref: ReadonlyDeep<Infer<ReturnType<typeof createProficiencyChoiceSchema>>>,
-	descriptions: ReadonlyArray<Description>,
+	descriptions: ReadonlyDeep<Array<Description>>,
 ) {
 	const allOfValid = ref.allOf.every((prof) => verifyProficiency(prof, descriptions));
 	const choicesValid = ref.choice.options.every((prof) => verifyProficiency(prof, descriptions));

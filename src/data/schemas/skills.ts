@@ -23,21 +23,16 @@ export type SkillReference = Infer<typeof skillReferenceSchema>;
 
 export const skillProficiencySchema = referenceSchema.map((refObject) => ({
 	...refObject,
-	ref: refObject.ref as SkillName | 'any',
+	ref: refObject.ref as SkillName,
 }));
 export type SkillProficiency = Infer<typeof skillProficiencySchema>;
 
-export function parseSkills(skills: ReadonlyArray<unknown>) {
+export function parseSkills(skills: ReadonlyDeep<Array<unknown>>) {
 	return parse({ schema: skillSchema, data: skills });
 }
 
-export function verifySkillReference(ref: ReadonlyDeep<SkillReference>, parsedSkills: ReadonlyArray<Skill>) {
+export function verifySkillReference(ref: ReadonlyDeep<SkillReference>, parsedSkills: ReadonlyDeep<Array<Skill>>) {
 	return !!findReferencedElement(ref, parsedSkills);
 }
 
-export function verifySkillProficiency(ref: ReadonlyDeep<SkillProficiency>, parsedSkills: ReadonlyArray<Skill>) {
-	if (ref.ref === 'any') {
-		return true;
-	}
-	return verifyProficiency(ref, parsedSkills);
-}
+export const verifySkillProficiency = verifyProficiency<SkillProficiency, Skill>;

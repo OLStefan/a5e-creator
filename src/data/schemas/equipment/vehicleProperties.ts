@@ -1,5 +1,5 @@
 import { Infer } from 'myzod';
-import { Opaque } from 'type-fest';
+import { Opaque, ReadonlyDeep } from 'type-fest';
 import { additionalDescriptionSchema, additionalReferenceSchema, parse, verifyAdditionalReferences } from '../util';
 
 export type VehiclePropertyName = Opaque<string, 'vehicleProperty'>;
@@ -17,7 +17,7 @@ export const vehiclePropertyReferenceSchema = additionalReferenceSchema.map((ref
 
 export type VehiclePropertyReference = Infer<typeof vehiclePropertyReferenceSchema>;
 
-export function parseVehicleProperties(vehicleProperties: ReadonlyArray<unknown>) {
+export function parseVehicleProperties(vehicleProperties: ReadonlyDeep<Array<unknown>>) {
 	return parse({ schema: vehiclePropertySchema, data: vehicleProperties });
 }
 

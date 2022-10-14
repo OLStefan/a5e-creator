@@ -96,13 +96,13 @@ export const adventuringGearReferenceSchema = equipmentPieceReference.map((refOb
 }));
 export type AdventuringGearReference = Infer<typeof adventuringGearReferenceSchema>;
 
-export function parseAdventuringGear(adventuringGear: ReadonlyArray<unknown>) {
+export function parseAdventuringGear(adventuringGear: ReadonlyDeep<Array<unknown>>) {
 	return parse({ schema: anyAdventuringGearSchema, data: adventuringGear });
 }
 
 export function verifyAdventuringGearReference(
 	ref: ReadonlyDeep<AdventuringGearReference>,
-	parsedAdventuringGears: ReadonlyArray<AnyAdventuringGear>,
+	parsedAdventuringGears: ReadonlyDeep<Array<AnyAdventuringGear>>,
 ) {
 	return !!findReferencedElement(ref, parsedAdventuringGears);
 }

@@ -6,7 +6,41 @@
 			"book": "AG",
 			"page": 107
 		},
-		"startingGold": 30,
+		"startingEquipment": {
+			"gold": 30,
+			"equipment": [
+				{
+					"name": "dungeoneer's set",
+					"content": [
+						{
+							"ref": "quarterstaff"
+						},
+						{
+							"ref": "dart",
+							"amount": 10
+						},
+						{
+							"ref": "dungeoneer's pack"
+						}
+					]
+				},
+				{
+					"name": "explorer's set",
+					"content": [
+						{
+							"ref": "shortsword"
+						},
+						{
+							"ref": "dart",
+							"amount": 10
+						},
+						{
+							"ref": "explorer's pack"
+						}
+					]
+				}
+			]
+		},
 		"hitDie": "d8",
 		"proficiencies": {
 			"savingThrows": [{ "ref": "strength" }, { "ref": "dexterity" }],
@@ -15,14 +49,8 @@
 			"tools": {
 				"choice": {
 					"options": [
-						{
-							"ref": "Type",
-							"name": "artisan's tool"
-						},
-						{
-							"ref": "Type",
-							"name": "muscial instrument"
-						}
+						{ "ref": "Type", "name": "artisan's tool" },
+						{ "ref": "Type", "name": "muscial instrument" }
 					]
 				}
 			},
@@ -30,35 +58,37 @@
 				"choice": {
 					"amount": 2,
 					"options": [
-						{
-							"ref": "acrobatics"
-						},
-						{
-							"ref": "athletics"
-						},
-						{
-							"ref": "history"
-						},
-						{
-							"ref": "insight"
-						},
-						{
-							"ref": "perception"
-						},
-						{
-							"ref": "religion"
-						},
-						{
-							"ref": "stealth"
-						}
+						{ "ref": "acrobatics" },
+						{ "ref": "athletics" },
+						{ "ref": "history" },
+						{ "ref": "insight" },
+						{ "ref": "perception" },
+						{ "ref": "religion" },
+						{ "ref": "stealth" }
 					]
 				}
 			}
 		},
-		"features": {},
-		"subclasses": {
-			"level": 3,
-			"options": []
-		}
+		"features": {
+			"1": [
+				{
+					"name": "adroid defense",
+					"description": "At 1st level, you learn special defensive techniques. Choose one of the following options. \n**Agile Defense.** While you are wearing no armor and not wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier. \n**Brutal Defense** You are proficient with light armor. While you are wearing light armor, you replace your Dexterity modifier with your Strength modifier for AC. If you know the Adept Speed practiced technique or any other that has it as a requirement, you can use them while wearing light armor.",
+					"source": {
+						"book": "AG",
+						"page": 108
+					}
+				},
+				{
+					"name": "martial arts",
+					"description": "At 1st level, your trail to perfection gives you mastery of combat styles that use unarmed strikes and adept weapons, which are quarterstaffs, punching daggers, shortswords, and any simple melee weapons that don't have the two-handed or heavy property. \nYou gain the following benefits while you are unarmed or wielding only adept weapons and you aren't wielding a shield:\n* You can use Dexterity instead of Strength for the attack and damage rolls of your unarmed strikes and adept weapons.\n* You can roll a d4 in place of the normal damage of your unarmed strike or adept weapon. This die changes as you gain adept levels, as shown in the Martial Arts column of the Adept table.\n* When you use the Attack action with an unarmed strike or an adept weapon on your turn, you can make one unarmed strike as a bonus action. For example, if you take the Attack action and attack with a quarterstaff, you can also make an unarmed strike as a bonus action, assuming you haven't already taken a bonus action this turn.",
+					"source": {
+						"book": "AG",
+						"page": 108
+					}
+				}
+			]
+		},
+		"subclasses": { "level": 3, "options": [] }
 	}
 ]

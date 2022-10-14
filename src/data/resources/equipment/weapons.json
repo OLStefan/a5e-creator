@@ -25,6 +25,65 @@
 		]
 	},
 	{
+		"name": "shortsword",
+		"source": {
+			"book": "AG",
+			"page": 310
+		},
+		"weight": 2,
+		"price": 10,
+		"type": "weapon",
+		"proficiency": "martial",
+		"weaponType": "melee",
+		"damage": {
+			"die": "d6",
+			"damageType": "slashing"
+		},
+		"defaultMaterial": { "ref": "steel" },
+		"properties": [
+			{
+				"ref": "defensive",
+				"additional": {
+					"shieldSize": "medium"
+				}
+			},
+			{
+				"ref": "finesse"
+			},
+			{
+				"ref": "parrying"
+			}
+		]
+	},
+	{
+		"name": "quarterstaff",
+		"source": {
+			"book": "AG",
+			"page": 310
+		},
+		"weight": 4,
+		"price": 0.2,
+		"type": "weapon",
+		"proficiency": "martial",
+		"weaponType": "melee",
+		"damage": {
+			"die": "d6",
+			"damageType": "bludgeoning"
+		},
+		"defaultMaterial": { "ref": "wood" },
+		"properties": [
+			{
+				"ref": "parrying"
+			},
+			{
+				"ref": "simple"
+			},
+			{
+				"ref": "two handed"
+			}
+		]
+	},
+	{
 		"name": "longbow",
 		"source": {
 			"book": "AG",
@@ -53,6 +112,32 @@
 			},
 			{
 				"ref": "two handed"
+			}
+		]
+	},
+	{
+		"name": "dart",
+		"source": {
+			"book": "AG",
+			"page": 311
+		},
+		"weight": 2,
+		"price": 50,
+		"type": "weapon",
+		"proficiency": "martial",
+		"weaponType": "ranged",
+		"damage": {
+			"die": "d4",
+			"damageType": "piercing"
+		},
+		"defaultMaterial": { "ref": "steel" },
+		"properties": [
+			{
+				"ref": "range",
+				"additional": {
+					"normal": 20,
+					"long": 60
+				}
 			}
 		]
 	}

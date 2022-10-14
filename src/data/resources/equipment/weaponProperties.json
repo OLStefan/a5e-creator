@@ -9,11 +9,27 @@
 		"additionalString": " ($shieldSize)"
 	},
 	{
+		"name": "finesse",
+		"description": "You may choose to use your Dexterity modifier for attack and damage rolls made with this weapon.",
+		"source": {
+			"book": "AG",
+			"page": 312
+		}
+	},
+	{
 		"name": "heavy",
 		"description": "This weapon is too large for Small creatures to use effectively. Small creatures have disadvantage on attack rolls with heavy weapons.",
 		"source": {
 			"book": "AG",
-			"page": 312
+			"page": 313
+		}
+	},
+	{
+		"name": "parrying",
+		"description": "When you are wielding this weapon and you are not using a shield, once before your next turn you can gain an expertise die to your AC against a single melee attack made against you by a creature you can see. You cannot use this property while incapacitated, paralyzed, rattled, restrained, or stunned.",
+		"source": {
+			"book": "AG",
+			"page": 313
 		}
 	},
 	{
@@ -21,16 +37,24 @@
 		"description": "This weapon fires ammunition. The range lists two numbers after it, both measured in feet — the first is the weapon's normal range, and the second is the weapon's maximum range. You have disadvantage on attack rolls made beyond the weapon's normal range, and you cannot make attacks against targets beyond the weapon's maximum range.",
 		"source": {
 			"book": "AG",
-			"page": 312
+			"page": 313
 		},
 		"additionalString": " ($normal / $long)"
+	},
+	{
+		"name": "simple",
+		"description": "This weapon can be used with very little skill or training, and all creatures gain proficiency with it.",
+		"source": {
+			"book": "AG",
+			"page": 313
+		}
 	},
 	{
 		"name": "two handed",
 		"description": "You must use two hands to wield this weapon.",
 		"source": {
 			"book": "AG",
-			"page": 312
+			"page": 313
 		}
 	}
 ]

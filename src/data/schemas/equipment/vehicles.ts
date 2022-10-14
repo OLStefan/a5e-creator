@@ -53,9 +53,9 @@ export const vehicleProficiencySchema = createIndividualProficiencySchema(Object
 export type VehicleProficiency = Infer<typeof vehicleProficiencySchema>;
 
 export function parseVehicles(
-	vehicles: ReadonlyArray<unknown>,
-	parsedVehicleProperties: ReadonlyArray<VehicleProperty>,
-	parsedMaterials: ReadonlyArray<Material>,
+	vehicles: ReadonlyDeep<Array<unknown>>,
+	parsedVehicleProperties: ReadonlyDeep<Array<VehicleProperty>>,
+	parsedMaterials: ReadonlyDeep<Array<Material>>,
 ) {
 	return parse({
 		schema: vehicleSchema,
@@ -71,8 +71,8 @@ export function parseVehicles(
 
 export function verifyVehicleReference(
 	ref: ReadonlyDeep<VehicleReference>,
-	parsedVehicles: ReadonlyArray<Vehicle>,
-	parsedMaterials: ReadonlyArray<Material>,
+	parsedVehicles: ReadonlyDeep<Array<Vehicle>>,
+	parsedMaterials: ReadonlyDeep<Array<Material>>,
 ) {
 	const verifiedMaterial = !ref.material || verifyMaterialReference(ref.material, parsedMaterials);
 	return verifiedMaterial && !!findReferencedElement(ref, parsedVehicles);

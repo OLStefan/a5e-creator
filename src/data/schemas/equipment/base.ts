@@ -10,6 +10,7 @@ export enum EquipmentType {
 	Vehicle = 'vehicle',
 	TradeGoos = 'trade good',
 	LifestyleExpense = 'lifestyle expense',
+	EquipmentPack = 'equipment pack',
 }
 
 export enum EquipmentQuality {
@@ -30,6 +31,7 @@ export type EquipmentPiece = Infer<typeof equipmentPieceSchema>;
 export const equipmentPieceReference = referenceSchema.and(
 	myzod.object({
 		quality: myzod.enum(EquipmentQuality).default(EquipmentQuality.Normal),
+		amount: myzod.number({ min: 1 }).default(1),
 	}),
 );
 export type EquipmentPieceReference = Infer<typeof equipmentPieceReference>;

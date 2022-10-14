@@ -22,10 +22,13 @@ export const cultureReferenceSchema = referenceSchema.map((refObject) => ({
 }));
 export type CultureReference = Infer<typeof cultureReferenceSchema>;
 
-export function parseCultures(cultures: ReadonlyArray<unknown>) {
+export function parseCultures(cultures: ReadonlyDeep<Array<unknown>>) {
 	return parse({ schema: cultureSchema, data: cultures });
 }
 
-export function verifyCultureReference(ref: ReadonlyDeep<CultureReference>, parsedCultures: ReadonlyArray<Culture>) {
+export function verifyCultureReference(
+	ref: ReadonlyDeep<CultureReference>,
+	parsedCultures: ReadonlyDeep<Array<Culture>>,
+) {
 	return !!findReferencedElement(ref, parsedCultures);
 }

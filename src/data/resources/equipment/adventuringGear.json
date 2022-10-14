@@ -11,7 +11,7 @@
 		"gearType": "medicinal"
 	},
 	{
-		"name": "Amulet",
+		"name": "amulet",
 		"source": {
 			"book": "AG",
 			"page": 327
@@ -47,6 +47,29 @@
 		"gearType": "survival gear"
 	},
 	{
+		"name": "supply",
+		"description": "Basic rations include food and water, typically costing 5 silver for 1 Supply. At the Narrator’s discretion, food and water may cost more or less than this, especially if an adventurer is choosing to foodstuffs or in a locale where resources are scarce.",
+		"source": {
+			"book": "AG",
+			"page": 329
+		},
+		"price": 0.5,
+		"type": "adventuring gear",
+		"gearType": "survival gear"
+	},
+	{
+		"name": "torch",
+		"description": "A torch burns for 1 hour, providing bright light in a 20-foot radius and dim light for an additional 20 feet. When you use a burning torch as a club to make a melee attack, it deals an extra 1 fire damage on a hit.",
+		"source": {
+			"book": "AG",
+			"page": 329
+		},
+		"weight": 1,
+		"price": 0.01,
+		"type": "adventuring gear",
+		"gearType": "survival gear"
+	},
+	{
 		"name": "backpack",
 		"description": "You can also strap items, such as a bedroll or a coil of rope, to the outside of a backpack.",
 		"source": {
@@ -60,6 +83,18 @@
 		"capacity": "30 pounds of gear or 1 cubic foot"
 	},
 	{
+		"name": "waterskin",
+		"source": {
+			"book": "AG",
+			"page": 331
+		},
+		"weight": 0.5,
+		"price": 0.2,
+		"type": "adventuring gear",
+		"gearType": "container",
+		"capacity": "4 pints liquid"
+	},
+	{
 		"name": "abacus",
 		"source": {
 			"book": "AG",
@@ -67,6 +102,82 @@
 		},
 		"weight": 2,
 		"price": 2,
+		"type": "adventuring gear",
+		"gearType": "miscellaneous gear"
+	},
+	{
+		"name": "crowbar",
+		"source": {
+			"book": "AG",
+			"page": 332
+		},
+		"weight": 5,
+		"price": 2,
+		"type": "adventuring gear",
+		"gearType": "miscellaneous gear"
+	},
+	{
+		"name": "hammer",
+		"source": {
+			"book": "AG",
+			"page": 332
+		},
+		"weight": 3,
+		"price": 1,
+		"type": "adventuring gear",
+		"gearType": "miscellaneous gear"
+	},
+	{
+		"name": "mess tin",
+		"source": {
+			"book": "AG",
+			"page": 333
+		},
+		"weight": 1,
+		"price": 0.1,
+		"type": "adventuring gear",
+		"gearType": "miscellaneous gear"
+	},
+	{
+		"name": "rope, hempen (50 feet)",
+		"source": {
+			"book": "AG",
+			"page": 333
+		},
+		"weight": 10,
+		"price": 1,
+		"type": "adventuring gear",
+		"gearType": "miscellaneous gear"
+	},
+	{
+		"name": "piton",
+		"source": {
+			"book": "AG",
+			"page": 333
+		},
+		"weight": 0.25,
+		"price": 0.05,
+		"type": "adventuring gear",
+		"gearType": "miscellaneous gear"
+	},
+	{
+		"name": "tinderbox",
+		"source": {
+			"book": "AG",
+			"page": 333
+		},
+		"weight": 1,
+		"price": 0.5,
+		"type": "adventuring gear",
+		"gearType": "miscellaneous gear"
+	},
+	{
+		"name": "string (10 feet)",
+		"source": {
+			"book": "AG",
+			"page": 333
+		},
+		"price": 0.1,
 		"type": "adventuring gear",
 		"gearType": "miscellaneous gear"
 	}

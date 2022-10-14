@@ -22,13 +22,13 @@ export const backgroundReferenceSchema = referenceSchema.map((refObject) => ({
 }));
 export type BackgroundReference = Infer<typeof backgroundReferenceSchema>;
 
-export function parseBackgrounds(backgrounds: ReadonlyArray<unknown>) {
+export function parseBackgrounds(backgrounds: ReadonlyDeep<Array<unknown>>) {
 	return parse({ schema: backgroundSchema, data: backgrounds });
 }
 
 export function verifyBackgroundReference(
 	ref: ReadonlyDeep<BackgroundReference>,
-	parsedbackgrounds: ReadonlyArray<Background>,
+	parsedbackgrounds: ReadonlyDeep<Array<Background>>,
 ) {
 	return !!findReferencedElement(ref, parsedbackgrounds);
 }
