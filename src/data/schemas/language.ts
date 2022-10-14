@@ -27,7 +27,6 @@ export enum Language {
 
 export const allLanguageProficiencies = Object.values(Language).map((attr) => ({ ref: attr }));
 
-//MAYBE create more in-depth schema and reference
 export const languageSchema = myzod.enum(Language);
 
 export const languageReferenceSchema = referenceSchema.and(myzod.object({ ref: myzod.enum(Language) }));

@@ -1,6 +1,7 @@
 import { isString } from 'lodash';
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
+import { allAttributeReferences, attributeReferenceSchema } from '../attributes';
 import {
 	anyEquipmentReferenceSchema,
 	AnyTool,
@@ -9,7 +10,6 @@ import {
 	toolProficiencySchema,
 	verifyEquipmentReference,
 } from '../equipment';
-import { allAttributeReferences, attributeReferenceSchema } from '../general';
 import { allLanguageProficiencies, languageProficiencySchema } from '../language';
 import { createProficiencyChoiceSchema } from '../proficiency';
 import { Skill, SkillProficiency, skillProficiencySchema } from '../skills';

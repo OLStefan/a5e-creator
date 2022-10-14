@@ -1,5 +1,6 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
+import { attributeReferenceSchema } from './attributes';
 import {
 	anyEquipmentReferenceSchema,
 	AnyTool,
@@ -13,7 +14,7 @@ import {
 	weaponProficiencySchema,
 } from './equipment';
 import { featureSetSchema } from './feature';
-import { attributeReferenceSchema, dieSizeSchema } from './general';
+import { dieSizeSchema } from './general';
 import { createProficiencyChoiceSchema, verifyProficiencyChoice } from './proficiency';
 import { Skill, SkillProficiency, skillProficiencySchema } from './skills';
 import { descriptionSchema, findReferencedElement, parse, referenceSchema } from './util';
