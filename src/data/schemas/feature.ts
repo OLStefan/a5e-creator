@@ -1,7 +1,8 @@
 import myzod, { Infer } from 'myzod';
+import { descriptionSchema } from './util';
 
 // TODO
-export const featureSchema = myzod.object({});
+export const featureSchema = descriptionSchema.and(myzod.object({}));
 export type Feature = Infer<typeof featureSchema>;
 
 export const featureSetSchema = myzod.object({});

@@ -1,7 +1,7 @@
 import myzod, { Infer } from 'myzod';
 import { Opaque, ReadonlyDeep } from 'type-fest';
 import { featureSchema } from '../feature';
-import { languageSchema } from '../language';
+import { languageReferenceSchema } from '../language';
 import { descriptionSchema, findReferencedElement, parse, referenceSchema } from '../util';
 
 export type CultureName = Opaque<string, 'culture'>;
@@ -10,7 +10,7 @@ const cultureSchema = descriptionSchema
 	.and(
 		myzod.object({
 			features: myzod.array(featureSchema),
-			languages: myzod.array(languageSchema),
+			languages: myzod.array(languageReferenceSchema),
 		}),
 	)
 	.map((desc) => ({ ...desc, name: desc.name as CultureName }));

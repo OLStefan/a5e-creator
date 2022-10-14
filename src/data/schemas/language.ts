@@ -1,4 +1,5 @@
-import myzod from 'myzod';
+import myzod, { Infer } from 'myzod';
+import { referenceSchema } from './util';
 
 export enum Language {
 	Abyssal = 'abyssal',
@@ -26,3 +27,6 @@ export enum Language {
 
 //MAYBE create more in-depth schema and reference
 export const languageSchema = myzod.enum(Language);
+
+export const languageReferenceSchema = referenceSchema.and(myzod.object({ ref: myzod.enum(Language) }));
+export type LanguageReference = Infer<typeof languageReferenceSchema>;

@@ -1,1 +1,43 @@
-[]
+[
+	{
+		"name": "dragonbound",
+		"description": "Dragonbound clans live under the direct rule of a dragon; in the case of dragonborn characters, that dragon will usually be their progenitor dragon. Whether that dragon is malevolent or benign, the clan exists to serve it. Living under a kind and wise dragon can be a safe and joyful upbringing, though one of strict control. Life under a cruel dragon can be fraught with the uncertainty of survival, scrounging off what a dragonic overlord deems a servant worthy of. Dragonbound living can often be comfortable or even enjoyable, but it is not living for oneself. Whether their chains are literal or metaphorical, dragonbound live at their master's whims. Thankfully those whims often involve directives and missions that range far and wide, endeavors that expose dragonbound to countless viewpoints and quite often plant the seeds of sedition.  \nCharacters raised in the dragonbound culture share a variety of traits in common with one another.",
+		"source": { "book": "AG", "page": 51 },
+		"features": [
+			{
+				"name": "draconic diplomacy",
+				"description": "You've been well trained in the sometimes difficult art of draconic etiquette and protocols. You gain an expertise die on Charisma checks made to influence dragon creatures.",
+				"source": { "book": "AG", "page": 51 }
+			},
+			{
+				"name": "dragonbound teachings",
+				"description": "You know one cantrip of your choice from the cleric or wizard spell lists. Your spellcasting ability for this cantrip is Intelligence or Wisdom (whichever is highest).",
+				"source": { "book": "AG", "page": 51 }
+			},
+			{
+				"name": "progenitor's boon",
+				"description": "Members of dragonbound clans overseen by their progenitors usually enjoy the benefits of their progenitor's boon. Choose one of the following:  \n**Chromatic Dragon's Boon:** Chromatic dragons raise their warriors to shock and terrify their enemies. You can cast fear without the need for material components once per long rest. Until you reach 5th level, the area of this casting of the spell is limited to a 15-foot cone. Your spellcasting ability for this spell is Charisma.  \n**Essence Dragon's Boon:** Essence Dragons ensure that their guardians can easily commune with the land and the spirits within. You know the druidcraft cantrip. In addition, your diplomatic understanding extends towards the creatures of the land and the spirits within it. You gain an expertise die on Charisma checks made to influence beast and celestial creatures.  \n**Gem Dragon's Boon:** Gem dragons ensure their agents' missions go undetected by bestowing upon them subterfuge magic. You know the message cantrip. Once you reach 3rd level, you can cast illusory script once per long rest. At 5th level, you can cast invisibility once per long rest. You don' t need material components for these spells, and when casting them your spell- casting ability is Intelligence or Charisma (whichever is highest).  \n**Metallic Dragon's Boon:** Metallic dragons let their pupils study vast repositories of knowledge. Choose a skill from among Arcana, History, Medicine, Nature, or Religion. You have proficiency in the chosen skill and you gain an expertise die on ability checks you make using it.",
+				"source": { "book": "AG", "page": 51 }
+			}
+		],
+		"languages": [{ "ref": "common" }, { "ref": "draconic" }]
+	},
+	{
+		"name": "dragoncult",
+		"description": "Dragon cults exist in most major cities, hidden deep within forgotten cellars or ancient crumbling ruins, plotting their draconic overlord’s return to power. The life of a dragon cultist is often filled with hushed conversations in darkened rooms, acquisitions of “sacrifices”, and the ever present tantalizing promise of a taste of their dragon god’s power. Dragon cultists often live entirely mundane lives by day, only to shuffle down some darkened stair to their “true lives” down below.  \nCharacters raised in the dragon cultist culture share a variety of traits in common with one another.",
+		"source": { "book": "AG", "page": 52 },
+		"features": [
+			{
+				"name": "draconic umbra",
+				"description": "Dragon cultists are often blessed with power from the object of their devotion so that they may spread their dragon's word or further its plans. As a bonus action, you can cause draconic power to course around you in a draconic umbra. This draconic umbra lasts for 1 minute or until you use a bonus action to end it. Once you have used this trait, you cannot use it again until after you finish a long rest. Choose one of the following effects:  \n**Damaging Umbra:** Common amongst the chromatic dragons, this umbra burns with draconic power. Once on each of your turns while this umbra is active, you can deal extra damage of the type dealt by your Dragon Breath to one target when you deal damage to it with an attack or a spell. The extra damage equals half your level (minimum 1). If you are not dragonborn, choose the damage type dealt by your umbra from those available in the Dragon Breath trait (page 27).  \n**Ethereal Umbra:** Common amongst the essence dragons, this umbra shimmers with draconic will. While this umbra is active you can move through nonmagical solid objects and occupied spaces as if they were difficult terrain. Opportunity attacks made against you while this umbra is active have disadvantage. You cannot move further than 5 feet into walls or other solid objects in this way. If you would end your turn in an occupied space, you are shunted into the nearest unoccupied space and take 1d6 force damage.  \n**Spiritual Umbra:** Common amongst the gem dragons, this umbra shifts with draconic cunning. While this umbra is active you gain an expertise die on Stealth checks, and once on each of your turns you may alter your appearance (as the disguise self spell). When your umbra ends, so do any illusions conjured by it.  \n **Protective Umbra:** Common amongst the metallic dragons, this umbra sparks with draconic ingenuity. While this umbra is active you gain resistance to the damage type dealt by your Dragon Breath (if you already had resistance to that damage type, you gain immunity instead), and you gain an expertise die on Wisdom or Intelligence checks. If you are not dragonborn, choose the damage type for your umbra from those available in the Dragon Breath trait (page 27).",
+				"source": { "book": "AG", "page": 53 }
+			},
+			{
+				"name": "secrets of the wyrm",
+				"description": "Draconic cults require diverse skill sets and the utmost secrecy. Choose two skills from among Arcana, Deception, Persuasion, Religion, or Stealth. You have proficiency in the chosen skills.",
+				"source": { "book": "AG", "page": 53 }
+			}
+		],
+		"languages": [{ "ref": "common" }, { "ref": "draconic" }]
+	}
+]

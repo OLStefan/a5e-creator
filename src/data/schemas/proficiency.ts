@@ -1,12 +1,26 @@
+import { isArray } from 'lodash';
 import myzod, { AnyType, Infer } from 'myzod';
 import { ReadonlyDeep } from 'type-fest';
 import { findReferencedElement, referenceSchema } from './util';
 import { Description } from './util/description';
 
-export function createProficiencyChoiceSchema<T extends AnyType>(reference: T) {
+export function createProficiencyChoiceSchema<T extends AnyType>(reference: T, allChoices: Array<Infer<T>>) {
 	return myzod.object({
 		allOf: myzod.array(reference).default([]),
-		choice: myzod.object({ options: myzod.array(reference).default([]), amount: myzod.number().default(1) }),
+		choice: myzod.object({
+			options: myzod
+				.literal('all')
+				.or(myzod.array(reference))
+				.default([])
+				.map((options) => {
+					if (isArray(options)) {
+						return options;
+					}
+
+					return allChoices;
+				}),
+			amount: myzod.number({ min: 1 }).default(1),
+		}),
 	});
 }
 
@@ -18,7 +32,7 @@ export function createIndividualProficiencySchema<Category extends string>(categ
 			.or(myzod.object({ ref: myzod.literal('Type'), name: myzod.literals(...categories) })),
 	);
 }
-type IndividualProficiency = Infer<ReturnType<typeof createIndividualProficiencySchema>>;
+export type IndividualProficiency = Infer<ReturnType<typeof createIndividualProficiencySchema>>;
 
 export function verifyProficiency<Prof extends IndividualProficiency, Element extends Description>(
 	ref: ReadonlyDeep<Prof>,
@@ -34,8 +48,8 @@ export function verifyProficiencyChoice(
 	ref: ReadonlyDeep<Infer<ReturnType<typeof createProficiencyChoiceSchema>>>,
 	descriptions: ReadonlyArray<Description>,
 ) {
-	return (
-		ref.allOf.every((prof) => verifyProficiency(prof, descriptions)) &&
-		ref.choice.options.every((prof) => verifyProficiency(prof, descriptions))
-	);
+	const allOfValid = ref.allOf.every((prof) => verifyProficiency(prof, descriptions));
+	const choicesValid = ref.choice.options.every((prof) => verifyProficiency(prof, descriptions));
+
+	return allOfValid && choicesValid;
 }

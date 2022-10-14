@@ -9,11 +9,11 @@ import {
 	verifyWeaponProficiency,
 	weaponProficiencySchema,
 } from './equipment';
-import { AnyTool } from './equipment/tools';
+import { AnyTool, ToolProficiency } from './equipment/tools';
 import { featureSetSchema } from './feature';
 import { attributeReferenceSchema, dieSizeSchema } from './general';
 import { createProficiencyChoiceSchema, verifyProficiencyChoice } from './proficiency';
-import { Skill, skillProficiencySchema } from './skills';
+import { Skill, SkillProficiency, skillProficiencySchema } from './skills';
 import { descriptionSchema, findReferencedElement, parse, referenceSchema } from './util';
 
 export type ClassName = Opaque<string, 'class'>;
@@ -21,25 +21,30 @@ export type SubClassName = Opaque<string, 'subclass'>;
 
 const subclassSchema = descriptionSchema.and(featureSetSchema);
 
-const classSchema = descriptionSchema.and(
-	myzod.object({
-		startingGold: myzod.number(),
-		hitDie: dieSizeSchema,
-		proficiencies: myzod.object({
-			savingThrows: myzod.array(attributeReferenceSchema),
-			armors: myzod.array(armorProficiencySchema),
-			weapons: myzod.array(weaponProficiencySchema),
-			tools: createProficiencyChoiceSchema(toolProficiencySchema),
-			skills: createProficiencyChoiceSchema(skillProficiencySchema),
+function createClassSchema(parsedData: { tools: ReadonlyArray<AnyTool>; skills: ReadonlyArray<Skill> }) {
+	const allToolProficiencies = parsedData.tools.map<ToolProficiency>(({ name }) => ({ ref: 'Individual', name }));
+	const allSkillProficiencies = parsedData.skills.map<SkillProficiency>(({ name }) => ({ ref: name }));
+
+	return descriptionSchema.and(
+		myzod.object({
+			startingGold: myzod.number(),
+			hitDie: dieSizeSchema,
+			proficiencies: myzod.object({
+				savingThrows: myzod.array(attributeReferenceSchema),
+				armors: myzod.array(armorProficiencySchema),
+				weapons: myzod.array(weaponProficiencySchema),
+				tools: createProficiencyChoiceSchema(toolProficiencySchema, allToolProficiencies),
+				skills: createProficiencyChoiceSchema(skillProficiencySchema, allSkillProficiencies),
+			}),
+			features: featureSetSchema,
+			subclasses: myzod.object({
+				level: myzod.number().default(3),
+				options: myzod.array(subclassSchema),
+			}),
 		}),
-		features: featureSetSchema,
-		subclasses: myzod.object({
-			level: myzod.number().default(3),
-			options: myzod.array(subclassSchema),
-		}),
-	}),
-);
-export type Class = Infer<typeof classSchema>;
+	);
+}
+export type Class = Infer<ReturnType<typeof createClassSchema>>;
 
 export const classReferenceSchema = referenceSchema.map((refObject) => ({
 	...refObject,
@@ -57,7 +62,7 @@ export function parseClasses(
 	},
 ) {
 	return parse({
-		schema: classSchema,
+		schema: createClassSchema(parsedData),
 		data: classes,
 		predicate: (parsedClasses) =>
 			parsedClasses.every((aClass) => {

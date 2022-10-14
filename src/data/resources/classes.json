@@ -14,7 +14,6 @@
 			"weapons": [{ "ref": "simple" }],
 			"tools": {
 				"choice": {
-					"amount": 1,
 					"options": [
 						{
 							"ref": "Type",
@@ -33,6 +32,24 @@
 					"options": [
 						{
 							"ref": "acrobatics"
+						},
+						{
+							"ref": "athletics"
+						},
+						{
+							"ref": "history"
+						},
+						{
+							"ref": "insight"
+						},
+						{
+							"ref": "perception"
+						},
+						{
+							"ref": "religion"
+						},
+						{
+							"ref": "stealth"
 						}
 					]
 				}

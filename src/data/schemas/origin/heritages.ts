@@ -17,8 +17,8 @@ const heritageSchema = descriptionSchema
 			}),
 			speed: myzod.number(),
 			baseFeatures: myzod.array(featureSchema),
-			gifts: myzod.array(featureSchema),
-			paragon: myzod.array(featureSchema),
+			gifts: myzod.object({ description: myzod.string(), options: myzod.array(featureSchema) }),
+			paragon: myzod.object({ description: myzod.string(), options: myzod.array(featureSchema) }),
 			suggestedCultures: myzod.array(cultureReferenceSchema),
 		}),
 	)

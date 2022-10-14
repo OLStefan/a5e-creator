@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
 import 'antd/dist/antd.css';
+import './index.css';
+
+import { configureStore } from '@reduxjs/toolkit';
 import { setup } from 'goober';
-import React, { createElement } from 'react';
+import { createElement, StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import './index.css';
+import Markdown from './MarkdownConverter';
 import rootReducer from './redux/rootReducer';
 import isDev from './util/isDev';
 
@@ -16,10 +18,10 @@ const store = configureStore({
 });
 
 ReactDOM.render(
-	<React.StrictMode>
+	<StrictMode>
 		<Provider store={store}>
-			<div>Hallo</div>
+			<Markdown />
 		</Provider>
-	</React.StrictMode>,
+	</StrictMode>,
 	document.getElementById('root'),
 );
