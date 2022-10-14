@@ -57,7 +57,7 @@ const anyArmorSchema = myzod.union([armorSchema, shieldSchema]);
 export type AnyArmor = Infer<typeof anyArmorSchema>;
 
 export const armorReferenceSchema = equipmentPieceReference
-	.and(myzod.object({ material: materialReferenceSchema }))
+	.and(myzod.object({ material: materialReferenceSchema.optional() }))
 	.map((refObject) => ({
 		...refObject,
 		ref: refObject.ref as ArmorName,
@@ -81,7 +81,8 @@ export function verifyArmorReference(
 	parsedArmors: ReadonlyArray<AnyArmor>,
 	parsedMaterials: ReadonlyArray<Material>,
 ) {
-	return !!findReferencedElement(ref, parsedArmors) && verifyMaterialReference(ref.material, parsedMaterials);
+	const verifiedMaterial = !ref.material || verifyMaterialReference(ref.material, parsedMaterials);
+	return verifiedMaterial && !!findReferencedElement(ref, parsedArmors);
 }
 
 export const verifyArmorProficiency = verifyProficiency<ArmorProficiency, AnyArmor>;

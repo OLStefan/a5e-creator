@@ -1,0 +1,17 @@
+[
+	{
+		"name": "carriage",
+		"type": "vehicle",
+		"source": {
+			"book": "AG",
+			"page": 346
+		},
+		"price": 100,
+		"vehicleType": "land",
+		"size": "large",
+		"ac": 15,
+		"speed": "Drawn",
+		"properties": [{ "ref": "drawn" }],
+		"defaultMaterial": { "ref": "wood" }
+	}
+]

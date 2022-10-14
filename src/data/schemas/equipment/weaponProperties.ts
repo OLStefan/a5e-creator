@@ -2,7 +2,7 @@ import { Infer } from 'myzod';
 import { Opaque } from 'type-fest';
 import { additionalDescriptionSchema, additionalReferenceSchema, parse, verifyAdditionalReferences } from '../util';
 
-export type WeaponPropertyName = Opaque<string, 'WeaponProperty'>;
+export type WeaponPropertyName = Opaque<string, 'weaponProperty'>;
 
 export const weaponPropertySchema = additionalDescriptionSchema.map((desc) => ({
 	...desc,

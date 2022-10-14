@@ -67,7 +67,7 @@ const anyWeaponSchema = myzod.union([meleeWeaponSchema, rangedWeaponSchema, spec
 export type AnyWeapon = Infer<typeof anyWeaponSchema>;
 
 export const weaponReferenceSchema = equipmentPieceReference
-	.and(myzod.object({ material: materialReferenceSchema }))
+	.and(myzod.object({ material: materialReferenceSchema.optional() }))
 	.map((refObject) => ({
 		...refObject,
 		ref: refObject.ref as WeaponName,
@@ -104,7 +104,8 @@ export function verifyWeaponReference(
 	parsedWeapons: ReadonlyArray<AnyWeapon>,
 	parsedMaterials: ReadonlyArray<Material>,
 ) {
-	return !!findReferencedElement(ref, parsedWeapons) && verifyMaterialReference(ref.material, parsedMaterials);
+	const verifiedMaterial = !ref.material || verifyMaterialReference(ref.material, parsedMaterials);
+	return verifiedMaterial && !!findReferencedElement(ref, parsedWeapons);
 }
 
 export const verifyWeaponProficiency = verifyProficiency<WeaponProficiency, AnyWeapon>;

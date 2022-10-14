@@ -1,0 +1,14 @@
+[
+	{
+		"name": "riding horse",
+		"source": {
+			"book": "AG",
+			"page": 341
+		},
+		"type": "mount",
+		"price": 50,
+		"speed": 50,
+		"capacity": 480,
+		"strength": 16
+	}
+]

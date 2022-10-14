@@ -1,0 +1,10 @@
+[
+	{
+		"name": "drawn",
+		"description": "A drawn vehicle is pulled by one or more beasts of burden and its movement and travel speeds are determined by the animal (or animals) pulling it.",
+		"source": {
+			"book": "AG",
+			"page": 346
+		}
+	}
+]

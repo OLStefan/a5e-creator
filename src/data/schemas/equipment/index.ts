@@ -13,7 +13,7 @@ export type {
 	OtherAdventuringGear,
 	Poison,
 	SpellcastingFocus,
-	SurvivalGear,
+	SurvivalGear
 } from './adventuringGear';
 export { armorProficiencySchema, ArmorType, ShieldType, verifyArmorProficiency, verifyArmorReference } from './armor';
 export type { AnyArmor, Armor, ArmorName, ArmorProficiency, Shield } from './armor';
@@ -26,6 +26,9 @@ export { parseEquipment } from './parseEquipment';
 export type { Equipment } from './parseEquipment';
 export { toolProficiencySchema, ToolType, verifyToolReference } from './tools';
 export type { AnyTool, ArtisanTool, GamingSet, MusicalInstrument, OtherTool, ToolName } from './tools';
+export type { VehicleProperty, VehiclePropertyName, VehiclePropertyReference } from './vehicleProperties';
+export { vehicleProficiencySchema, VehicleType as VehicleTerrain, verifyVehicleProficiency, verifyVehicleReference } from './vehicles';
+export type { Vehicle, VehicleName, VehicleProficiency } from './vehicles';
 export { verifyWeaponPropertyReference } from './weaponProperties';
 export type { WeaponProperty, WeaponPropertyName, WeaponPropertyReference } from './weaponProperties';
 export {
@@ -33,9 +36,9 @@ export {
 	verifyWeaponReference,
 	WeaponCategory,
 	weaponProficiencySchema,
-	WeaponType,
+	WeaponType
 } from './weapons';
 export type { AnyWeapon, MeleeWeapon, RangedWeapon, SpecialWeapon, WeaponName, WeaponProficiency } from './weapons';
-// TODO: Mounts, Vehicles, Trade Goods, Lifestyle Expense
+// TODO: Trade Goods, Lifestyle Expense
 
 export type AnyEquipment = AnyArmor | AnyTool | AnyWeapon | AnyAdventuringGear;
