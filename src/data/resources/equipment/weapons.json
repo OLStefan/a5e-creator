@@ -14,7 +14,7 @@
 			"die": "d8",
 			"damageType": "slashing"
 		},
-		"defaultMaterial": { "ref": "steel" },
+		"defaultMaterial": "steel",
 		"properties": [
 			{
 				"ref": "defensive",
@@ -39,7 +39,7 @@
 			"die": "d6",
 			"damageType": "slashing"
 		},
-		"defaultMaterial": { "ref": "steel" },
+		"defaultMaterial": "steel",
 		"properties": [
 			{
 				"ref": "defensive",
@@ -70,7 +70,7 @@
 			"die": "d6",
 			"damageType": "bludgeoning"
 		},
-		"defaultMaterial": { "ref": "wood" },
+		"defaultMaterial": "wood",
 		"properties": [
 			{
 				"ref": "parrying"
@@ -98,7 +98,7 @@
 			"die": "d8",
 			"damageType": "piercing"
 		},
-		"defaultMaterial": { "ref": "wood" },
+		"defaultMaterial": "wood",
 		"properties": [
 			{
 				"ref": "heavy"
@@ -130,7 +130,7 @@
 			"die": "d4",
 			"damageType": "piercing"
 		},
-		"defaultMaterial": { "ref": "steel" },
+		"defaultMaterial": "steel",
 		"properties": [
 			{
 				"ref": "range",

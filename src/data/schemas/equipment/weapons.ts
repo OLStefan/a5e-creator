@@ -3,7 +3,7 @@ import { damageDescriptionModel, specialDamageDescriptionModel } from '../genera
 import { createProficiency } from '../util/proficiency';
 import { equipmentPieceModel, equipmentPieceReferenceModel, EquipmentType } from './base';
 import { materialModel } from './material';
-import { weaponPropertyModel } from './weaponProperties';
+import { weaponPropertyReference } from './weaponProperties';
 
 export enum WeaponCategory {
 	Improvised = 'improvised',
@@ -23,7 +23,7 @@ const baseWeaponModel = types.compose(
 	types.model({
 		proficiency: types.enumeration(Object.values(WeaponCategory)),
 		damage: types.union(damageDescriptionModel, specialDamageDescriptionModel),
-		properties: types.array(types.reference(weaponPropertyModel)),
+		properties: types.array(weaponPropertyReference),
 		type: types.literal(EquipmentType.Weapon),
 		weaponType: types.enumeration(Object.values(WeaponType)),
 		defaultMaterial: types.reference(materialModel),

@@ -18,7 +18,7 @@
 				"amount": 8,
 				"unit": "hours"
 			},
-			"profit": [15, 20, 30]
+			"profit": { "easy": 15, "middle": 20, "hard": 30 }
 		}
 	},
 	{
@@ -41,7 +41,7 @@
 				"unit": "hours",
 				"additional": "2 week delay"
 			},
-			"profit": [2, 5, 20]
+			"profit": { "easy": 2, "middle": 5, "hard": 20 }
 		}
 	},
 	{

@@ -9,7 +9,7 @@
 		"weight": 10,
 		"price": 20,
 		"type": "armor",
-		"defaultMaterial": { "ref": "leather" },
+		"defaultMaterial": "leather",
 		"armorType": "light",
 		"ac": {
 			"base": 13
@@ -25,7 +25,7 @@
 		"weight": 8,
 		"price": 20,
 		"type": "armor",
-		"defaultMaterial": { "ref": "steel" },
+		"defaultMaterial": "steel",
 		"armorType": "shield",
 		"shieldType": "medium",
 		"ac": 2

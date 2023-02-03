@@ -49,14 +49,13 @@ const containerModel = types.compose(
 	types.model({
 		gearType: types.literal(AdventuringGearType.Container),
 		capacity: types.string,
-		defaultMaterial: types.reference(materialModel),
+		defaultMaterial: types.maybe(types.reference(materialModel)),
 	}),
 );
 const miscAdventuringGearModel = types.compose(
 	baseAdventuringGearSchema,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Miscellaneous),
-		capacity: types.string,
 		defaultMaterial: types.maybe(types.reference(materialModel)),
 	}),
 );

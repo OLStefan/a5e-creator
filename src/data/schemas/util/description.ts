@@ -27,3 +27,10 @@ export const additionalDescriptionModel = types.compose(
 		additionalString: types.optional(types.string, ''),
 	}),
 );
+
+export function createAdditionalDescriptionReference<T extends typeof additionalDescriptionModel>(model: T) {
+	return types.model({
+		ref: types.reference(model),
+		additional: types.map(types.union(types.string, types.number)),
+	});
+}

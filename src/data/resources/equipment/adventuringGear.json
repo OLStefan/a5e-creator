@@ -20,7 +20,7 @@
 		"price": 5,
 		"type": "adventuring gear",
 		"gearType": "spellcasting focus",
-		"defaultMaterial": { "ref": "steel" }
+		"defaultMaterial": "steel"
 	},
 	{
 		"name": "reliquary",
@@ -32,7 +32,7 @@
 		"price": 5,
 		"type": "adventuring gear",
 		"gearType": "spellcasting focus",
-		"defaultMaterial": { "ref": "steel" }
+		"defaultMaterial": "steel"
 	},
 	{
 		"name": "curare (vial)",

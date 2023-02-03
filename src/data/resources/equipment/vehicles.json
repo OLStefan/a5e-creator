@@ -11,7 +11,7 @@
 		"size": "large",
 		"ac": 15,
 		"speed": "Drawn",
-		"properties": [{ "ref": "drawn" }],
-		"defaultMaterial": { "ref": "wood" }
+		"properties": ["drawn"],
+		"defaultMaterial": "wood"
 	}
 ]

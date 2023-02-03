@@ -26,33 +26,37 @@ import { weaponPropertyModel } from './weaponProperties';
 import { anyWeaponModel } from './weapons';
 
 export const equipmentModel = types.model({
-	adventuringGear: types.array(types.reference(anyAdventuringGearModel)),
-	armors: types.array(types.reference(anyArmorModel)),
-	equipmentPacks: types.array(types.reference(equipmentPackModel)),
-	materialProperties: types.array(types.reference(materialPropertyModel)),
-	materials: types.array(types.reference(materialModel)),
-	mountProperties: types.array(types.reference(mountPropertyModel)),
-	mounts: types.array(types.reference(mountModel)),
-	tools: types.array(types.reference(anyToolModel)),
-	weaponProperties: types.array(types.reference(weaponPropertyModel)),
-	weapons: types.array(types.reference(anyWeaponModel)),
-	vehicleProperties: types.array(types.reference(vehiclePropertyModel)),
-	vehicles: types.array(types.reference(vehicleModel)),
+	adventuringGear: types.array(anyAdventuringGearModel),
+	armors: types.array(anyArmorModel),
+	equipmentPacks: types.array(equipmentPackModel),
+	materialProperties: types.array(materialPropertyModel),
+	materials: types.array(materialModel),
+	mountProperties: types.array(mountPropertyModel),
+	mounts: types.array(mountModel),
+	tools: types.array(anyToolModel),
+	weaponProperties: types.array(weaponPropertyModel),
+	weapons: types.array(anyWeaponModel),
+	vehicleProperties: types.array(vehiclePropertyModel),
+	vehicles: types.array(vehicleModel),
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const object: any = {
+	materials: materialsJson,
+	materialPropertiesJson,
+	adventuringGear: adventuringGearJson,
+	armors: armorsJson,
+	equipmentPacks: equipmentPacksJson,
+	materialProperties: materialPropertiesJson,
+	mountProperties: mountPropertiesJson,
+	mounts: mountsJson,
+	tools: toolsJson,
+	vehicleProperties: vehiclePropertiesJson,
+	vehicles: vehiclesJson,
+	weaponProperties: weaponPropertiesJson,
+	weapons: weaponsJson,
+};
+
 export function parseEquipment() {
-	return equipmentModel.create({
-		adventuringGear: adventuringGearJson,
-		armors: armorsJson,
-		equipmentPacks: equipmentPacksJson,
-		materialProperties: materialPropertiesJson,
-		materials: materialsJson,
-		mountProperties: mountPropertiesJson,
-		mounts: mountsJson,
-		tools: toolsJson,
-		vehicleProperties: vehiclePropertiesJson,
-		vehicles: vehiclesJson,
-		weaponProperties: weaponPropertiesJson,
-		weapons: weaponsJson,
-	} as any);
+	return equipmentModel.create(object);
 }

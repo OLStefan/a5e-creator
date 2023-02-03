@@ -9,6 +9,11 @@ export const equipmentPackModel = types.compose(
 	equipmentPieceModel,
 	types.model({
 		type: types.literal(EquipmentType.EquipmentPack),
-		content: types.array(types.reference(anyAdventuringGearModel)),
+		content: types.array(
+			types.model({
+				gear: types.reference(anyAdventuringGearModel),
+				amount: types.optional(types.integer, 1),
+			}),
+		),
 	}),
 );

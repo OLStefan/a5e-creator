@@ -8,15 +8,15 @@
 		"type": "equipment pack",
 		"price": 12,
 		"content": [
-			{ "ref": "backpack" },
-			{ "ref": "crowbar" },
-			{ "ref": "hammer" },
-			{ "ref": "piton", "amount": 10 },
-			{ "ref": "torch", "amount": 10 },
-			{ "ref": "tinderbox" },
-			{ "ref": "supply", "amount": 10 },
-			{ "ref": "waterskin" },
-			{ "ref": "rope, hempen (50 feet)" }
+			{ "gear": "backpack" },
+			{ "gear": "crowbar" },
+			{ "gear": "hammer" },
+			{ "gear": "piton", "amount": 10 },
+			{ "gear": "torch", "amount": 10 },
+			{ "gear": "tinderbox" },
+			{ "gear": "supply", "amount": 10 },
+			{ "gear": "waterskin" },
+			{ "gear": "rope, hempen (50 feet)" }
 		]
 	},
 	{
@@ -28,14 +28,14 @@
 		"type": "equipment pack",
 		"price": 10,
 		"content": [
-			{ "ref": "backpack" },
-			{ "ref": "bedroll" },
-			{ "ref": "mess tin" },
-			{ "ref": "tinderbox" },
-			{ "ref": "torch", "amount": 10 },
-			{ "ref": "supply", "amount": 10 },
-			{ "ref": "waterskin" },
-			{ "ref": "rope, hempen (50 feet)" }
+			{ "gear": "backpack" },
+			{ "gear": "bedroll" },
+			{ "gear": "mess tin" },
+			{ "gear": "tinderbox" },
+			{ "gear": "torch", "amount": 10 },
+			{ "gear": "supply", "amount": 10 },
+			{ "gear": "waterskin" },
+			{ "gear": "rope, hempen (50 feet)" }
 		]
 	}
 ]
