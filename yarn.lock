@@ -2495,7 +2495,6 @@ __metadata:
     mobx: ^6.7.0
     mobx-react: ^7.6.0
     mobx-state-tree: ^5.1.7
-    myzod: ~1.8.8
     parcel: ~2.8.3
     prettier: ~2.8.3
     process: ~0.11.10
@@ -7018,13 +7017,6 @@ __metadata:
     msgpackr-extract:
       optional: true
   checksum: 156cf8938667c3a191feedaed05c8a2d7c95b53d0834c32928e849a2bd93292e4eba33e3601c79cc4cc79023161d658e91472f1719d0d5c63fb1d0f2b142fa07
-  languageName: node
-  linkType: hard
-
-"myzod@npm:~1.8.8":
-  version: 1.8.8
-  resolution: "myzod@npm:1.8.8"
-  checksum: 4a5b4d41e64b0df68fb113350796cd17753adaa6faf8f139cffcecdba7aa80e16e7c9343f5f6f306d93824b9edb5d0815d30bad362f25f2b9aeec71690d2c061
   languageName: node
   linkType: hard
 

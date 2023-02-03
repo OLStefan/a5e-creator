@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { damageDescriptionModel, specialDamageDescriptionModel } from '../general';
-import { createProficiency } from '../proficiency';
+import { createProficiency } from '../util/proficiency';
 import { equipmentPieceModel, equipmentPieceReferenceModel, EquipmentType } from './base';
 import { materialModel } from './material';
 import { weaponPropertyModel } from './weaponProperties';

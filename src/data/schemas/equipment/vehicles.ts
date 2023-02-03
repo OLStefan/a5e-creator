@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { Size } from '../general';
-import { createProficiency } from '../proficiency';
+import { createProficiency } from '../util/proficiency';
 import { equipmentPieceModel, EquipmentType } from './base';
 import { materialModel } from './material';
 import { vehiclePropertyModel } from './vehicleProperties';
