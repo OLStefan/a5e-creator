@@ -12,6 +12,7 @@ import weaponPropertiesJson from '../../resources/equipment/weaponProperties.jso
 import weaponsJson from '../../resources/equipment/weapons.json';
 
 import { types } from 'mobx-state-tree';
+import type { ExtractCFromProps } from 'mobx-state-tree/dist/internal';
 import { anyAdventuringGearModel } from './adventuringGear';
 import { anyArmorModel } from './armor';
 import { equipmentPackModel } from './equipmentPacks';
@@ -40,23 +41,24 @@ export const equipmentModel = types.model({
 	vehicles: types.array(vehicleModel),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const object: any = {
-	materials: materialsJson,
-	materialPropertiesJson,
-	adventuringGear: adventuringGearJson,
-	armors: armorsJson,
-	equipmentPacks: equipmentPacksJson,
-	materialProperties: materialPropertiesJson,
-	mountProperties: mountPropertiesJson,
-	mounts: mountsJson,
-	tools: toolsJson,
-	vehicleProperties: vehiclePropertiesJson,
-	vehicles: vehiclesJson,
-	weaponProperties: weaponPropertiesJson,
-	weapons: weaponsJson,
-};
-
 export function parseEquipment() {
-	return equipmentModel.create(object);
+	return equipmentModel.create(getEquipmentResources());
+}
+
+export function getEquipmentResources() {
+	return {
+		materials: materialsJson,
+		materialPropertiesJson,
+		adventuringGear: adventuringGearJson,
+		armors: armorsJson,
+		equipmentPacks: equipmentPacksJson,
+		materialProperties: materialPropertiesJson,
+		mountProperties: mountPropertiesJson,
+		mounts: mountsJson,
+		tools: toolsJson,
+		vehicleProperties: vehiclePropertiesJson,
+		vehicles: vehiclesJson,
+		weaponProperties: weaponPropertiesJson,
+		weapons: weaponsJson,
+	} as ExtractCFromProps<typeof equipmentModel.properties>;
 }
