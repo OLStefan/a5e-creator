@@ -21,6 +21,7 @@
 		"@ant-design/icons": "~5.0.1",
 		"@fortawesome/fontawesome-svg-core": "~6.2.1",
 		"@fortawesome/free-solid-svg-icons": "~6.2.1",
+		"@parcel/core": "^2.8.3",
 		"@reduxjs/toolkit": "~1.9.2",
 		"antd": "~5.1.7",
 		"classnames": "~2.3.2",

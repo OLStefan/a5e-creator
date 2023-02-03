@@ -1,4 +1,5 @@
-import myzod, { Infer } from 'myzod';
+import { types } from 'mobx-state-tree';
+import { partial } from './util/partial';
 
 export enum DamageType {
 	Acid = 'acid',
@@ -25,20 +26,25 @@ export enum Size {
 	Gargantuan = 'gargantuan',
 }
 
-export const dieSizeSchema = myzod.literals('d4', 'd6', 'd8', 'd10', 'd12', 'd100');
-export type DieSize = Infer<typeof dieSizeSchema>;
+export const dieSizeModel = types.enumeration(['d4', 'd6', 'd8', 'd10', 'd12', 'd100']);
 
-export const damageDescriptionSchema = myzod.object({
-	die: dieSizeSchema,
-	amount: myzod.number({ min: 0 }).default(1),
-	damageType: myzod.enum(DamageType),
-	type: myzod.literal('normal').optional(),
+const baseDamageDescriptionModel = types.model({
+	die: dieSizeModel,
+	amount: types.optional(types.integer, 1),
+	static: types.optional(types.integer, 0),
+	damageType: types.enumeration(Object.values(DamageType)),
 });
-export type DamageDescription = Infer<typeof damageDescriptionSchema>;
 
-export const specialdamageDescriptionSchema = myzod.partial(myzod.omit(damageDescriptionSchema, ['type'])).and(
-	myzod.object({
-		type: myzod.literal('special'),
+export const damageDescriptionModel = types.compose(
+	baseDamageDescriptionModel,
+	types.model({
+		type: types.maybe(types.literal('normal')),
 	}),
 );
-export type SpecialDamageDescription = Infer<typeof specialdamageDescriptionSchema>;
+
+export const specialDamageDescriptionModel = types.compose(
+	partial(baseDamageDescriptionModel),
+	types.model({
+		type: types.literal('special'),
+	}),
+);

@@ -1,9 +1,6 @@
-import myzod, { Infer } from 'myzod';
-import { Opaque, ReadonlyDeep } from 'type-fest';
-import { verifyProficiency } from '../proficiency';
-import { findReferencedElement, parse, referenceSchema } from '../util';
-import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
-import { Material, materialReferenceSchema, verifyMaterialReference } from './material';
+import { types } from 'mobx-state-tree';
+import { equipmentPieceModel, EquipmentType } from './base';
+import { materialModel } from './material';
 
 export enum ArmorType {
 	Light = 'light',
@@ -19,70 +16,33 @@ export enum ShieldType {
 	Tower = 'tower',
 }
 
-export type ArmorName = Opaque<string, 'armor'>;
-
-const baseArmorSchema = equipmentPieceSchema.and(
-	myzod.object({
-		type: myzod.literal(EquipmentType.Armor),
-		defaultMaterial: materialReferenceSchema,
-		armorType: myzod.enum(ArmorType),
+const baseArmorModel = types.compose(
+	equipmentPieceModel,
+	types.model({
+		type: types.literal(EquipmentType.Armor),
+		defaultMaterial: types.reference(materialModel),
+		armorType: types.enumeration(Object.values(ArmorType)),
 	}),
 );
 
-const armorSchema = baseArmorSchema
-	.and(
-		myzod.object({
-			armorType: myzod.literals(ArmorType.Light, ArmorType.Medium, ArmorType.Heavy),
-			ac: myzod.object({
-				base: myzod.number(),
-				maxDexMod: myzod.number().optional(),
-			}),
+const armorModel = types.compose(
+	baseArmorModel,
+	types.model({
+		armorType: types.enumeration([ArmorType.Light, ArmorType.Medium, ArmorType.Heavy]),
+		ac: types.model({
+			base: types.number,
+			maxDexMode: types.optional(types.number, 0),
 		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as ArmorName }));
-export type Armor = Infer<typeof armorSchema>;
+	}),
+);
 
-const shieldSchema = baseArmorSchema
-	.and(
-		myzod.object({
-			armorType: myzod.literal(ArmorType.Shield),
-			shieldType: myzod.enum(ShieldType),
-			ac: myzod.number(),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as ArmorName }));
-export type Shield = Infer<typeof shieldSchema>;
+const shieldModel = types.compose(
+	baseArmorModel,
+	types.model({
+		armorType: types.literal(ArmorType.Shield),
+		shieldType: types.enumeration(Object.values(ShieldType)),
+		ac: types.number,
+	}),
+);
 
-const anyArmorSchema = myzod.union([armorSchema, shieldSchema]);
-export type AnyArmor = Infer<typeof anyArmorSchema>;
-
-export const armorReferenceSchema = equipmentPieceReference
-	.and(myzod.object({ material: materialReferenceSchema.optional() }))
-	.map((refObject) => ({
-		...refObject,
-		ref: refObject.ref as ArmorName,
-	}));
-export type ArmorReference = Infer<typeof armorReferenceSchema>;
-
-export const armorProficiencySchema = referenceSchema.and(myzod.object({ ref: myzod.enum(ArmorType) }));
-export type ArmorProficiency = Infer<typeof armorProficiencySchema>;
-
-export function parseArmors(armors: ReadonlyDeep<Array<unknown>>, parsedMaterials: ReadonlyDeep<Array<Material>>) {
-	return parse({
-		schema: anyArmorSchema,
-		data: armors,
-		predicate: (parsedArmors) =>
-			parsedArmors.every((armor) => verifyMaterialReference(armor.defaultMaterial, parsedMaterials)),
-	});
-}
-
-export function verifyArmorReference(
-	ref: ReadonlyDeep<ArmorReference>,
-	parsedArmors: ReadonlyDeep<Array<AnyArmor>>,
-	parsedMaterials: ReadonlyDeep<Array<Material>>,
-) {
-	const verifiedMaterial = !ref.material || verifyMaterialReference(ref.material, parsedMaterials);
-	return verifiedMaterial && !!findReferencedElement(ref, parsedArmors);
-}
-
-export const verifyArmorProficiency = verifyProficiency<ArmorProficiency, AnyArmor>;
+export const anyArmorModel = types.union(armorModel, shieldModel);

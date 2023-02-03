@@ -1,4 +1,4 @@
-import myzod, { Infer } from 'myzod';
+import { types } from 'mobx-state-tree';
 
 export enum SourceBook {
 	AG = 'AG',
@@ -8,22 +8,22 @@ export enum SourceBook {
 	GPG = 'GPG',
 	Homebrew = 'homebrew',
 }
-export const sourceReferenceSchema = myzod.object({
-	book: myzod.enum(SourceBook),
-	page: myzod.number().optional(),
+
+export const sourceReferenceModel = types.model({
+	book: types.enumeration(Object.values(SourceBook)),
+	page: types.maybe(types.refinement(types.integer, (page) => page >= 1)),
 });
 
-export const descriptionSchema = myzod.object({
-	name: myzod.string(),
-	description: myzod.string().default(''),
-	source: sourceReferenceSchema,
-	disabled: myzod.literal(false).optional(),
+export const descriptionModel = types.model({
+	name: types.identifier,
+	description: types.optional(types.string, ''),
+	source: sourceReferenceModel,
+	disabled: types.maybe(types.boolean),
 });
-export type Description = Infer<typeof descriptionSchema>;
 
-export const additionalDescriptionSchema = descriptionSchema.and(
-	myzod.object({
-		additionalString: myzod.string().default(''),
+export const additionalDescriptionModel = types.compose(
+	descriptionModel,
+	types.model({
+		additionalString: types.optional(types.string, ''),
 	}),
 );
-export type AdditionalDescription = Infer<typeof additionalDescriptionSchema>;

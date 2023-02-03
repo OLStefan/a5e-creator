@@ -1,5 +1,5 @@
-import myzod, { Infer } from 'myzod';
-import { descriptionSchema, referenceSchema } from '../util';
+import { types } from 'mobx-state-tree';
+import { descriptionModel } from '../util';
 
 export enum EquipmentType {
 	Weapon = 'weapon',
@@ -19,19 +19,20 @@ export enum EquipmentQuality {
 	Masterwork = 'masterwork',
 }
 
-export const equipmentPieceSchema = descriptionSchema.and(
-	myzod.object({
-		weight: myzod.number().default(0),
-		price: myzod.number().default(0),
-		type: myzod.enum(EquipmentType),
+export const equipmentPieceModel = types.compose(
+	descriptionModel,
+	types.model({
+		weight: types.optional(types.number, 0),
+		price: types.optional(types.number, 0),
+		type: types.enumeration(Object.values(EquipmentType)),
 	}),
 );
-export type EquipmentPiece = Infer<typeof equipmentPieceSchema>;
 
-export const equipmentPieceReference = referenceSchema.and(
-	myzod.object({
-		quality: myzod.enum(EquipmentQuality).default(EquipmentQuality.Normal),
-		amount: myzod.number({ min: 1 }).default(1),
-	}),
-);
-export type EquipmentPieceReference = Infer<typeof equipmentPieceReference>;
+export const equipmentPieceReferenceModel = types.model({
+	ref: types.reference(equipmentPieceModel),
+	quality: types.optional(types.enumeration(Object.values(EquipmentQuality)), EquipmentQuality.Normal),
+	amount: types.optional(
+		types.refinement(types.integer, (value) => value >= 1),
+		1,
+	),
+});

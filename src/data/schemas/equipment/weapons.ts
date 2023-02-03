@@ -1,11 +1,9 @@
-import myzod, { Infer } from 'myzod';
-import { Opaque, ReadonlyDeep } from 'type-fest';
-import { damageDescriptionSchema, specialdamageDescriptionSchema } from '../general';
-import { createIndividualProficiencySchema, verifyProficiency } from '../proficiency';
-import { findReferencedElement, parse } from '../util';
-import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
-import { Material, materialReferenceSchema, verifyMaterialReference } from './material';
-import { verifyWeaponPropertyReference, WeaponProperty, weaponPropertyReferenceSchema } from './weaponProperties';
+import { types } from 'mobx-state-tree';
+import { damageDescriptionModel, specialDamageDescriptionModel } from '../general';
+import { createProficiency } from '../proficiency';
+import { equipmentPieceModel, equipmentPieceReferenceModel, EquipmentType } from './base';
+import { materialModel } from './material';
+import { weaponPropertyModel } from './weaponProperties';
 
 export enum WeaponCategory {
 	Improvised = 'improvised',
@@ -20,92 +18,41 @@ export enum WeaponType {
 	Special = 'special',
 }
 
-export type WeaponName = Opaque<string, 'weapon'>;
-
-const baseWeaponSchema = equipmentPieceSchema.and(
-	myzod.object({
-		proficiency: myzod.enum(WeaponCategory),
-		damage: damageDescriptionSchema.or(specialdamageDescriptionSchema),
-		properties: myzod.array(weaponPropertyReferenceSchema),
-		type: myzod.literal(EquipmentType.Weapon),
-		weaponType: myzod.enum(WeaponType),
-		defaultMaterial: materialReferenceSchema,
+const baseWeaponModel = types.compose(
+	equipmentPieceModel,
+	types.model({
+		proficiency: types.enumeration(Object.values(WeaponCategory)),
+		damage: types.union(damageDescriptionModel, specialDamageDescriptionModel),
+		properties: types.array(types.reference(weaponPropertyModel)),
+		type: types.literal(EquipmentType.Weapon),
+		weaponType: types.enumeration(Object.values(WeaponType)),
+		defaultMaterial: types.reference(materialModel),
 	}),
 );
 
-const meleeWeaponSchema = baseWeaponSchema
-	.and(
-		myzod.object({
-			weaponType: myzod.literal(WeaponType.Melee),
-			damage: damageDescriptionSchema,
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as WeaponName }));
-export type MeleeWeapon = Infer<typeof meleeWeaponSchema>;
+const meleeWeaponModel = types.compose(
+	baseWeaponModel,
+	types.model({ weaponType: types.literal(WeaponType.Melee), damage: damageDescriptionModel }),
+);
 
-const rangedWeaponSchema = baseWeaponSchema
-	.and(
-		myzod.object({
-			weaponType: myzod.literal(WeaponType.Ranged),
-			damage: damageDescriptionSchema,
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as WeaponName }));
-export type RangedWeapon = Infer<typeof rangedWeaponSchema>;
+const rangedWeaponModel = types.compose(
+	baseWeaponModel,
+	types.model({ weaponType: types.literal(WeaponType.Ranged), damage: damageDescriptionModel }),
+);
 
-const specialWeaponSchema = baseWeaponSchema
-	.and(
-		myzod.object({
-			weaponType: myzod.literal(WeaponType.Special),
-			damage: specialdamageDescriptionSchema,
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as WeaponName }));
-export type SpecialWeapon = Infer<typeof specialWeaponSchema>;
+const specialWeaponModel = types.compose(
+	baseWeaponModel,
+	types.model({ weaponType: types.literal(WeaponType.Special), damage: specialDamageDescriptionModel }),
+);
 
-const anyWeaponSchema = myzod.union([meleeWeaponSchema, rangedWeaponSchema, specialWeaponSchema]);
-export type AnyWeapon = Infer<typeof anyWeaponSchema>;
+export const anyWeaponModel = types.union(meleeWeaponModel, rangedWeaponModel, specialWeaponModel);
 
-export const weaponReferenceSchema = equipmentPieceReference
-	.and(myzod.object({ material: materialReferenceSchema.optional() }))
-	.map((refObject) => ({
-		...refObject,
-		ref: refObject.ref as WeaponName,
-	}));
-export type WeaponReference = Infer<typeof weaponReferenceSchema>;
+export const weaponReferenceModel = types.compose(
+	equipmentPieceReferenceModel,
+	types.model({
+		ref: types.reference(anyWeaponModel),
+		material: types.reference(materialModel),
+	}),
+);
 
-export const weaponProficiencySchema = createIndividualProficiencySchema(Object.values(WeaponCategory)).map((ref) => {
-	if (ref.ref === 'Individual') {
-		return { ...ref, name: ref.name as WeaponName };
-	}
-	return ref;
-});
-export type WeaponProficiency = Infer<typeof weaponProficiencySchema>;
-
-export function parseWeapons(
-	weapons: ReadonlyDeep<Array<unknown>>,
-	parsedWeaponProperties: ReadonlyDeep<Array<WeaponProperty>>,
-	parsedMaterials: ReadonlyDeep<Array<Material>>,
-) {
-	return parse({
-		schema: anyWeaponSchema,
-		data: weapons,
-		predicate: (parsedWeapons) =>
-			parsedWeapons.every(
-				(weapon) =>
-					verifyMaterialReference(weapon.defaultMaterial, parsedMaterials) &&
-					weapon.properties.every((ref) => verifyWeaponPropertyReference(ref, parsedWeaponProperties)),
-			),
-	});
-}
-
-export function verifyWeaponReference(
-	ref: ReadonlyDeep<WeaponReference>,
-	parsedWeapons: ReadonlyDeep<Array<AnyWeapon>>,
-	parsedMaterials: ReadonlyDeep<Array<Material>>,
-) {
-	const verifiedMaterial = !ref.material || verifyMaterialReference(ref.material, parsedMaterials);
-	return verifiedMaterial && !!findReferencedElement(ref, parsedWeapons);
-}
-
-export const verifyWeaponProficiency = verifyProficiency<WeaponProficiency, AnyWeapon>;
+export const weaponProficiencyModel = createProficiency(anyWeaponModel, Object.values(WeaponCategory));

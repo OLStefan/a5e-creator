@@ -1,5 +1,5 @@
-import { parseData } from './parseData';
+import { parseEquipment } from './equipment';
 
 test('parseData', () => {
-	parseData();
+	parseEquipment();
 });

@@ -1,8 +1,6 @@
-import myzod, { Infer } from 'myzod';
-import { Opaque, ReadonlyDeep } from 'type-fest';
-import { createIndividualProficiencySchema, verifyProficiency } from '../proficiency';
-import { findReferencedElement, parse } from '../util';
-import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
+import { types } from 'mobx-state-tree';
+import { Opaque } from 'type-fest';
+import { equipmentPieceModel, EquipmentType } from './base';
 
 export type ToolName = Opaque<string, 'tool'>;
 
@@ -13,84 +11,54 @@ export enum ToolType {
 	Other = 'miscellaneous tool',
 }
 
-const baseToolSchema = equipmentPieceSchema.and(
-	myzod.object({
-		type: myzod.literal(EquipmentType.Tool),
-		toolType: myzod.enum(ToolType),
+const baseToolModel = types.compose(
+	equipmentPieceModel,
+	types.model({
+		type: types.literal(EquipmentType.Tool),
+		toolType: types.enumeration(Object.values(ToolType)),
 	}),
 );
 
-const artisanToolSchema = baseToolSchema
-	.and(
-		myzod.object({
-			toolType: myzod.literal(ToolType.Artisan),
-			genericTrade: myzod.object({
-				material: myzod.object({
-					amount: myzod.number(),
-					name: myzod.string(),
-				}),
-				time: myzod.object({
-					amount: myzod.number(),
-					unit: myzod.literals('hours', 'weeks', 'month'),
-					additional: myzod.string().optional(),
-				}),
-				profit: myzod.tuple([myzod.number(), myzod.number(), myzod.number()]),
+const artisanToolModel = types.compose(
+	baseToolModel,
+	types.model({
+		toolType: types.literal(ToolType.Artisan),
+		genericTrade: types.model({
+			material: types.model({
+				amount: types.number,
+				name: types.string,
+			}),
+			time: types.model({
+				amount: types.number,
+				unit: types.enumeration(['hours', 'weeks', 'month']),
+				additional: types.maybe(types.string),
+			}),
+			profit: types.model({
+				easy: types.number,
+				middle: types.number,
+				hard: types.number,
 			}),
 		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as ToolName }));
-export type ArtisanTool = Infer<typeof artisanToolSchema>;
+	}),
+);
 
-const gamingSetSchema = baseToolSchema
-	.and(
-		myzod.object({
-			toolType: myzod.literal(ToolType.Gaming),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as ToolName }));
-export type GamingSet = Infer<typeof gamingSetSchema>;
+const gamingSetModel = types.compose(
+	baseToolModel,
+	types.model({
+		toolType: types.literal(ToolType.Gaming),
+	}),
+);
+const musicalInstrumentModel = types.compose(
+	baseToolModel,
+	types.model({
+		toolType: types.literal(ToolType.Musical),
+	}),
+);
+const miscToolModel = types.compose(
+	baseToolModel,
+	types.model({
+		toolType: types.literal(ToolType.Other),
+	}),
+);
 
-const musicalInstrumentSchema = baseToolSchema
-	.and(
-		myzod.object({
-			toolType: myzod.literal(ToolType.Gaming),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as ToolName }));
-export type MusicalInstrument = Infer<typeof musicalInstrumentSchema>;
-
-const otherToolSchema = baseToolSchema
-	.and(
-		myzod.object({
-			toolType: myzod.literal(ToolType.Other),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as ToolName }));
-export type OtherTool = Infer<typeof otherToolSchema>;
-
-const anyToolSchema = myzod.union([artisanToolSchema, gamingSetSchema, musicalInstrumentSchema, otherToolSchema]);
-export type AnyTool = Infer<typeof anyToolSchema>;
-
-export const toolReferenceSchema = equipmentPieceReference.map((refObject) => ({
-	...refObject,
-	ref: refObject.ref as ToolName,
-}));
-export type ToolReference = Infer<typeof toolReferenceSchema>;
-
-export const toolProficiencySchema = createIndividualProficiencySchema(Object.values(ToolType)).map((ref) => {
-	if (ref.ref === 'Individual') {
-		return { ...ref, name: ref.name as ToolName };
-	}
-	return ref;
-});
-export type ToolProficiency = Infer<typeof toolProficiencySchema>;
-
-export function parseTools(tools: ReadonlyDeep<Array<unknown>>) {
-	return parse({ schema: anyToolSchema, data: tools });
-}
-
-export function verifyToolReference(ref: ReadonlyDeep<ToolReference>, parsedTools: ReadonlyDeep<Array<AnyTool>>) {
-	return !!findReferencedElement(ref, parsedTools);
-}
-
-export const verifyToolProficiency = verifyProficiency<ToolProficiency, AnyTool>;
+export const anyToolModel = types.union(artisanToolModel, gamingSetModel, musicalInstrumentModel, miscToolModel);

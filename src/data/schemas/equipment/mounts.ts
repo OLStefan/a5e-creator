@@ -1,40 +1,12 @@
-import myzod, { Infer } from 'myzod';
-import { Opaque, ReadonlyDeep } from 'type-fest';
-import { findReferencedElement, parse } from '../util';
-import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
-import { MountProperty, mountPropertyReferenceSchema, verifyMountPropertyReference } from './mountProperties';
+import { types } from 'mobx-state-tree';
+import { equipmentPieceModel, EquipmentType } from './base';
 
-export type MountName = Opaque<string, 'mount'>;
-
-const mountSchema = equipmentPieceSchema
-	.and(
-		myzod.object({
-			type: myzod.literal(EquipmentType.Mount),
-			speed: myzod.number(),
-			capacity: myzod.number(),
-			strength: myzod.number(),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as MountName }));
-export type Mount = Infer<typeof mountSchema>;
-
-export const mountReferenceSchema = equipmentPieceReference
-	.and(myzod.object({ property: mountPropertyReferenceSchema.optional() }))
-	.map((refObject) => ({
-		...refObject,
-		ref: refObject.ref as MountName,
-	}));
-export type MountReference = Infer<typeof mountReferenceSchema>;
-
-export function parseMounts(mounts: ReadonlyDeep<Array<unknown>>) {
-	return parse({ schema: mountSchema, data: mounts });
-}
-
-export function verifyMountReference(
-	ref: ReadonlyDeep<MountReference>,
-	parsedMounts: ReadonlyDeep<Array<Mount>>,
-	parsedMountProperties: ReadonlyDeep<Array<MountProperty>>,
-) {
-	const verifiedProperty = !ref.property || verifyMountPropertyReference(ref.property, parsedMountProperties);
-	return verifiedProperty && !!findReferencedElement(ref, parsedMounts);
-}
+export const mountModel = types.compose(
+	equipmentPieceModel,
+	types.model({
+		type: types.literal(EquipmentType.Mount),
+		speed: types.number,
+		capacity: types.number,
+		strength: types.number,
+	}),
+);

@@ -1,10 +1,6 @@
-import myzod, { Infer } from 'myzod';
-import { Opaque, ReadonlyDeep } from 'type-fest';
-import { findReferencedElement, parse } from '../util';
-import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
-import { materialReferenceSchema } from './material';
-
-export type AdventuringGearName = Opaque<string, 'adventuringGear'>;
+import { types } from 'mobx-state-tree';
+import { equipmentPieceModel, EquipmentType } from './base';
+import { materialModel } from './material';
 
 export enum AdventuringGearType {
 	Medicine = 'medicinal',
@@ -15,94 +11,61 @@ export enum AdventuringGearType {
 	Miscellaneous = 'miscellaneous gear',
 }
 
-const baseAdventuringGearSchema = equipmentPieceSchema.and(
-	myzod.object({
-		type: myzod.literal(EquipmentType.AdventuringGear),
-		gearType: myzod.enum(AdventuringGearType),
+const baseAdventuringGearSchema = types.compose(
+	equipmentPieceModel,
+	types.model({
+		type: types.literal(EquipmentType.AdventuringGear),
+		gearType: types.enumeration(Object.values(AdventuringGearType)),
 	}),
 );
 
-const medicineSchema = baseAdventuringGearSchema
-	.and(
-		myzod.object({
-			gearType: myzod.literal(AdventuringGearType.Medicine),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
-export type Medicine = Infer<typeof medicineSchema>;
+const medicineModel = types.compose(
+	baseAdventuringGearSchema,
+	types.model({
+		gearType: types.literal(AdventuringGearType.Medicine),
+	}),
+);
+const spellcastinFocuesModel = types.compose(
+	baseAdventuringGearSchema,
+	types.model({
+		gearType: types.literal(AdventuringGearType.SpellcastingFocus),
+		defaultMaterial: types.reference(materialModel),
+	}),
+);
+const poisonModel = types.compose(
+	baseAdventuringGearSchema,
+	types.model({
+		gearType: types.literal(AdventuringGearType.Poison),
+	}),
+);
+const survivalGearModel = types.compose(
+	baseAdventuringGearSchema,
+	types.model({
+		gearType: types.literal(AdventuringGearType.SurvivalGear),
+	}),
+);
+const containerModel = types.compose(
+	baseAdventuringGearSchema,
+	types.model({
+		gearType: types.literal(AdventuringGearType.Container),
+		capacity: types.string,
+		defaultMaterial: types.reference(materialModel),
+	}),
+);
+const miscAdventuringGearModel = types.compose(
+	baseAdventuringGearSchema,
+	types.model({
+		gearType: types.literal(AdventuringGearType.Miscellaneous),
+		capacity: types.string,
+		defaultMaterial: types.maybe(types.reference(materialModel)),
+	}),
+);
 
-const spellcastingFocusSchema = baseAdventuringGearSchema
-	.and(
-		myzod.object({
-			gearType: myzod.literal(AdventuringGearType.SpellcastingFocus),
-			defaultMaterial: materialReferenceSchema,
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
-export type SpellcastingFocus = Infer<typeof spellcastingFocusSchema>;
-
-const poisonSchema = baseAdventuringGearSchema
-	.and(
-		myzod.object({
-			gearType: myzod.literal(AdventuringGearType.Poison),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
-export type Poison = Infer<typeof poisonSchema>;
-
-const survivalGearSchema = baseAdventuringGearSchema
-	.and(
-		myzod.object({
-			gearType: myzod.literal(AdventuringGearType.SurvivalGear),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
-export type SurvivalGear = Infer<typeof survivalGearSchema>;
-
-const containerSchema = baseAdventuringGearSchema
-	.and(
-		myzod.object({
-			gearType: myzod.literal(AdventuringGearType.Container),
-			capacity: myzod.string(),
-			defaultMaterial: materialReferenceSchema.optional(),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
-export type Container = Infer<typeof containerSchema>;
-
-const otherAdventuringGearSchema = baseAdventuringGearSchema
-	.and(
-		myzod.object({
-			gearType: myzod.literal(AdventuringGearType.Miscellaneous),
-			defaultMaterial: materialReferenceSchema.optional(),
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as AdventuringGearName }));
-export type OtherAdventuringGear = Infer<typeof otherAdventuringGearSchema>;
-
-const anyAdventuringGearSchema = myzod.union([
-	medicineSchema,
-	spellcastingFocusSchema,
-	poisonSchema,
-	survivalGearSchema,
-	containerSchema,
-	otherAdventuringGearSchema,
-]);
-export type AnyAdventuringGear = Infer<typeof anyAdventuringGearSchema>;
-
-export const adventuringGearReferenceSchema = equipmentPieceReference.map((refObject) => ({
-	...refObject,
-	ref: refObject.ref as AdventuringGearName,
-}));
-export type AdventuringGearReference = Infer<typeof adventuringGearReferenceSchema>;
-
-export function parseAdventuringGear(adventuringGear: ReadonlyDeep<Array<unknown>>) {
-	return parse({ schema: anyAdventuringGearSchema, data: adventuringGear });
-}
-
-export function verifyAdventuringGearReference(
-	ref: ReadonlyDeep<AdventuringGearReference>,
-	parsedAdventuringGears: ReadonlyDeep<Array<AnyAdventuringGear>>,
-) {
-	return !!findReferencedElement(ref, parsedAdventuringGears);
-}
+export const anyAdventuringGearModel = types.union(
+	medicineModel,
+	spellcastinFocuesModel,
+	poisonModel,
+	survivalGearModel,
+	containerModel,
+	miscAdventuringGearModel,
+);

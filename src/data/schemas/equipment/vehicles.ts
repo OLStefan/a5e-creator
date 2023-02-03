@@ -1,13 +1,9 @@
-import myzod, { Infer } from 'myzod';
-import { Opaque, ReadonlyDeep } from 'type-fest';
+import { types } from 'mobx-state-tree';
 import { Size } from '../general';
-import { createIndividualProficiencySchema, verifyProficiency } from '../proficiency';
-import { findReferencedElement, parse } from '../util';
-import { equipmentPieceReference, equipmentPieceSchema, EquipmentType } from './base';
-import { Material, materialReferenceSchema, verifyMaterialReference } from './material';
-import { VehicleProperty, vehiclePropertyReferenceSchema, verifyVehiclePropertyReference } from './vehicleProperties';
-
-export type VehicleName = Opaque<string, 'vehicle'>;
+import { createProficiency } from '../proficiency';
+import { equipmentPieceModel, EquipmentType } from './base';
+import { materialModel } from './material';
+import { vehiclePropertyModel } from './vehicleProperties';
 
 export enum VehicleType {
 	Land = 'land',
@@ -15,67 +11,24 @@ export enum VehicleType {
 	Air = 'air',
 }
 
-const vehicleSchema = equipmentPieceSchema
-	.and(
-		myzod.object({
-			type: myzod.literal(EquipmentType.Vehicle),
-			vehicleType: myzod.enum(VehicleType),
-			// carrying capacity (crew/cargo/supply) is only dependent on size, so not tracked separately
-			size: myzod.enum(Size),
-			ac: myzod.number(),
-			speed: myzod.literal('Drawn').or(
-				myzod.object({
-					movement: myzod.number(),
-					journey: myzod.number(),
-				}),
-			),
-			properties: myzod.array(vehiclePropertyReferenceSchema),
-			defaultMaterial: materialReferenceSchema,
-		}),
-	)
-	.map((desc) => ({ ...desc, name: desc.name as VehicleName }));
-export type Vehicle = Infer<typeof vehicleSchema>;
+export const vehicleModel = types.compose(
+	equipmentPieceModel,
+	types.model({
+		type: types.literal(EquipmentType.Vehicle),
+		vehicleType: types.enumeration(Object.values(VehicleType)),
+		// carrying capacity (crew/cargo/supply) is only dependent on size, so not tracked separately
+		size: types.enumeration(Object.values(Size)),
+		ac: types.number,
+		speed: types.union(
+			types.literal('Drawn'),
+			types.model({
+				movement: types.number,
+				journey: types.number,
+			}),
+		),
+		properties: types.array(types.reference(vehiclePropertyModel)),
+		defaultMaterial: types.reference(materialModel),
+	}),
+);
 
-export const vehicleReferenceSchema = equipmentPieceReference
-	.and(myzod.object({ material: materialReferenceSchema.optional() }))
-	.map((refObject) => ({
-		...refObject,
-		ref: refObject.ref as VehicleName,
-	}));
-export type VehicleReference = Infer<typeof vehicleReferenceSchema>;
-
-export const vehicleProficiencySchema = createIndividualProficiencySchema(Object.values(VehicleType)).map((ref) => {
-	if (ref.ref === 'Individual') {
-		return { ...ref, name: ref.name as VehicleName };
-	}
-	return ref;
-});
-export type VehicleProficiency = Infer<typeof vehicleProficiencySchema>;
-
-export function parseVehicles(
-	vehicles: ReadonlyDeep<Array<unknown>>,
-	parsedVehicleProperties: ReadonlyDeep<Array<VehicleProperty>>,
-	parsedMaterials: ReadonlyDeep<Array<Material>>,
-) {
-	return parse({
-		schema: vehicleSchema,
-		data: vehicles,
-		predicate: (parsedWeapons) =>
-			parsedWeapons.every(
-				(weapon) =>
-					verifyMaterialReference(weapon.defaultMaterial, parsedMaterials) &&
-					weapon.properties.every((ref) => verifyVehiclePropertyReference(ref, parsedVehicleProperties)),
-			),
-	});
-}
-
-export function verifyVehicleReference(
-	ref: ReadonlyDeep<VehicleReference>,
-	parsedVehicles: ReadonlyDeep<Array<Vehicle>>,
-	parsedMaterials: ReadonlyDeep<Array<Material>>,
-) {
-	const verifiedMaterial = !ref.material || verifyMaterialReference(ref.material, parsedMaterials);
-	return verifiedMaterial && !!findReferencedElement(ref, parsedVehicles);
-}
-
-export const verifyVehicleProficiency = verifyProficiency<VehicleProficiency, Vehicle>;
+export const vehicleProficiencyModel = createProficiency(vehicleModel, Object.values(VehicleType));
