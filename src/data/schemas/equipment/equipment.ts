@@ -41,10 +41,6 @@ export const equipmentModel = types.model({
 	vehicles: types.array(vehicleModel),
 });
 
-export function parseEquipment() {
-	return equipmentModel.create(getEquipmentResources());
-}
-
 export function getEquipmentResources() {
 	return {
 		materials: materialsJson,

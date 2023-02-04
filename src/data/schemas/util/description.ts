@@ -29,14 +29,8 @@ export const additionalDescriptionModel = types.compose(
 );
 
 export function createAdditionalDescriptionReference<T extends typeof additionalDescriptionModel>(model: T) {
-	return types.refinement(
-		types.model({
-			ref: types.reference(model),
-			additional: types.map(types.union(types.string, types.number)),
-		}),
-		(value) => {
-			// TODO: Fix
-			return true;
-		},
-	);
+	return types.model({
+		ref: types.reference(model),
+		additional: types.map(types.union(types.string, types.number)),
+	});
 }
