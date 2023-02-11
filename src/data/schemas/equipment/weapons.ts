@@ -20,27 +20,30 @@ export enum WeaponType {
 
 const baseWeaponModel = types.compose(
 	equipmentPieceModel,
-	types.model({
+	types.model('BaseWeapon', {
 		proficiency: types.enumeration(Object.values(WeaponCategory)),
 		damage: types.union(damageDescriptionModel, specialDamageDescriptionModel),
 		properties: types.array(weaponPropertyReference),
 		type: types.literal(EquipmentType.Weapon),
 		weaponType: types.enumeration(Object.values(WeaponType)),
-		defaultMaterial: types.reference(materialModel),
+		defaultMaterial: types.safeReference(materialModel),
 	}),
 );
 
 const meleeWeaponModel = types.compose(
+	'Melee Weapon',
 	baseWeaponModel,
 	types.model({ weaponType: types.literal(WeaponType.Melee), damage: damageDescriptionModel }),
 );
 
 const rangedWeaponModel = types.compose(
+	'Ranged Weapon',
 	baseWeaponModel,
 	types.model({ weaponType: types.literal(WeaponType.Ranged), damage: damageDescriptionModel }),
 );
 
 const specialWeaponModel = types.compose(
+	'Special Weapon',
 	baseWeaponModel,
 	types.model({ weaponType: types.literal(WeaponType.Special), damage: specialDamageDescriptionModel }),
 );
@@ -48,11 +51,12 @@ const specialWeaponModel = types.compose(
 export const anyWeaponModel = types.union(meleeWeaponModel, rangedWeaponModel, specialWeaponModel);
 
 export const weaponReferenceModel = types.compose(
+	'Weapon Reference',
 	equipmentPieceReferenceModel,
 	types.model({
-		ref: types.reference(anyWeaponModel),
-		material: types.reference(materialModel),
+		ref: types.safeReference(anyWeaponModel),
+		material: types.safeReference(materialModel),
 	}),
 );
 
-export const weaponProficiencyModel = createProficiency(anyWeaponModel, Object.values(WeaponCategory));
+export const weaponProficiencyModel = createProficiency(anyWeaponModel, Object.values(WeaponCategory), 'Weapon');

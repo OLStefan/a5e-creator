@@ -20,7 +20,7 @@ const baseArmorModel = types.compose(
 	equipmentPieceModel,
 	types.model({
 		type: types.literal(EquipmentType.Armor),
-		defaultMaterial: types.reference(materialModel),
+		defaultMaterial: types.safeReference(materialModel),
 		armorType: types.enumeration(Object.values(ArmorType)),
 	}),
 );

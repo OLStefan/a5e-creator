@@ -28,9 +28,28 @@ export const additionalDescriptionModel = types.compose(
 	}),
 );
 
-export function createAdditionalDescriptionReference<T extends typeof additionalDescriptionModel>(model: T) {
-	return types.model({
-		ref: types.reference(model),
+export function createAdditionalDescriptionReference<T extends typeof additionalDescriptionModel>(
+	model: T,
+	name: string,
+) {
+	return types.model(`${name} Reference`, {
+		ref: types.safeReference(model),
 		additional: types.map(types.union(types.string, types.number)),
 	});
 }
+
+// const additionalInformationRegex = /\$(\w+)/g;
+// function verifyAdditionalProperties({
+// 	additionalString,
+// 	additionalProperties,
+// }: {
+// 	additionalString: string;
+// 	additionalProperties?: Record<string, string | number>;
+// }) {
+// 	const requiredProperties = [...additionalString.matchAll(additionalInformationRegex)].map(
+// 		// Every map will have a group match here, since that is all the regex does
+// 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+// 		([, groupMatch]) => groupMatch!,
+// 	);
+// 	return requiredProperties.every((prop) => !isUndefined(additionalProperties?.[prop]));
+// }

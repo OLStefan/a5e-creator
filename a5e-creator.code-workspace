@@ -1,9 +1,5 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
+	"folders": [{ "path": "." }],
 	"settings": {
 		"editor.insertSpaces": false,
 		"[javascriptreact]": {
@@ -12,10 +8,14 @@
 		"[json]": {
 			"editor.defaultFormatter": "esbenp.prettier-vscode"
 		},
-		"workbench.tree.indent": 17,
+		"workbench.tree.indent": 16,
 		"files.eol": "\n",
-		"todo-tree.general.rootFolder": "${workspaceFolder}/src",
-		"typescript.tsdk": "node_modules/typescript/lib"
+		"typescript.tsdk": "node_modules/typescript/lib",
+		"files.exclude": {
+			"**/node_modules": false
+		},
+		"jest.jestCommandLine": "yarn test",
+		"jest.rootPath": ""
 	},
 	"extensions": {
 		"recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]

@@ -29,7 +29,7 @@ const spellcastinFocuesModel = types.compose(
 	baseAdventuringGearSchema,
 	types.model({
 		gearType: types.literal(AdventuringGearType.SpellcastingFocus),
-		defaultMaterial: types.reference(materialModel),
+		defaultMaterial: types.safeReference(materialModel),
 	}),
 );
 const poisonModel = types.compose(
@@ -49,14 +49,14 @@ const containerModel = types.compose(
 	types.model({
 		gearType: types.literal(AdventuringGearType.Container),
 		capacity: types.string,
-		defaultMaterial: types.maybe(types.reference(materialModel)),
+		defaultMaterial: types.maybe(types.safeReference(materialModel)),
 	}),
 );
 const miscAdventuringGearModel = types.compose(
 	baseAdventuringGearSchema,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Miscellaneous),
-		defaultMaterial: types.maybe(types.reference(materialModel)),
+		defaultMaterial: types.maybe(types.safeReference(materialModel)),
 	}),
 );
 

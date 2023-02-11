@@ -29,7 +29,7 @@ export const equipmentPieceModel = types.compose(
 );
 
 export const equipmentPieceReferenceModel = types.model({
-	ref: types.reference(equipmentPieceModel),
+	ref: types.safeReference(equipmentPieceModel),
 	quality: types.optional(types.enumeration(Object.values(EquipmentQuality)), EquipmentQuality.Normal),
 	amount: types.optional(
 		types.refinement(types.integer, (value) => value >= 1),

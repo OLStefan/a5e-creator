@@ -28,9 +28,10 @@
 		"@typescript-eslint/no-empty-interface": "off"
 	},
 	"settings": {
-		"react": { "version": "17" },
+		"react": { "version": "18" },
 		"import/resolver": {
 			"typescript": {}
 		}
-	}
+	},
+	"ignorePatterns": ["jest.config.js"]
 }

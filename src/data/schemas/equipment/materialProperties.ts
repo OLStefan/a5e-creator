@@ -2,4 +2,7 @@ import { additionalDescriptionModel, createAdditionalDescriptionReference } from
 
 export const materialPropertyModel = additionalDescriptionModel;
 
-export const materialPropertyReferenceModel = createAdditionalDescriptionReference(materialPropertyModel);
+export const materialPropertyReferenceModel = createAdditionalDescriptionReference(
+	materialPropertyModel,
+	'Material Property',
+);

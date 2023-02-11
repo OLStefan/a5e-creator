@@ -26,9 +26,9 @@ export const vehicleModel = types.compose(
 				journey: types.number,
 			}),
 		),
-		properties: types.array(types.reference(vehiclePropertyModel)),
-		defaultMaterial: types.reference(materialModel),
+		properties: types.array(types.safeReference(vehiclePropertyModel)),
+		defaultMaterial: types.safeReference(materialModel),
 	}),
 );
 
-export const vehicleProficiencyModel = createProficiency(vehicleModel, Object.values(VehicleType));
+export const vehicleProficiencyModel = createProficiency(vehicleModel, Object.values(VehicleType), 'Vehicle');

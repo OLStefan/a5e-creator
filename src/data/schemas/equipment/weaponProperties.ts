@@ -2,4 +2,4 @@ import { additionalDescriptionModel, createAdditionalDescriptionReference } from
 
 export const weaponPropertyModel = additionalDescriptionModel;
 
-export const weaponPropertyReference = createAdditionalDescriptionReference(weaponPropertyModel);
+export const weaponPropertyReference = createAdditionalDescriptionReference(weaponPropertyModel, 'Weapon Property');
