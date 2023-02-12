@@ -25,6 +25,7 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
           git remote update
           git fetch
+          git pull
           git checkout -b $(uuidgen)
           git merge origin/${{ github.event.repository.default_branch }}
 
@@ -88,7 +89,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.open-pr.outputs.pr_number }}
-          method: merge
+          method: rebase
 
       - name: Cleanup
         run: |
