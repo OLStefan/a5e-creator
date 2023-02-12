@@ -5,6 +5,9 @@ on:
     branches:
       - 'develop'
 
+env:
+  BRANCH_NAME: staging
+
 jobs:
   setup:
     name: Setup
@@ -14,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ vars.STAGING_BRANCH }}
+          ref: ${{ env.ENV_CONTEXT_VAR }}
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -29,12 +32,12 @@ jobs:
         run: |
           git remote update
           git fetch
-          git push -d origin ${{ vars.STAGING_BRANCH }}
+          git push -d origin ${{ env.ENV_CONTEXT_VAR }}
 
       - name: Setup staging branch
         run: |
-          git checkout -b ${{ vars.STAGING_BRANCH }}
-          git push --set-upstream origin ${{ vars.STAGING_BRANCH }}
+          git checkout -b ${{ env.ENV_CONTEXT_VAR }}
+          git push --set-upstream origin ${{ env.ENV_CONTEXT_VAR }}
 
   check:
     name: Static Checks
@@ -63,7 +66,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ vars.STAGING_BRANCH }}
+          ref: ${{ env.ENV_CONTEXT_VAR }}
 
       # https://github.com/marketplace/actions/github-pull-request-action
       - name: create pull request
