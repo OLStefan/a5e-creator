@@ -42,10 +42,14 @@ jobs:
           pr_label: 'pipeline'
           pr_body: 'Automated Pull Request'
 
+      # https://github.com/marketplace/actions/merge-pull-requests-automerge-action
       - name: merge pull request
         uses: 'pascalgn/automerge-action@v0.15.5'
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           PULL_REQUEST: ${{ steps.open-pr.outputs.pr_number }}
           MERGE_LABELS: 'pipeline'
+          UPDATE_LABELS: 'pipeline'
           MERGE_ERROR_FAIL: true
+          MERGE_FILTER_AUTHOR: 'github-actions'
+          MERGE_REQUIRED_APPROVALS: 0
