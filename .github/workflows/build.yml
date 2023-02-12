@@ -3,36 +3,36 @@ name: Check & Merge
 on:
   push:
     branches: ['develop']
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  # check:
-  #   name: Static Checks
-  #   concurrency: ci-${{ github.ref }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16
-  #         cache: 'npm'
+  check:
+    name: Static Checks
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
 
-  #     - name: Install Dependencies
-  #       run: yarn install --immutable
+      - name: Install Dependencies
+        run: yarn install --immutable
 
-  #     - name: Static Checks
-  #       run: yarn check:all
+      - name: Static Checks
+        run: yarn check:all
 
   main:
     name: Merge to main
     concurrency: ci-${{ github.ref }}
-    # needs: check
+    needs: check
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
         uses: actions/checkout@v3
-        # with:
-        #   ref: ${{ github.event.push.head.ref }}
 
       # https://github.com/marketplace/actions/github-pull-request-action
       - name: create pull request
