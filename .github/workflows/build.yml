@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-build:
-    name: Create PR Release to Main
+  check:
+    name: Static Checks
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
@@ -23,18 +23,14 @@ jobs:
       - name: Static Checks
         run: yarn check:all
 
-      - name: Build
-        run: yarn build
-
   main:
     name: Create PR Develop to Main
     concurrency: ci-${{ github.ref }}
+    needs: check
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       # https://github.com/marketplace/actions/github-pull-request-action
       - name: create pull request
