@@ -1,0 +1,23 @@
+name: Merge PR
+
+on:
+  workflow_run:
+    types:
+      - completed
+    workflows:
+      # List all required workflow names here.
+      - 'Check & Merge'
+
+jobs:
+  merge-me:
+    name: Accept & Merge PR
+    runs-on: ubuntu-latest
+    steps:
+      - # It is often a desired behavior to merge only when a workflow execution
+        # succeeds. This can be changed as needed.
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        name: Accept & Merge PR
+        # https://github.com/marketplace/actions/merge-me
+        uses: ridedott/merge-me-action@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
