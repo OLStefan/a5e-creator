@@ -1,0 +1,56 @@
+name: Check & Merge
+
+on:
+  push:
+    branches: ['develop']
+  workflow_dispatch:
+
+jobs:
+  check-build:
+    name: Create PR Release to Main
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Static Checks
+        run: yarn check:all
+
+      - name: Build
+        run: yarn build
+
+  main:
+    name: Create PR Develop to Main
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      # https://github.com/marketplace/actions/github-pull-request-action
+      - name: create pull request
+        id: open-pr
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: ${{ github.event.repository.default_branch }}
+          pr_title: '[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}'
+          pr_body: 'Automated Pull Request'
+          pr_reviewer: 'OLStefan'
+          pr_assignee: 'OLStefan'
+
+      # https://github.com/marketplace/actions/enable-pull-request-automerge
+      - name: enable automerge
+        if: steps.open-pr.outputs.pr_number != ''
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          pull-request-number: ${{ steps.open-pr.outputs.pr_number }}
+          merge-method: merge
