@@ -28,21 +28,23 @@ export enum Size {
 
 export const dieSizeModel = types.enumeration(['d4', 'd6', 'd8', 'd10', 'd12', 'd100']);
 
-const baseDamageDescriptionModel = types.model('Base Damage Description',{
+const baseDamageDescriptionModel = types.model('Base Damage Description', {
 	die: dieSizeModel,
 	amount: types.optional(types.integer, 1),
 	static: types.optional(types.integer, 0),
 	damageType: types.enumeration(Object.values(DamageType)),
 });
 
-export const damageDescriptionModel = types.compose('Standard Damage Description',
+export const damageDescriptionModel = types.compose(
+	'Standard Damage Description',
 	baseDamageDescriptionModel,
 	types.model({
 		type: types.maybe(types.literal('normal')),
 	}),
 );
 
-export const specialDamageDescriptionModel = types.compose('Special Damage Description',
+export const specialDamageDescriptionModel = types.compose(
+	'Special Damage Description',
 	partial(baseDamageDescriptionModel),
 	types.model({
 		type: types.literal('special'),
