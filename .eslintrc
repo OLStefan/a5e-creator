@@ -1,37 +1,11 @@
 {
-	"env": {
-		"browser": true,
-		"es2021": true
-	},
-	"extends": [
-		"eslint:recommended",
-		"plugin:react/recommended",
-		"plugin:react-hooks/recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:import/errors",
-		"plugin:import/warnings",
-		"plugin:import/typescript"
-	],
-	"overrides": [],
-	"parser": "@typescript-eslint/parser",
-	"parserOptions": {
-		"project": "./tsconfig.json"
-	},
-	"plugins": ["react", "@typescript-eslint"],
-	"rules": {
-		"no-mixed-spaces-and-tabs": "off",
-		"import/no-cycle": "warn",
-		"@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }],
-		"import/no-named-as-default-member": "off",
-		"no-console": "warn",
-		"react/react-in-jsx-scope": "off",
-		"@typescript-eslint/no-empty-interface": "off"
-	},
-	"settings": {
-		"react": { "version": "18" },
-		"import/resolver": {
-			"typescript": {}
+	"extends": ["eslint-config-prettier", "next/core-web-vitals"],
+	"plugins": ["testing-library"],
+	"overrides": [
+		// Only uses Testing Library lint rules in test files
+		{
+			"files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+			"extends": ["plugin:testing-library/react"]
 		}
-	},
-	"ignorePatterns": ["jest.config.js"]
+	]
 }
