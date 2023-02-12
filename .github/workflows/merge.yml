@@ -28,6 +28,7 @@ jobs:
           git remote update
           git fetch
           git push -d origin ${{ env.BRANCH_NAME }}
+          git fetch
 
       - name: Setup staging branch
         run: |
