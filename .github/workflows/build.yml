@@ -2,7 +2,8 @@ name: Check & Merge
 
 on:
   push:
-    branches: ['develop']
+    branches:
+      - 'develop'
 
 jobs:
   check:
