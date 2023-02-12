@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ env.ENV_CONTEXT_VAR }}
+          ref: ${{ env.BRANCH_NAME }}
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -32,12 +32,12 @@ jobs:
         run: |
           git remote update
           git fetch
-          git push -d origin ${{ env.ENV_CONTEXT_VAR }}
+          git push -d origin ${{ env.BRANCH_NAME }}
 
       - name: Setup staging branch
         run: |
-          git checkout -b ${{ env.ENV_CONTEXT_VAR }}
-          git push --set-upstream origin ${{ env.ENV_CONTEXT_VAR }}
+          git checkout -b ${{ env.BRANCH_NAME }}
+          git push --set-upstream origin ${{ env.BRANCH_NAME }}
 
   check:
     name: Static Checks
@@ -66,7 +66,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ env.ENV_CONTEXT_VAR }}
+          ref: ${{ env.BRANCH_NAME }}
 
       # https://github.com/marketplace/actions/github-pull-request-action
       - name: create pull request
