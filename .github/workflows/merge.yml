@@ -32,6 +32,7 @@ jobs:
       - name: Setup staging branch
         run: |
           git checkout -b ${{ env.BRANCH_NAME }}
+          git merge origin/${{ github.event.repository.default_branch }}
           git push --set-upstream origin ${{ env.BRANCH_NAME }}
 
   check:
@@ -63,6 +64,7 @@ jobs:
     needs: check
     runs-on: ubuntu-latest
     steps:
+      - echo: ${{ env.BRANCH_NAME }}
       - name: Checkout
         uses: actions/checkout@v3
         with:
