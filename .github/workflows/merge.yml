@@ -5,17 +5,51 @@ on:
     branches:
       - 'develop'
 
+env:
+  BRANCH_NAME: staging
+
 jobs:
-  check:
-    name: Static Checks
+  setup:
+    name: Setup
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup git
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}"
+          git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+
+      - name: remove old staging
+        continue-on-error: true
+        run: |
+          git remote update
+          git fetch
+          git push -d origin ${{ env.BRANCH_NAME }}
+
+      - name: Setup staging branch
+        run: |
+          git checkout -b ${{ env.BRANCH_NAME }}
+          git push --set-upstream origin ${{ env.BRANCH_NAME }}
+
+  check:
+    name: Static Checks
+    concurrency: ci-${{ github.ref }}
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+
+      - name: Setpup Node
+        uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Install Dependencies
         run: yarn install --immutable
@@ -29,8 +63,10 @@ jobs:
     needs: check
     runs-on: ubuntu-latest
     steps:
-      - name: git checkout
+      - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH_NAME }}
 
       # https://github.com/marketplace/actions/github-pull-request-action
       - name: create pull request
@@ -42,6 +78,7 @@ jobs:
           pr_label: 'pipeline'
           pr_body: 'Automated Pull Request'
 
+      # https://github.com/juliangruber/merge-pull-request-action
       - name: Merge Pull Request
         uses: juliangruber/merge-pull-request-action@v1
         with:
