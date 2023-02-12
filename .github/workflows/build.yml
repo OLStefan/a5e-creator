@@ -31,8 +31,8 @@ jobs:
     steps:
       - name: git checkout
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.push.head.ref }}
+        # with:
+        #   ref: ${{ github.event.push.head.ref }}
 
       # https://github.com/marketplace/actions/github-pull-request-action
       - name: create pull request
