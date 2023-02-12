@@ -93,6 +93,7 @@ jobs:
     concurrency: ci-${{ github.ref }}
     needs: merge
     runs-on: ubuntu-latest
+    steps:
       - name: Checkout develop
         uses: actions/checkout@v3
         with:
