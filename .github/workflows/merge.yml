@@ -32,7 +32,7 @@ jobs:
 
       - name: Push staging branch
         run: |
-          git checkout ${{ env.BRANCH_NAME }}
+          git checkout -b ${{ env.BRANCH_NAME }}
           git merge origin/${{ github.event.repository.default_branch }}
           git push --set-upstream origin ${{ env.BRANCH_NAME }}
 
