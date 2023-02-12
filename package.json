@@ -8,14 +8,14 @@
 		"build": "yarn parse:data-files && next build",
 		"build:docker": "docker build . -t a5e-creator",
 		"clean": "rm -rf dist node_modules",
-		"test": "jest --",
+		"test": "jest",
 		"test:watch": "yarn test --watch",
 		"check:types": "tsc --noEmit --incremental",
 		"check:style": "prettier --check ./src",
 		"check:lint": "next lint",
 		"check:all": "yarn check:types && yarn check:style && yarn check:lint && yarn test",
 		"fix:style": "prettier --write ./src",
-		"parse:data-files": "yarn test 'src/data/schemas/'"
+		"parse:data-files": "yarn test 'src/data/models/'"
 	},
 	"browserslist": "> 0.5%, last 2 versions, not dead",
 	"dependencies": {
