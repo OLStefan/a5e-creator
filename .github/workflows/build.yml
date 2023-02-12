@@ -24,7 +24,7 @@ jobs:
         run: yarn check:all
 
   main:
-    name: Create PR Develop to Main
+    name: Merge to main
     concurrency: ci-${{ github.ref }}
     needs: check
     runs-on: ubuntu-latest
@@ -32,24 +32,12 @@ jobs:
       - name: git checkout
         uses: actions/checkout@v3
 
-      # https://github.com/marketplace/actions/github-pull-request-action
-      - name: create pull request
-        id: open-pr
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: ${{ github.event.repository.default_branch }}
-          pr_title: '[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}'
-          pr_label: 'pipeline'
-          pr_body: 'Automated Pull Request'
-
-      # https://github.com/marketplace/actions/merge-pull-requests-automerge-action
-      - name: merge pull request
-        uses: 'pascalgn/automerge-action@v0.15.5'
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-          PULL_REQUEST: ${{ steps.open-pr.outputs.pr_number }}
-          MERGE_LABELS: 'pipeline'
-          UPDATE_LABELS: 'pipeline'
-          MERGE_ERROR_FAIL: true
-          MERGE_FILTER_AUTHOR: 'github-actions'
-          MERGE_REQUIRED_APPROVALS: 0
+      - name: perform merge
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}"
+          git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+          git checkout "$GITHUB_HEAD_REF"
+          git checkout "${{ github.event.repository.default_branch }}"
+          git merge "$GITHUB_HEAD_REF" --no-edit
+          git push
+          git status
