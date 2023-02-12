@@ -5,9 +5,6 @@ on:
     branches:
       - 'develop'
 
-env:
-  BRANCH_NAME: staging
-
 jobs:
   setup:
     name: Setup
