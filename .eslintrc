@@ -1,37 +1,3 @@
 {
-	"env": {
-		"browser": true,
-		"es2021": true
-	},
-	"extends": [
-		"eslint:recommended",
-		"plugin:react/recommended",
-		"plugin:react-hooks/recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:import/errors",
-		"plugin:import/warnings",
-		"plugin:import/typescript"
-	],
-	"overrides": [],
-	"parser": "@typescript-eslint/parser",
-	"parserOptions": {
-		"project": "./tsconfig.json"
-	},
-	"plugins": ["react", "@typescript-eslint"],
-	"rules": {
-		"no-mixed-spaces-and-tabs": "off",
-		"import/no-cycle": "warn",
-		"@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }],
-		"import/no-named-as-default-member": "off",
-		"no-console": "warn",
-		"react/react-in-jsx-scope": "off",
-		"@typescript-eslint/no-empty-interface": "off"
-	},
-	"settings": {
-		"react": { "version": "18" },
-		"import/resolver": {
-			"typescript": {}
-		}
-	},
-	"ignorePatterns": ["jest.config.js"]
+	"extends": "next/core-web-vitals"
 }
