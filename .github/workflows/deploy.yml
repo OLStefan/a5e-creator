@@ -1,8 +1,6 @@
 name: Build & Deploy
 
 on:
-  push:
-    branches: ['main']
   pull_request:
     branches: ['main']
 
@@ -20,14 +18,14 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Build
+        run: yarn build
+
       - name: Static Checks
         run: yarn check:all
 
-      # - name: Build
-      #   run: yarn build
-
-      # - name: Deploy
-      #   uses: JamesIves/github-pages-deploy-action@v4
-      #   with:
-      #     folder: dist
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          token: ${{ secrets.GITHUB_TOKEN }}
