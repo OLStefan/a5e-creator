@@ -85,3 +85,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.open-pr.outputs.pr_number }}
           method: merge
+
+      - name: Cleanup
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}"
+          git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+          git remote update
+          git fetch
+          git push -d origin ${{ env.BRANCH_NAME }}
