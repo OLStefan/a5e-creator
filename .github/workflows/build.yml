@@ -1,0 +1,52 @@
+name: Check & Merge
+
+on:
+  push:
+    branches: ['develop']
+  workflow_dispatch:
+
+jobs:
+  # check:
+  #   name: Static Checks
+  #   concurrency: ci-${{ github.ref }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         cache: 'npm'
+
+  #     - name: Install Dependencies
+  #       run: yarn install --immutable
+
+  #     - name: Static Checks
+  #       run: yarn check:all
+
+  main:
+    name: Merge to main
+    concurrency: ci-${{ github.ref }}
+    # needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v3
+        # with:
+        #   ref: ${{ github.event.push.head.ref }}
+
+      # https://github.com/marketplace/actions/github-pull-request-action
+      - name: create pull request
+        id: open-pr
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: ${{ github.event.repository.default_branch }}
+          pr_title: '[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}'
+          pr_label: 'pipeline'
+          pr_body: 'Automated Pull Request'
+
+      - name: Merge Pull Request
+        uses: juliangruber/merge-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ steps.open-pr.outputs.pr_number }}
+          method: merge
