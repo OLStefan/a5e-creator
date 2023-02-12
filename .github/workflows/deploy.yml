@@ -2,8 +2,8 @@
 name: Deploy to Github Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
+  pull_request:
+    types: ['closed']
     branches: ['main']
 
   # Allows you to run this workflow manually from the Actions tab
@@ -23,6 +23,7 @@ concurrency:
 jobs:
   # Build job
   build:
+    if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
