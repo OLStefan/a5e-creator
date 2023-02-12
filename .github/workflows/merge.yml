@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.push.head.ref }}
 
       - name: Setup git
         run: |
@@ -28,7 +30,6 @@ jobs:
           git remote update
           git fetch
           git push -d origin ${{ env.BRANCH_NAME }}
-          git fetch
 
       - name: Setup staging branch
         run: |
