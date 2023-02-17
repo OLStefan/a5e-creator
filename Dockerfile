@@ -1,34 +1,48 @@
-# ==== CONFIGURE =====
-# Use a Node 16 base image
-FROM node:16-alpine as deps
-# Set the working directory to /app inside the container
+
+FROM node:18-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+# RUN apk add --no-cache libc6-compat
 WORKDIR /app
-# Copy app files
-COPY .yarn ./.yarn
-COPY .yarnrc.yml .
-COPY ./package.json .
-COPY ./yarn.lock .
-# ==== BUILD =====
-# Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
-RUN yarn install --frozen-lockfile
-# ==== RUN =======
-FROM node:16-alpine as builder
-# Set the working directory to /app inside the container
-WORKDIR /app
-# Copy app files
-COPY . .
-COPY --from=deps app/node_modules ./node_modules
-# Build the app
-RUN yarn build
-# ==== RUN =======
-FROM node:16-alpine
-# Set the working directory to /app inside the container
-WORKDIR /app
-# Copy only the build artifact
-COPY --from=builder app/dist ./dist
-# Set the env to "production"
+
+# Install dependencies
+COPY .yarn .yarn/
+COPY package.json yarn.lock .yarnrc.yml ./
 ENV NODE_ENV production
-# Expose the port on which the app will be running
-EXPOSE 3000
-# Start the app
-CMD [ "npx", "serve", "dist" ]
+RUN yarn --immutable
+
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+ENV NEXT_TELEMETRY_DISABLED 1
+RUN yarn build
+
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED 1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/server ./.next/server
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+CMD ["node", "server.js"]
