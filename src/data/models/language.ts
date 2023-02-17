@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 
-export enum Attribute {
+export enum Language {
 	Abyssal = 'abyssal',
 	Aquan = 'aquan',
 	Auran = 'auran',
@@ -24,4 +24,4 @@ export enum Attribute {
 	Undercommon = 'undercommon',
 }
 
-export const attributeModel = types.enumeration(Object.values(Attribute));
+export const languageModel = types.enumeration(Object.values(Language));
