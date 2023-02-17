@@ -12,7 +12,6 @@ import weaponPropertiesJson from '../../resources/equipment/weaponProperties.jso
 import weaponsJson from '../../resources/equipment/weapons.json';
 
 import { types } from 'mobx-state-tree';
-import type { ExtractCFromProps } from 'mobx-state-tree/dist/internal';
 import { anyAdventuringGearModel } from './adventuringGear';
 import { anyArmorModel } from './armor';
 import { equipmentPackModel } from './equipmentPacks';
@@ -56,5 +55,5 @@ export function getEquipmentResources() {
 		vehicles: vehiclesJson,
 		weaponProperties: weaponPropertiesJson,
 		weapons: weaponsJson,
-	} as ExtractCFromProps<typeof equipmentModel.properties>;
+	} as NonNullable<Parameters<typeof equipmentModel.create>[0]>;
 }
