@@ -77,7 +77,7 @@ jobs:
     name: Merge to main
     concurrency: ci-${{ github.ref }}
     needs: check
-    if: always() && !canceled() && needs.check.result != 'failure'
+    if: always() && ! cancelled() && needs.check.result != 'failure'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
