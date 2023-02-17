@@ -28,7 +28,7 @@ jobs:
       - name: remove old staging
         continue-on-error: true
         run: |
-          git push -d origin ${{ env.BRANCH_NAME }}
+          git push -d origin ${{ env.BRANCH_NAME }} ; exit 0
 
       - name: Push staging branch
         run: |
