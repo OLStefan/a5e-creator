@@ -5,7 +5,7 @@ import { Divider, Input } from 'antd';
 import classNames from 'classnames';
 import { useState } from 'react';
 import Description from '../components/Description';
-// import styles from './page.module.scss';
+import styles from './index.module.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,9 +13,9 @@ export default function Home() {
 	const [val, setVal] = useState('');
 
 	return (
-		<div className={classNames(inter.className /*styles.main*/)}>
+		<div className={classNames(inter.className, styles.main)}>
 			<Input.TextArea
-				// className={styles.textarea}
+				className={styles.textarea}
 				onChange={(event) => {
 					setVal(escapeMarkdown(event.target.value).string);
 				}}
