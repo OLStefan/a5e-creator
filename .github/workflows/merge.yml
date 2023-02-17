@@ -107,7 +107,7 @@ jobs:
     name: CleanUp
     concurrency: ci-${{ github.ref }}
     needs: merge
-    if: always() && ! cancelled() && needs.merge.result != 'failure'
+    if: always() && ! cancelled() && needs.merge.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout develop
