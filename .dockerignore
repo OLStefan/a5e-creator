@@ -1,10 +1,12 @@
 # Caches
 node_modules
 dist
-.parcel-cache
+.next
+.swc
 
 # Project related
 .vscode
 *.code-workspace
 .git
 .gitignore
+.github
