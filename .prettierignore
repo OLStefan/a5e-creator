@@ -1,5 +1,12 @@
-.vscode
-.yarn
-dist
+# Caches
 node_modules
-static
+dist
+.next
+.swc
+
+# Project related
+.vscode
+*.code-workspace
+.git
+.gitignore
+.github
