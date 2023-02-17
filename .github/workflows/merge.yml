@@ -25,10 +25,10 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}"
           git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
 
-      - name: remove old staging
+      - name: remove old staging, if existing
         continue-on-error: true
         run: |
-          git push -d origin ${{ env.BRANCH_NAME }} ; exit 0
+          if git ls-remote | grep -i ${{ env.BRANCH_NAME }}; then git push -d origin ${{ env.BRANCH_NAME }}; fi
 
       - name: Push staging branch
         run: |
