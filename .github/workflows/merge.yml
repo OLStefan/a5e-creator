@@ -47,13 +47,13 @@ jobs:
           $HasDiff = $SourceDiff.Length -gt 0
 
           # Set the output name"
-          Write-Host "::set-output name=srcDiff::$HasDiff"    
+          Write-Host "::echo "{srcDiff}={$HasDiff}" >> $GITHUB_OUTPUT"    
 
   check:
     name: Static Checks
     concurrency: ci-${{ github.ref }}
     needs: setup
-    if: needs.setup.outputs.srcDiff == 'True'
+    if: needs.setup.outputs.srcDiff == 'False'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -107,6 +107,7 @@ jobs:
     name: CleanUp
     concurrency: ci-${{ github.ref }}
     needs: merge
+    if: always() && ! cancelled() && needs.merge.result != 'failure'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout develop
