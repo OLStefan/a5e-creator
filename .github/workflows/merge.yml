@@ -55,7 +55,7 @@ jobs:
     name: Static Checks
     concurrency: ci-${{ github.ref }}
     needs: setup
-    if: needs.setup.outputs.srcDiff == 'False'
+    if: needs.setup.outputs.srcDiff != 'False'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
