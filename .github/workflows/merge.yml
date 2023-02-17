@@ -7,7 +7,6 @@ on:
 
 env:
   BRANCH_NAME: staging
-  CHECK_DIFF_RESULT: srcDiff
 
 jobs:
   setup:
@@ -48,13 +47,13 @@ jobs:
           $HasDiff = $SourceDiff.Length -gt 0
 
           # Set the output name"
-          Write-Host "::set-output name=${{ env.CHECK_DIFF_RESULT }}::$HasDiff"    
+          Write-Host "::set-output name=srcDiff::$HasDiff"    
 
   check:
     name: Static Checks
     concurrency: ci-${{ github.ref }}
     needs: setup
-    if: needs.setup.outputs.${{ env.CHECK_DIFF_RESULT }} == 'True'
+    if: needs.setup.outputs.srcDiff == 'True'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
