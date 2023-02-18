@@ -5,7 +5,7 @@ import { Divider, Input } from 'antd';
 import classNames from 'classnames';
 import { useState } from 'react';
 import Description from '../components/Description';
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

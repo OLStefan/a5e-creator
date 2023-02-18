@@ -1760,7 +1760,6 @@ __metadata:
     react-dom: ~18.2.0
     react-markdown: ^8.0.5
     react-redux: ^8.0.5
-    sass: ^1.58.0
     ts-jest: ~29.0.5
     type-fest: ~3.5.7
     typescript: ~4.9.5
@@ -7858,7 +7857,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.56.1, sass@npm:^1.58.0":
+"sass@npm:^1.56.1":
   version: 1.58.0
   resolution: "sass@npm:1.58.0"
   dependencies:
