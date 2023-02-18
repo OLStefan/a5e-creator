@@ -4,27 +4,27 @@ import { Inter } from '@next/font/google';
 import { Divider, Input } from 'antd';
 import classNames from 'classnames';
 import { useState } from 'react';
-import Description from '../components/Description';
-// import styles from './page.module.scss';
+import Markdown from 'react-markdown';
+import styles from './index.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-	const [val, setVal] = useState('');
+	const [val, setVal] = useState<ReturnType<typeof escapeMarkdown>>({ orig: '', string: '' });
 
 	return (
-		<div className={classNames(inter.className /*styles.main*/)}>
+		<div className={classNames(inter.className, styles.main)}>
 			<Input.TextArea
-				// className={styles.textarea}
+				className={styles.textarea}
 				onChange={(event) => {
-					setVal(escapeMarkdown(event.target.value).string);
+					setVal(escapeMarkdown(event.target.value));
 				}}
 				autoSize
 			/>
 			<Divider />
-			<div>{val}</div>
+			<div>{val.string}</div>
 			<Divider />
-			<Description value={val} />
+			<Markdown>{val.orig}</Markdown>
 		</div>
 	);
 }
@@ -32,6 +32,6 @@ export default function Home() {
 function escapeMarkdown(markdown: string) {
 	return {
 		orig: markdown,
-		string: markdown.replaceAll('\\', '\\\\').replaceAll(/"/g, '"').replaceAll('\n', '  \\n').replaceAll('’', "'"),
+		string: markdown.replaceAll('\\', '\\\\').replaceAll(/"/g, '"').replaceAll('\n', '\\n').replaceAll('’', "'"),
 	};
 }
