@@ -1,6 +1,5 @@
 import { types } from 'mobx-state-tree';
 import { damageDescriptionModel, specialDamageDescriptionModel } from '../general';
-import { createProficiency } from '../util/proficiency';
 import { equipmentPieceModel, equipmentPieceReferenceModel, EquipmentType } from './base';
 import { materialModel } from './material';
 import { weaponPropertyReference } from './weaponProperties';
@@ -26,7 +25,7 @@ const baseWeaponModel = types.compose(
 		properties: types.array(weaponPropertyReference),
 		type: types.literal(EquipmentType.Weapon),
 		weaponType: types.enumeration(Object.values(WeaponType)),
-		defaultMaterial: types.safeReference(materialModel),
+		defaultMaterial: types.reference(materialModel),
 	}),
 );
 
@@ -54,9 +53,7 @@ export const weaponReferenceModel = types.compose(
 	'Weapon Reference',
 	equipmentPieceReferenceModel,
 	types.model({
-		ref: types.safeReference(anyWeaponModel),
-		material: types.safeReference(materialModel),
+		ref: types.reference(anyWeaponModel),
+		material: types.reference(materialModel),
 	}),
 );
-
-export const weaponProficiencyModel = createProficiency(anyWeaponModel, Object.values(WeaponCategory), 'Weapon');

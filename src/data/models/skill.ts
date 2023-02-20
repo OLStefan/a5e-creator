@@ -1,10 +1,10 @@
 import skillsJson from '../resources/skills.json';
 
 import { types } from 'mobx-state-tree';
-import { descriptionModel } from './util';
+import { sourcedDescriptionModel } from './util';
 
 export const skillModel = types.compose(
-	descriptionModel,
+	sourcedDescriptionModel,
 	types.model({
 		specialties: types.array(types.string),
 	}),
