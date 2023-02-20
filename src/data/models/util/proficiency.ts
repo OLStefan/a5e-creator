@@ -17,11 +17,11 @@ export function createProficiency<Model extends IAnyComplexType, Category extend
 	);
 }
 
-export function createReferenceProficiencyChoiceSchema<Model extends IAnyComplexType>(model: Model) {
-	return createProficiencyChoiceSchema(types.reference(model));
+export function createReferenceProficiencyChoice<Model extends IAnyComplexType>(model: Model) {
+	return createProficiencyChoice(types.reference(model));
 }
 
-export function createProficiencyChoiceSchema<Model extends IAnyType>(model: Model) {
+export function createProficiencyChoice<Model extends IAnyType>(model: Model) {
 	return types.model({
 		allOf: types.array(model),
 		choice: types.maybe(
