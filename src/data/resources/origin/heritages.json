@@ -36,7 +36,7 @@
 				}
 			]
 		},
-		"paragon": {
+		"paragonFeatures": {
 			"description": "With enough time and training any dragonborn can unlock their draconic potential. When you reach 10th level, your dragonborn gift dramatically improves.\n\nIn addition, you gain resistance to the damage type dealt by your Dragon Breath. If you already have resistance to that type of damage, you gain immunity to it instead.",
 			"options": [
 				{
@@ -56,6 +56,6 @@
 				}
 			]
 		},
-		"suggestedCultures": [{ "ref": "dragonbound" }, { "ref": "dragoncult" }]
+		"suggestedCultures": ["dragonbound", "dragoncult"]
 	}
 ]

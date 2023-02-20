@@ -20,7 +20,7 @@
 				"source": { "book": "AG", "page": 51 }
 			}
 		],
-		"languages": { "allOf": [{ "ref": "common" }, { "ref": "draconic" }] }
+		"languages": { "allOf": ["common", "draconic"] }
 	},
 	{
 		"name": "dragoncult",
@@ -38,6 +38,6 @@
 				"source": { "book": "AG", "page": 53 }
 			}
 		],
-		"languages": { "allOf": [{ "ref": "common" }, { "ref": "draconic" }] }
+		"languages": { "allOf": ["common", "draconic"] }
 	}
 ]
