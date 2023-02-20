@@ -9,8 +9,13 @@ export enum SourceBook {
 	Homebrew = 'Homebrew',
 }
 
+export const sourceModel = types.model({
+	short: types.identifier,
+	name: types.string,
+});
+
 export const sourceReferenceModel = types.model({
-	book: types.enumeration(Object.values(SourceBook)),
+	book: types.reference(sourceModel),
 	page: types.maybe(types.refinement(types.integer, (page) => page >= 1)),
 });
 
