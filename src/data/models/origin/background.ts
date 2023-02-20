@@ -7,7 +7,7 @@ import {
 	createProficiencyChoice,
 	createReferenceProficiencyChoice,
 	descriptionModel,
-	sourcedDescriptionModel
+	sourcedDescriptionModel,
 } from '../util';
 
 export const backgroundModel = types.compose(
