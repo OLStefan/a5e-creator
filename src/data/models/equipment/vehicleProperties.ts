@@ -1,3 +1,3 @@
-import { descriptionModel } from '../util';
+import { sourcedDescriptionModel } from '../util';
 
-export const vehiclePropertyModel = descriptionModel;
+export const vehiclePropertyModel = sourcedDescriptionModel;

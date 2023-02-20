@@ -1,3 +1,3 @@
-import { descriptionModel } from '../util';
+import { sourcedDescriptionModel } from '../util';
 
-export const mountPropertyModel = descriptionModel;
+export const mountPropertyModel = sourcedDescriptionModel;

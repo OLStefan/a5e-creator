@@ -40,10 +40,19 @@ export const equipmentModel = types.model({
 	vehicles: types.array(vehicleModel),
 });
 
+export const anyEquipmentPieceModel = types.union(
+	anyAdventuringGearModel,
+	anyArmorModel,
+	equipmentPackModel,
+	mountModel,
+	anyToolModel,
+	vehicleModel,
+	anyWeaponModel,
+);
+
 export function getEquipmentResources() {
 	return {
 		materials: materialsJson,
-		materialPropertiesJson,
 		adventuringGear: adventuringGearJson,
 		armors: armorsJson,
 		equipmentPacks: equipmentPacksJson,

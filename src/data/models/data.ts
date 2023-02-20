@@ -1,12 +1,14 @@
 import { types } from 'mobx-state-tree';
 import { equipmentModel, getEquipmentResources } from './equipment';
-import { getSkillResources, skillListModel } from './skills';
+import { getOriginResources, originModel } from './origin';
+import { getSkillResources, skillListModel } from './skill';
 
 export const dataModel = types.model('Data', {
 	equipment: equipmentModel,
 	skills: skillListModel,
+	origins: originModel,
 });
 
 export function getResources() {
-	return { equipment: getEquipmentResources(), skills: getSkillResources() };
+	return { equipment: getEquipmentResources(), skills: getSkillResources(), origins: getOriginResources() };
 }

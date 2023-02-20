@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree';
-import { descriptionModel } from '../util';
+import { sourcedDescriptionModel } from '../util';
 
 export enum EquipmentType {
 	Weapon = 'weapon',
@@ -20,7 +20,7 @@ export enum EquipmentQuality {
 }
 
 export const equipmentPieceModel = types.compose(
-	descriptionModel,
+	sourcedDescriptionModel,
 	types.model({
 		weight: types.optional(types.number, 0),
 		price: types.optional(types.number, 0),
@@ -29,7 +29,7 @@ export const equipmentPieceModel = types.compose(
 );
 
 export const equipmentPieceReferenceModel = types.model({
-	ref: types.safeReference(equipmentPieceModel),
+	ref: types.reference(equipmentPieceModel),
 	quality: types.optional(types.enumeration(Object.values(EquipmentQuality)), EquipmentQuality.Normal),
 	amount: types.optional(
 		types.refinement(types.integer, (value) => value >= 1),

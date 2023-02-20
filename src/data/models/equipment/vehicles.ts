@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { Size } from '../general';
-import { createProficiency } from '../util/proficiency';
+import { createProficiency } from '../util';
 import { equipmentPieceModel, EquipmentType } from './base';
 import { materialModel } from './material';
 import { vehiclePropertyModel } from './vehicleProperties';
@@ -26,8 +26,8 @@ export const vehicleModel = types.compose(
 				journey: types.number,
 			}),
 		),
-		properties: types.array(types.safeReference(vehiclePropertyModel)),
-		defaultMaterial: types.safeReference(materialModel),
+		properties: types.array(types.reference(vehiclePropertyModel)),
+		defaultMaterial: types.reference(materialModel),
 	}),
 );
 

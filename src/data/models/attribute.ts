@@ -10,3 +10,4 @@ export enum Attribute {
 }
 
 export const attributeModel = types.enumeration(Object.values(Attribute));
+
