@@ -1,13 +1,13 @@
-import sourceJson from '../resources/sources.json';
-
 import { types } from 'mobx-state-tree';
 import { equipmentModel, getEquipmentResources } from './equipment';
+import { getLanguageResources, languageModel } from './language';
 import { getOriginResources, originModel } from './origin';
 import { getSkillResources, skillListModel } from './skill';
-import { sourceModel } from './util';
+import { getSourceResources, sourceListModel } from './source';
 
 export const dataModel = types.model('Data', {
-	sources: types.array(sourceModel),
+	sources: sourceListModel,
+	languages: types.array(languageModel),
 	equipment: equipmentModel,
 	skills: skillListModel,
 	origins: originModel,
@@ -15,7 +15,8 @@ export const dataModel = types.model('Data', {
 
 export function getResources() {
 	return {
-		sources: sourceJson,
+		sources: getSourceResources(),
+		languages: getLanguageResources(),
 		equipment: getEquipmentResources(),
 		skills: getSkillResources(),
 		origins: getOriginResources(),

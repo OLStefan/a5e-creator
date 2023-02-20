@@ -1,23 +1,5 @@
 import { types } from 'mobx-state-tree';
-
-export enum SourceBook {
-	AG = 'AG',
-	TT = 'TT',
-	DDG = 'DDG',
-	ZG = 'ZG',
-	GPG = 'GPG',
-	Homebrew = 'Homebrew',
-}
-
-export const sourceModel = types.model({
-	short: types.identifier,
-	name: types.string,
-});
-
-export const sourceReferenceModel = types.model({
-	book: types.reference(sourceModel),
-	page: types.maybe(types.refinement(types.integer, (page) => page >= 1)),
-});
+import { sourceReferenceModel } from '../source';
 
 export const descriptionModel = types.model({
 	name: types.identifier,
