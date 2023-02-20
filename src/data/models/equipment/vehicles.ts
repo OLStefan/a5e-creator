@@ -1,6 +1,5 @@
 import { types } from 'mobx-state-tree';
 import { Size } from '../general';
-import { createProficiency } from '../util';
 import { equipmentPieceModel, EquipmentType } from './base';
 import { materialModel } from './material';
 import { vehiclePropertyModel } from './vehicleProperties';
@@ -30,5 +29,3 @@ export const vehicleModel = types.compose(
 		defaultMaterial: types.reference(materialModel),
 	}),
 );
-
-export const vehicleProficiencyModel = createProficiency(vehicleModel, Object.values(VehicleType), 'Vehicle');
