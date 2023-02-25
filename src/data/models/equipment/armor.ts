@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree';
-import { equipmentPieceModel, EquipmentType } from './base';
+import { equipmentPieceModel, equipmentPieceReferenceModel, EquipmentType } from './base';
 import { materialModel } from './material';
 
 export enum ArmorType {
@@ -46,3 +46,12 @@ const shieldModel = types.compose(
 );
 
 export const anyArmorModel = types.union(armorModel, shieldModel);
+
+export const armorReferenceModel = types.compose(
+	'Armor Reference',
+	equipmentPieceReferenceModel,
+	types.model({
+		ref: types.reference(anyArmorModel),
+		material: types.reference(materialModel),
+	}),
+);

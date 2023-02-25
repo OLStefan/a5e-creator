@@ -1,4 +1,4 @@
-import { IAnyComplexType, IAnyType, types } from 'mobx-state-tree';
+import { IAnyComplexType, IAnyType, Instance, types } from 'mobx-state-tree';
 
 export function createProficiency<Model extends IAnyComplexType, Category extends string>(
 	model: Model,
@@ -20,6 +20,10 @@ export function createProficiency<Model extends IAnyComplexType, Category extend
 export function createReferenceProficiencyChoice<Model extends IAnyComplexType>(model: Model) {
 	return createProficiencyChoice(types.reference(model));
 }
+
+export interface ReferenceProficiencyChoice<Model extends IAnyComplexType>
+	extends Instance<ReturnType<typeof createReferenceProficiencyChoice<Model>>> {}
+
 
 export function createProficiencyChoice<Model extends IAnyType>(model: Model) {
 	return types.model({

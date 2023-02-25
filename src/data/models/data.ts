@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { Instance, types } from 'mobx-state-tree';
 import { equipmentModel, getEquipmentResources } from './equipment';
 import { getLanguageResources, languageModel } from './language';
 import { getOriginResources, originModel } from './origin';
@@ -12,6 +12,8 @@ export const dataModel = types.model('Data', {
 	skills: skillListModel,
 	origins: originModel,
 });
+
+export interface Data extends Instance<typeof dataModel> {}
 
 export function getResources() {
 	return {
