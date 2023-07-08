@@ -57,7 +57,7 @@ jobs:
     name: Static Checks
     concurrency: ci-${{ github.ref }}
     needs: setup
-    if: needs.setup.outputs.setupDiff || needs.setup.outputs.codeDiff
+    if: needs.setup.outputs.setupDiff == true || needs.setup.outputs.codeDiff == true 
     runs-on: ubuntu-latest
     steps:
       - name: Debug
