@@ -1,5 +1,5 @@
 import { Instance, types } from 'mobx-state-tree';
-import { equipmentModel } from './equipment';
+import { equipmentModel, getEquipmentResources } from './equipment';
 import { getLanguageResources, languageModel } from './language';
 import { getOriginResources, originModel } from './origin';
 import { getSkillResources, skillListModel } from './skill';
@@ -19,7 +19,7 @@ export function getResources() {
 	return {
 		sources: getSourceResources(),
 		languages: getLanguageResources(),
-		// equipment: getEquipmentResources(),
+		equipment: getEquipmentResources(),
 		skills: getSkillResources(),
 		origins: getOriginResources(),
 	};
