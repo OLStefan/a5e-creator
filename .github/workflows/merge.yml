@@ -13,11 +13,13 @@ jobs:
     name: Setup
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
+    outputs:
+      srcDiff: ${{steps.check_file_changed.outputs.srcDiff}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.push.head.ref }}
+          ref: ${{ github.event.ref }}
           fetch-depth: 0
 
       - name: Setup git
@@ -47,7 +49,7 @@ jobs:
           $HasDiff = $SourceDiff.Length -gt 0
 
           # Set the output name"
-          Write-Host "::echo "{srcDiff}={$HasDiff}" >> $GITHUB_OUTPUT"    
+          Write-Host "::echo "{srcDiff}={$HasDiff}" >> $GITHUB_OUTPUT"  
 
   check:
     name: Static Checks
@@ -107,13 +109,13 @@ jobs:
     name: CleanUp
     concurrency: ci-${{ github.ref }}
     needs: merge
-    if: always() && ! cancelled() && needs.merge.result == 'success'
+    if: always() && !cancelled() && needs.merge.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout develop
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.push.head.ref }}
+          ref: ${{ github.event.ref }}
           fetch-depth: 0
 
       - name: Push staging branch

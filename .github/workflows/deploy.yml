@@ -2,11 +2,9 @@
 name: Deploy to Github Pages
 
 on:
-  pull_request:
-    types:
-      - 'closed'
+  push:
     branches:
-      - 'main'
+      - 'develop'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,7 +23,6 @@ concurrency:
 jobs:
   # Build job
   build:
-    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
