@@ -89,7 +89,7 @@ jobs:
         with:
           ref: ${{ env.BRANCH_NAME }}
 
-      # https://github.com/marketplace/actions/github-pull-request-action
+      # https://github.com/marketplace/actions/create-pull-request
       - name: create pull request
         id: open-pr
         uses: repo-sync/pull-request@v2
