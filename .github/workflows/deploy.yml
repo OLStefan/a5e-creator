@@ -43,15 +43,13 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable
 
-      # TODO: Wait until supported for appDir: https://beta.nextjs.org/docs/app-directory-roadmap
       - name: Build
         run: yarn export
 
-      # TODO: Use correct folder
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: 'export/'
+          path: 'out/'
 
   # Deployment job
   deploy:
