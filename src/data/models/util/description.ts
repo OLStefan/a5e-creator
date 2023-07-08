@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { Instance, types } from 'mobx-state-tree';
 import { sourceReferenceModel } from '../source';
 
 export const descriptionModel = types.model({
@@ -13,6 +13,8 @@ export const sourcedDescriptionModel = types.compose(
 		disabled: types.maybe(types.boolean),
 	}),
 );
+
+export interface SourcedDescription extends Instance<typeof sourcedDescriptionModel> {}
 
 export const additionalDescriptionModel = types.compose(
 	sourcedDescriptionModel,

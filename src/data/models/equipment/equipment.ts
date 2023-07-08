@@ -11,7 +11,7 @@ import vehiclesJson from '../../resources/equipment/vehicles.json';
 import weaponPropertiesJson from '../../resources/equipment/weaponProperties.json';
 import weaponsJson from '../../resources/equipment/weapons.json';
 
-import { types } from 'mobx-state-tree';
+import { Instance, types } from 'mobx-state-tree';
 import { anyAdventuringGearModel } from './adventuringGear';
 import { anyArmorModel } from './armor';
 import { equipmentPackModel } from './equipmentPacks';
@@ -39,6 +39,8 @@ export const equipmentModel = types.model({
 	vehicleProperties: types.array(vehiclePropertyModel),
 	vehicles: types.array(vehicleModel),
 });
+
+export interface Equipment extends Instance<typeof equipmentModel> {}
 
 export const anyEquipmentPieceModel = types.union(
 	anyAdventuringGearModel,
