@@ -1,4 +1,4 @@
-import { IAnyComplexType, IAnyType, Instance, types } from 'mobx-state-tree';
+import { IAnyComplexType, IAnyType, Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree';
 
 export function createProficiency<Model extends IAnyComplexType, Category extends string>(
 	model: Model,
@@ -25,11 +25,20 @@ export interface ReferenceProficiencyChoice<Model extends IAnyComplexType>
 	extends Instance<ReturnType<typeof createReferenceProficiencyChoice<Model>>> {}
 
 export function createProficiencyChoice<Model extends IAnyType>(model: Model) {
+	const optionArray = types.array(model);
+	type optionSnapshotIn = SnapshotIn<typeof optionArray>;
+	type optionSnapshotOut = SnapshotOut<typeof optionArray>;
+	type optionInstance = Instance<typeof optionArray>;
+
 	return types.model({
 		allOf: types.array(model),
 		choice: types.maybe(
 			types.model({
-				options: types.union(types.literal('all'), types.array(model)),
+				// Typescript does not manage to extract types from optionArray itself
+				options: types.union<'all', 'all', 'all', optionSnapshotIn, optionSnapshotOut, optionInstance>(
+					types.literal('all'),
+					optionArray,
+				),
 				amount: types.optional(types.number, 1),
 			}),
 		),
