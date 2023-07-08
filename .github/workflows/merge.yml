@@ -96,12 +96,19 @@ jobs:
           pr_body: 'Automated Pull Request'
 
       # https://github.com/juliangruber/merge-pull-request-action
+      # - name: Merge Pull Request
+      #   uses: juliangruber/merge-pull-request-action@v1.2
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     number: ${{ steps.open-pr.outputs.pr_number }}
+      #     method: merge
+
+      # https://github.com/juliangruber/merge-pull-request-action
       - name: Merge Pull Request
-        uses: juliangruber/merge-pull-request-action@v1
+        uses: maxkomarychev/oction-merge-pull-request@v0.7.1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.open-pr.outputs.pr_number }}
-          method: merge
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull_number: ${{ steps.open-pr.outputs.pr_number }}
 
   cleanup:
     name: CleanUp
