@@ -2,10 +2,12 @@
 	"name": "a5e-creator",
 	"version": "0.1.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"develop": "yarn install && next dev",
 		"export": "echo 'Not yet supported in next.JS' && exit 1; yarn build && next export",
 		"build": "yarn parse:data-files && next build",
+		"start": "node .next/standalone/server.js",
 		"build:docker": "docker build . -t a5e-creator",
 		"clean": "rm -rf out node_modules .next",
 		"test": "jest",
@@ -15,7 +17,7 @@
 		"check:lint": "next lint",
 		"check:all": "yarn check:types && yarn check:style && yarn check:lint && yarn test",
 		"fix:style": "prettier --write ./src",
-		"parse:data-files": "yarn test 'src/data/models/'"
+		"parse:data-files": "yarn test src/data/models/"
 	},
 	"browserslist": "> 0.5%, last 2 versions, not dead",
 	"dependencies": {
