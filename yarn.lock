@@ -1001,13 +1001,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/font@npm:^13.4.9":
-  version: 13.4.9
-  resolution: "@next/font@npm:13.4.9"
-  checksum: ef50061c0f2adb73fece5477b312ba9ae7efb573a53259a4dc480e5c3ae97f2b8fa0200ccef793604bfdf65e635bdf1c3876c63f0e3d5e67887fe8b95967d57d
-  languageName: node
-  linkType: hard
-
 "@next/swc-darwin-arm64@npm:13.4.9":
   version: 13.4.9
   resolution: "@next/swc-darwin-arm64@npm:13.4.9"
@@ -1869,7 +1862,6 @@ __metadata:
     "@ant-design/icons": ~5.1.4
     "@fortawesome/fontawesome-svg-core": ~6.4.0
     "@fortawesome/free-solid-svg-icons": ~6.4.0
-    "@next/font": ^13.4.9
     "@testing-library/dom": ~9.3.1
     "@testing-library/jest-dom": 5.16.5
     "@testing-library/react": 14.0.0

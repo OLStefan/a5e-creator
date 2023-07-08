@@ -1,8 +1,8 @@
 'use client';
 
-import { Inter } from '@next/font/google';
 import { Divider, Input } from 'antd';
 import classNames from 'classnames';
+import { Inter } from 'next/font/google';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
 import styles from './index.module.css';
