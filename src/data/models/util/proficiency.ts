@@ -24,7 +24,6 @@ export function createReferenceProficiencyChoice<Model extends IAnyComplexType>(
 export interface ReferenceProficiencyChoice<Model extends IAnyComplexType>
 	extends Instance<ReturnType<typeof createReferenceProficiencyChoice<Model>>> {}
 
-
 export function createProficiencyChoice<Model extends IAnyType>(model: Model) {
 	return types.model({
 		allOf: types.array(model),
