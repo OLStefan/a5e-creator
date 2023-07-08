@@ -60,11 +60,6 @@ jobs:
     if: needs.setup.outputs.setupDiff == true || needs.setup.outputs.codeDiff == true 
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        run: |
-          echo ${{ needs.setup.outputs.setupDiff }}
-          echo ${{ needs.setup.outputs.codeDiff }}
-
       - name: Checkout
         uses: actions/checkout@v3
         with:
