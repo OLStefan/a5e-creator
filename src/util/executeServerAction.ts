@@ -5,32 +5,36 @@ export default function executeServerAction<Action extends (...args: never[]) =>
 	fallback: Action;
 	fallbackClient?: Action;
 	params?: undefined;
+	executedOnClient?: boolean;
 }): ReturnType<Action>;
 export default function executeServerAction<Action extends (...args: any) => any>(params: {
 	action: Action;
 	fallback: Action;
 	fallbackClient?: Action;
 	params: Parameters<Action>;
+	executedOnClient?: boolean;
 }): ReturnType<Action>;
 export default function executeServerAction<Action extends (...args: any) => any>({
 	action,
 	fallback,
 	fallbackClient,
 	params = [] as Parameters<Action>,
+	executedOnClient,
 }: {
 	action: Action;
 	fallback: Action;
 	fallbackClient?: Action;
 	params?: Parameters<Action>;
+	executedOnClient?: boolean;
 }) {
 	if (serverAllowed) {
 		console.log('Server Action');
 		return action(...params);
 	}
 
-	try {
-		return fallbackClient?.(...params) ?? fallback(...params);
-	} catch {
-		return fallback(...params);
+	if (executedOnClient) {
+		const func = fallbackClient ?? fallback;
+		return func(...params);
 	}
+	return fallback(...params);
 }
