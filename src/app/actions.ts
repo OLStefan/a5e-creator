@@ -27,8 +27,7 @@ export async function loadText() {
 				return '';
 			});
 		},
-		fallback: async () => {
-			return localStorage.getItem(LOCAL_STORAGE_KEY) ?? '';
-		},
+		fallback: async () => '',
+		fallbackClient: async () => localStorage.getItem(LOCAL_STORAGE_KEY),
 	});
 }
