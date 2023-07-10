@@ -19,7 +19,7 @@ export async function updateText(text: string) {
 	});
 }
 
-export async function loadText() {
+export async function loadText(executedOnClient?: boolean) {
 	return executeServerAction({
 		action: async () => {
 			return fetch('http://google.de').then(() => {
@@ -29,5 +29,6 @@ export async function loadText() {
 		},
 		fallback: async () => null,
 		fallbackClient: async () => localStorage.getItem(LOCAL_STORAGE_KEY),
+		executedOnClient,
 	});
 }

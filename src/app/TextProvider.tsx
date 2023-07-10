@@ -13,7 +13,7 @@ export interface TextProviderProps {
 
 export default function TextProvider({ initialValue, children }: TextProviderProps) {
 	console.log('Provider', { initialValue });
-	const value = useLoadedValue({ initialValue, loadFunction: loadText, defaultValue: '' });
+	const value = useLoadedValue({ initialValue, loadFunction: () => loadText(true), defaultValue: '' });
 
 	return <TextContext.Provider value={value}>{children}</TextContext.Provider>;
 }
