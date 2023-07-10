@@ -21,7 +21,7 @@ export async function updateText(text: string) {
 
 export async function loadText() {
 	return executeServerAction({
-		action: () => {
+		action: async () => {
 			return fetch('http://google.de').then(() => {
 				console.log('Fetched');
 				return '';
