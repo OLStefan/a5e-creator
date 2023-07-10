@@ -7,7 +7,7 @@ import { Context, ReactNode, useState } from 'react';
 export interface StaticExportProviderHandlerProps<TModel extends IAnyModelType> {
 	Context: Context<Instance<TModel>>;
 	initialValue: SnapshotIn<TModel> | null;
-	loadFunction: () => Promise<SnapshotIn<TModel> | null>;
+	loadFunction: (executedOnClient: boolean) => Promise<SnapshotIn<TModel> | null>;
 	children: ReactNode;
 	model: TModel;
 }
@@ -29,19 +29,15 @@ export function StaticExportProviderHandler<TModel extends IAnyModelType>({
 	return <Context.Provider value={instance}>{children}</Context.Provider>;
 }
 
-function useLoadedValue<Value extends unknown>({
+function useLoadedValue<TModel extends IAnyModelType>({
 	initialValue,
 	loadFunction,
-}: {
-	initialValue: Value | null;
-	loadFunction: () => Promise<Value | null>;
-}): Value | null {
+}: Pick<StaticExportProviderHandlerProps<TModel>, 'loadFunction' | 'initialValue'>): SnapshotIn<TModel> | null {
 	const [value, setValue] = useState(initialValue);
 
 	useMount(() => {
 		if (initialValue === null) {
-			loadFunction().then((v) => {
-				console.log('Callback', { value: v });
+			loadFunction(true).then((v) => {
 				setValue(v);
 			});
 		}

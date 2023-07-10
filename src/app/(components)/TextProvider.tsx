@@ -17,7 +17,7 @@ export default function TextProvider({ initialValue, children }: TextProviderPro
 			Context={TextContext}
 			initialValue={initialValue}
 			model={uiModel}
-			loadFunction={() => loadText(true)}>
+			loadFunction={loadText}>
 			{children}
 		</StaticExportProviderHandler>
 	);
