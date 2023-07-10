@@ -1,9 +1,6 @@
 'use client';
 
-import {
-	StaticExportProviderHandler,
-	StaticExportProviderHandlerProps,
-} from '@/components/StaticExportProviderHandler';
+import { StaticExportProviderHandler, StaticExportProviderHandlerProps } from '@/components/StaticExportHandler';
 import { Instance } from 'mobx-state-tree';
 import { createContext, useContext } from 'react';
 import loadText from '../(actions)/loadText';
@@ -26,6 +23,6 @@ export default function TextProvider({ initialValue, children }: TextProviderPro
 	);
 }
 
-export function useText() {
+export function useTextModel() {
 	return useContext(TextContext);
 }
