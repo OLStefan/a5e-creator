@@ -1,5 +1,5 @@
-import MarkdownEscape from './MarkdownEscape';
-import TextProvider from './TextProvider';
+import MarkdownEscape from './(components)/MarkdownEscape';
+import TextProvider from './(components)/TextProvider';
 import { loadText } from './actions';
 
 export const dynamic = 'force-static';
