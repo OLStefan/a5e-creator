@@ -3,7 +3,7 @@
 import { Divider, Input } from 'antd';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
-import { loadText, updateText } from './actions';
+import { updateText } from './actions';
 import styles from './index.module.css';
 
 export interface MarkdownEscapeProps {
@@ -11,7 +11,7 @@ export interface MarkdownEscapeProps {
 }
 
 export default function MarkdownEscape({ initialValue }: MarkdownEscapeProps) {
-	const value = useLoadedValue(initialValue, loadText);
+	const value = ''; // useLoadedValue({ initialValue, loadFunction: loadText, defaultValue: '' });
 	const [val, setVal] = useState<ReturnType<typeof escapeMarkdown>>({ orig: value, string: value });
 
 	return (
@@ -38,15 +38,4 @@ function escapeMarkdown(markdown: string) {
 		orig: markdown,
 		string: markdown.replaceAll('\\', '\\\\').replaceAll(/"/g, '"').replaceAll('\n', '\\n').replaceAll('’', "'"),
 	};
-}
-
-function useLoadedValue(initialValue: string | null, loadFunction: () => Promise<string | null>) {
-	const [value, setValue] = useState(initialValue);
-
-	if (value === null) {
-		loadFunction().then((v) => setValue(v));
-		return '';
-	}
-
-	return value;
 }
