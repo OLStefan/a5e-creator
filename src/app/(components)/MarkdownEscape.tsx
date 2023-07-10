@@ -3,10 +3,10 @@
 import { Divider, Input } from 'antd';
 import { observer } from 'mobx-react-lite';
 import styles from '../index.module.css';
-import { useText } from './TextProvider';
+import { useTextModel } from './TextProvider';
 
 export default observer(function MarkdownEscape() {
-	const model = useText();
+	const model = useTextModel();
 
 	return (
 		<div className={styles.main}>
