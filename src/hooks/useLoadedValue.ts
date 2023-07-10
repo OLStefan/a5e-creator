@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function useLoadedValue<Value extends any>({
 	initialValue,
@@ -14,13 +14,15 @@ export function useLoadedValue<Value extends any>({
 	console.log('Hook', { initialValue });
 	const [value, setValue] = useState(initialValue);
 
-	if (value === null) {
-		loadFunction().then((v) => {
-			console.log('Callback', { value: v });
-			setValue(v ?? defaultValue);
-		});
-		return defaultValue;
-	}
+	useEffect(() => {
+		if (value === null) {
+			loadFunction().then((v) => {
+				console.log('Callback', { value: v });
+				setValue(v ?? defaultValue);
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-	return value;
+	return value ?? defaultValue;
 }
