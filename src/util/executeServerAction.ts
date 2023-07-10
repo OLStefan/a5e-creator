@@ -25,12 +25,15 @@ export default function executeServerAction<Action extends (...args: any) => any
 	params?: Parameters<Action>;
 }) {
 	if (serverAllowed) {
+		console.log('Server Action');
 		return action(...params);
 	}
 
 	if (isServer || !fallbackClient) {
+		console.log('Server Fallback');
 		return fallback(...params);
 	}
 
+	console.log('Client Fallback');
 	return fallbackClient(...params);
 }
