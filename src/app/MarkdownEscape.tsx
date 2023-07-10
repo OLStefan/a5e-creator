@@ -3,15 +3,13 @@
 import { Divider, Input } from 'antd';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
+import { useText } from './TextProvider';
 import { updateText } from './actions';
 import styles from './index.module.css';
 
-export interface MarkdownEscapeProps {
-	initialValue: string;
-}
-
-export default function MarkdownEscape({ initialValue }: MarkdownEscapeProps) {
-	const [val, setVal] = useState<ReturnType<typeof escapeMarkdown>>({ orig: initialValue, string: initialValue });
+export default function MarkdownEscape() {
+	const intialValue = useText();
+	const [val, setVal] = useState<ReturnType<typeof escapeMarkdown>>({ orig: intialValue, string: intialValue });
 
 	return (
 		<div className={styles.main}>

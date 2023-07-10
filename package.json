@@ -16,6 +16,7 @@
 		"copy-static": "cp -r .next/static .next/standalone/.next",
 		"copy-public": "cp -r public .next/standalone/",
 		"start": "next start",
+		"start:docker": "docker run -d -p 3000:3000 a5e-creator",
 		"clean": "rm -rf out node_modules .next",
 		"test": "jest",
 		"test:watch": "yarn test --watch",
