@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 
 export function useLoadedValue<Value extends any>({
@@ -10,10 +11,14 @@ export function useLoadedValue<Value extends any>({
 	loadFunction: () => Promise<Value | null>;
 	defaultValue: Value;
 }): Value {
+	console.log('Hook', { initialValue });
 	const [value, setValue] = useState(initialValue);
 
 	if (value === null) {
-		loadFunction().then((v) => setValue(v ?? defaultValue));
+		loadFunction().then((v) => {
+			console.log('Callback', { value: v });
+			setValue(v ?? defaultValue);
+		});
 		return defaultValue;
 	}
 

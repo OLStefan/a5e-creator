@@ -1,4 +1,5 @@
-import { isServer, serverAllowed } from '@/global';
+const isServer = process.env.IS_SERVER;
+const serverAllowed = !process.env.NEXT_PUBLIC_STATIC_EXPORT;
 
 export default function executeServerAction<Action extends (...args: never[]) => any>(params: {
 	action: Action;
