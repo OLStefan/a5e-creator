@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-export function useLoadedValue<Value extends any>({
+export function useLoadedValue<Value extends unknown>({
 	initialValue,
 	loadFunction,
 	defaultValue,
@@ -12,10 +12,10 @@ export function useLoadedValue<Value extends any>({
 	defaultValue: Value;
 }): Value {
 	console.log('Hook', { initialValue });
-	const [value, setValue] = useState(initialValue);
+	const [value, setValue] = useState(initialValue ?? defaultValue);
 
 	useEffect(() => {
-		if (value === null) {
+		if (initialValue === null) {
 			loadFunction().then((v) => {
 				console.log('Callback', { value: v });
 				setValue(v ?? defaultValue);
@@ -24,5 +24,5 @@ export function useLoadedValue<Value extends any>({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return value ?? defaultValue;
+	return value;
 }
