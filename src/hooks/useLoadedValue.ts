@@ -5,20 +5,18 @@ import { useEffect, useState } from 'react';
 export function useLoadedValue<Value extends unknown>({
 	initialValue,
 	loadFunction,
-	defaultValue,
 }: {
 	initialValue: Value | null;
 	loadFunction: () => Promise<Value | null>;
-	defaultValue: Value;
-}): Value {
+}): Value | null {
 	console.log('Hook', { initialValue });
-	const [value, setValue] = useState(initialValue ?? defaultValue);
+	const [value, setValue] = useState(initialValue);
 
 	useEffect(() => {
 		if (initialValue === null) {
 			loadFunction().then((v) => {
 				console.log('Callback', { value: v });
-				setValue(v ?? defaultValue);
+				setValue(v);
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
