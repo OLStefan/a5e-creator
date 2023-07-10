@@ -1,4 +1,3 @@
-const isServer = process.env.IS_SERVER;
 const serverAllowed = !process.env.NEXT_PUBLIC_STATIC_EXPORT;
 
 export default function executeServerAction<Action extends (...args: never[]) => any>(params: {
@@ -29,11 +28,9 @@ export default function executeServerAction<Action extends (...args: any) => any
 		return action(...params);
 	}
 
-	if (isServer || !fallbackClient) {
-		console.log('Server Fallback');
+	try {
+		return fallbackClient?.(...params) ?? fallback(...params);
+	} catch {
 		return fallback(...params);
 	}
-
-	console.log('Client Fallback');
-	return fallbackClient(...params);
 }
