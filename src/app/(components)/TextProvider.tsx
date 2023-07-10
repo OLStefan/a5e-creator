@@ -6,8 +6,8 @@ import {
 } from '@/components/StaticExportProviderHandler';
 import { Instance } from 'mobx-state-tree';
 import { createContext, useContext } from 'react';
+import loadText from '../(actions)/loadText';
 import { uiModel } from '../(model)/uiModel';
-import { loadText } from '../actions';
 
 const TextContext = createContext<Instance<typeof uiModel>>(null!);
 

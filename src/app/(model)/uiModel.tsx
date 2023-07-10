@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 import Markdown from 'react-markdown';
-import { updateText } from '../actions';
+import updateText from '../(actions)/updateText';
 
 export const uiModel = types
 	.model({
