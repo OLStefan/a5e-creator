@@ -43,9 +43,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Build
-        run: |
-          yarn export
-          touch out/.nojekyll
+        run: yarn export
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
