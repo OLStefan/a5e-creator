@@ -2,8 +2,8 @@
 
 import { Divider, Input } from 'antd';
 import { observer } from 'mobx-react-lite';
+import styles from '../index.module.css';
 import { useText } from './TextProvider';
-import styles from './index.module.css';
 
 export default observer(function MarkdownEscape() {
 	const model = useText();
