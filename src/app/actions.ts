@@ -1,4 +1,4 @@
-
+'use server';
 
 import executeServerAction from '@/util/executeServerAction';
 
