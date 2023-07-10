@@ -2,18 +2,18 @@ const serverAllowed = !process.env.NEXT_PUBLIC_STATIC_EXPORT;
 
 export default function executeServerAction<Action extends (...args: never[]) => any>(params: {
 	action: Action;
-	fallback: Action;
+	fallback: Action | (() => Promise<null>);
 	fallbackClient?: Action;
 	params?: undefined;
 	executedOnClient?: boolean;
-}): ReturnType<Action>;
+}): ReturnType<Action> | null;
 export default function executeServerAction<Action extends (...args: any) => any>(params: {
 	action: Action;
-	fallback: Action;
+	fallback: Action | ((...args: Parameters<Action>) => Promise<null>);
 	fallbackClient?: Action;
 	params: Parameters<Action>;
 	executedOnClient?: boolean;
-}): ReturnType<Action>;
+}): ReturnType<Action> | null;
 export default function executeServerAction<Action extends (...args: any) => any>({
 	action,
 	fallback,
@@ -28,7 +28,6 @@ export default function executeServerAction<Action extends (...args: any) => any
 	executedOnClient?: boolean;
 }) {
 	if (serverAllowed) {
-		console.log('Server Action');
 		return action(...params);
 	}
 
