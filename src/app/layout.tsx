@@ -1,10 +1,11 @@
 import './globals.css';
 
-import { ConfigProvider } from 'antd';
+import { App } from 'antd';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import StyledComponentsRegistry from './AntRegistry';
-import theme from './theme';
+import AntMessageHandling from './(setup)/AntMessageHandling';
+import StyledComponentsRegistry from './(setup)/AntRegistry';
+import AntStyleConfig from './(setup)/AntStyleConfig';
 
 const basePath = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}`;
 
@@ -21,7 +22,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<head />
 			<body className={inter.className}>
 				<StyledComponentsRegistry>
-					<ConfigProvider theme={theme}>{children}</ConfigProvider>
+					<AntStyleConfig>
+						<App>
+							<AntMessageHandling />
+							{children}
+						</App>
+					</AntStyleConfig>
 				</StyledComponentsRegistry>
 			</body>
 		</html>
