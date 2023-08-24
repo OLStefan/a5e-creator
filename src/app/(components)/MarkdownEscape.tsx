@@ -12,7 +12,7 @@ export default observer(function MarkdownEscape() {
 		<div className={styles.main}>
 			<Input.TextArea
 				value={model.text}
-				className={styles.textarea}
+				className={styles['text-area']}
 				onChange={(event) => {
 					model.update(event.target.value);
 				}}
