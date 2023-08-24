@@ -33,6 +33,11 @@ jobs:
         run: |
           if git ls-remote | grep -i ${{ env.BRANCH_NAME }}; then git push -d origin ${{ env.BRANCH_NAME }}; fi 
 
+      - name: Push staging branch
+        run: |
+          git checkout -b ${{ env.BRANCH_NAME }}
+          git push --set-upstream origin ${{ env.BRANCH_NAME }}
+
       - name: Check for changes source files
         uses: dorny/paths-filter@v2
         id: filter
