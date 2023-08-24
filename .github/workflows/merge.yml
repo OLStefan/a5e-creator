@@ -103,7 +103,7 @@ jobs:
         with:
           github-token: ${{ secrets.PR_TOKEN }}
           number: ${{ steps.open-pr.outputs.pr_number }}
-          method: merge
+          method: rebase
 
   cleanup:
     name: CleanUp
