@@ -36,6 +36,7 @@ jobs:
       - name: Push staging branch
         run: |
           git checkout -b ${{ env.BRANCH_NAME }}
+          git merge origin/${{ github.event.repository.default_branch }}
           git push --set-upstream origin ${{ env.BRANCH_NAME }}
 
       - name: Check for changes source files
@@ -104,4 +105,30 @@ jobs:
         with:
           github-token: ${{ secrets.PR_TOKEN }}
           number: ${{ steps.open-pr.outputs.pr_number }}
-          method: rebase
+          method: merge
+
+  cleanup:
+    name: CleanUp
+    concurrency: ci-${{ github.ref }}
+    needs: merge
+    if: always() && !cancelled() && needs.merge.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.ref }}
+          fetch-depth: 0
+
+      - name: Push staging branch
+        run: |
+          git rebase origin/${{ github.event.repository.default_branch }}
+          git push
+
+      - name: Cleanup
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}"
+          git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+          git remote update
+          git fetch
+          git push -d origin ${{ env.BRANCH_NAME }}
