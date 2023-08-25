@@ -41,7 +41,6 @@ function useLoadedValue<TModel extends IAnyModelType>({
 				setValue(v);
 			});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	});
 
 	return value;
