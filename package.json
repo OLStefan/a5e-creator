@@ -7,8 +7,8 @@
 		"node": "^16"
 	},
 	"scripts": {
-		"develop": "yarn install && next dev",
-		"build": "yarn parse:data-files && next build",
+		"develop": "yarn install && yarn pre:dev && next dev",
+		"build": "yarn parse:data-files && yarn pre:dev && next build",
 		"build:standalone": "cp next.config.js next.config.bak.js && cp next-standalone.config.js next.config.js && yarn build; mv next.config.bak.js next.config.js",
 		"build:docker": "docker build . -t a5e-creator",
 		"clean-server-actions": "find src/**/*.ts | xargs grep -il \"'use server';\" | xargs -r sed -i \"s/'use server';//g\"",
@@ -25,11 +25,14 @@
 		"check:lint": "next lint && stylelint src/**/*.css",
 		"check:all": "yarn check:types && yarn check:style && yarn check:lint && yarn test",
 		"fix:style": "prettier --write ./src",
-		"parse:data-files": "yarn test src/data/models/"
+		"parse:data-files": "yarn test src/data/models/",
+		"pre:dev": "tsx ./src/scripts/genAntdCss.ts",
+		"pre:build": "cross-env NODE_ENV=production tsx ./src/scripts/genAntdCss.ts"
 	},
 	"browserslist": "> 0.5%, last 2 versions, not dead",
 	"dependencies": {
 		"@ant-design/icons": "~5.2.5",
+		"@ant-design/static-style-extract": "^1.0.1",
 		"@fortawesome/fontawesome-svg-core": "~6.4.2",
 		"@fortawesome/free-solid-svg-icons": "~6.4.2",
 		"antd": "~5.8.4",
@@ -55,6 +58,7 @@
 		"@types/react-dom": "~18.2.7",
 		"@typescript-eslint/eslint-plugin": "~6.4.1",
 		"@typescript-eslint/parser": "~6.4.1",
+		"cross-env": "^7.0.3",
 		"csstype": "~3.1.2",
 		"eslint": "~8.47.0",
 		"eslint-config-next": "~13.4.19",
@@ -72,6 +76,9 @@
 		"stylelint-config-css-modules": "^4.3.0",
 		"stylelint-config-standard": "^34.0.0",
 		"ts-jest": "~29.1.1",
+		"ts-node": "^10.9.1",
+		"tslib": "^2.6.2",
+		"tsx": "^3.12.7",
 		"type-fest": "~4.2.0",
 		"typescript": "~5.2.2",
 		"typescript-plugin-css-modules": "^5.0.1"
