@@ -32,19 +32,3 @@ export function createAdditionalDescriptionReference<T extends typeof additional
 		additional: types.map(types.union(types.string, types.number)),
 	});
 }
-
-// const additionalInformationRegex = /\$(\w+)/g;
-// function verifyAdditionalProperties({
-// 	additionalString,
-// 	additionalProperties,
-// }: {
-// 	additionalString: string;
-// 	additionalProperties?: Record<string, string | number>;
-// }) {
-// 	const requiredProperties = [...additionalString.matchAll(additionalInformationRegex)].map(
-// 		// Every map will have a group match here, since that is all the regex does
-// 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-// 		([, groupMatch]) => groupMatch!,
-// 	);
-// 	return requiredProperties.every((prop) => !isUndefined(additionalProperties?.[prop]));
-// }
