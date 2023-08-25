@@ -1,16 +1,9 @@
 'use client';
 
-import { ConfigProvider, theme, type ThemeConfig } from 'antd';
+import { ConfigProvider, theme } from 'antd';
 import { CSSProperties, ReactNode } from 'react';
+import { themeConfig } from '../../theme';
 import styles from './setup.module.css';
-
-const themeConfig: ThemeConfig = {
-	token: {
-		fontSize: 14,
-		colorPrimary: '#f48847',
-		colorInfo: '#1677ff',
-	},
-};
 
 interface Props {
 	children: ReactNode;

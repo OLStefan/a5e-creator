@@ -1,3 +1,4 @@
+import '../scripts/antd.min.css';
 import './globals.css';
 
 import { Metadata } from 'next';
