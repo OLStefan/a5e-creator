@@ -7,7 +7,7 @@ export default async function Page() {
 
 	return (
 		<TextProvider initialValue={initialText}>
-			<MarkdownEscape />;
+			<MarkdownEscape />
 		</TextProvider>
 	);
 }
