@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<head />
-			<body className={inter.className} id="a5e">
+			<body className={inter.className}>
 				<AntHandling>{children}</AntHandling>
 			</body>
 		</html>

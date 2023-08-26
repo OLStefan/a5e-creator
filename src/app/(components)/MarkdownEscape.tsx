@@ -9,7 +9,7 @@ export default observer(function MarkdownEscape() {
 	const model = useTextModel();
 
 	return (
-		<div className={styles.main}>
+		<div className={styles.root}>
 			<Input.TextArea
 				value={model.text}
 				className={styles['text-area']}

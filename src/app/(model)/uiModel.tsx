@@ -18,7 +18,6 @@ export const uiModel = types
 
 		const actions = {
 			update(text: string) {
-				console.log(text);
 				updateText(text);
 				self.text = text;
 			},

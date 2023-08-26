@@ -1,6 +1,5 @@
 module.exports = {
 	plugins: [
-		['postcss-plugin-namespace', true],
 		'postcss-flexbugs-fixes',
 		[
 			'postcss-preset-env',
@@ -14,6 +13,7 @@ module.exports = {
 				},
 			},
 		],
+		require.resolve('./postcss/postcss-plugin-namespace-wrapper.cjs'),
 		'postcss-nesting',
 	],
 };

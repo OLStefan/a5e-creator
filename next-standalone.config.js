@@ -4,6 +4,10 @@ import baseConfig from './next.config.bak.js';
 const nextConfig = {
 	...baseConfig,
 	output: 'standalone',
+	onDemandEntries: {
+		maxInactiveAge: 60 * 1000,
+		pagesBufferLength: 2,
+	},
 };
 
 export default nextConfig;
