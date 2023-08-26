@@ -1,3 +1,4 @@
+/* Based on https://www.npmjs.com/package/postcss-plugin-namespace */
 var postcss = require('postcss');
 
 module.exports = postcss.plugin('postcss-plugin-namespace-wrapper', function () {
