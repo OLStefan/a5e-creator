@@ -10,7 +10,7 @@ module.exports = postcss.plugin('postcss-plugin-namespace-wrapper', function () 
 		'html',
 		'body',
 	];
-	const prefix = ':not(:global(#a5e))';
+	const prefix = ':not(:global(#\\9))';
 
 	return function (root) {
 		if (!prefix || typeof prefix !== 'string') {
