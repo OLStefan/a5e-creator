@@ -25,7 +25,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      BASE_PATH: '/a5e-creator'
+      BASE_PATH: '/${{ github.event.repository.name }}'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
