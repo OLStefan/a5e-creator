@@ -1,22 +1,18 @@
 /* Based on https://www.npmjs.com/package/postcss-plugin-namespace */
 var postcss = require('postcss');
 
+const ignore = [
+	/:where\(\.css-dev-only-do-not-override-.*\)/,
+	/^\.ant/,
+	'.data-ant-cssinjs-cache-path',
+	'*',
+	'html',
+	'body',
+];
+const prefix = ':not(:global(#\\9))';
+
 module.exports = postcss.plugin('postcss-plugin-namespace-wrapper', function () {
-	const ignore = [
-		/:where\(\.css-dev-only-do-not-override-.*\)/,
-		/^\.ant/,
-		'.data-ant-cssinjs-cache-path',
-		'*',
-		'html',
-		'body',
-	];
-	const prefix = ':not(:global(#\\9))';
-
 	return function (root) {
-		if (!prefix || typeof prefix !== 'string') {
-			return;
-		}
-
 		root.walkRules(function (rule) {
 			if (!rule.selectors) {
 				return rule;
