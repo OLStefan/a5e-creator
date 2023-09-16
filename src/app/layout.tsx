@@ -5,11 +5,9 @@ import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import AntHandling from './(setup)/AntHandling';
 
-const basePath = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}`;
-
 export const metadata: Metadata = {
 	title: 'A5E Character Creator',
-	icons: `${basePath}/favicon.ico`,
+	icons: `./favicon.ico`,
 };
 
 const inter = Inter({ subsets: ['latin'] });

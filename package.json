@@ -8,11 +8,11 @@
 	},
 	"scripts": {
 		"develop": "yarn install && yarn pre:dev && next dev",
-		"build": "yarn parse:data-files && yarn pre:dev && next build",
+		"build": "yarn pre:build && next build",
 		"build:standalone": "cp next.config.js next.config.bak.js && cp next-standalone.config.js next.config.js && yarn build; mv next.config.bak.js next.config.js",
 		"build:docker": "docker build . -t a5e-creator",
+		"build:export": "cp next.config.js next.config.bak.js && cp next-static.config.js next.config.js && yarn clean-server-actions && yarn build; mv next.config.bak.js next.config.js",
 		"clean-server-actions": "find src/**/*.ts | xargs grep -il \"'use server';\" | xargs -r sed -i \"s/'use server';//g\"",
-		"export": "cp next.config.js next.config.bak.js && cp next-static.config.js next.config.js && yarn clean-server-actions && yarn build; mv next.config.bak.js next.config.js",
 		"copy-static": "cp -r .next/static .next/standalone/.next",
 		"copy-public": "cp -r public .next/standalone/",
 		"start": "next start",
