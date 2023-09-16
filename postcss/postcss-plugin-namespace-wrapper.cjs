@@ -26,14 +26,14 @@ module.exports = postcss.plugin('postcss-plugin-namespace-wrapper', function () 
 				return rule;
 			}
 
-			rule.selectors = rule.selectors.map(function (selector, index) {
+			rule.selectors = rule.selectors.map(function (selector) {
 				if (classMatchesTest(selector, ignore) || selector.trim().length === 0) {
 					return selector;
 				}
 				if (rule.parent.selector?.startsWith(prefix)) {
 					return selector;
 				}
-				return prefix.trim() + ' ' + selector;
+				return `${prefix} ${selector}`;
 			});
 			return rule;
 		});
