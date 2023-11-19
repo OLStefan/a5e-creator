@@ -9,4 +9,4 @@ export enum Attribute {
 	Cha = 'charisma',
 }
 
-export const attributeModel = types.enumeration(Object.values(Attribute));
+export const attributeModel = types.enumeration('attribute', Object.values(Attribute));

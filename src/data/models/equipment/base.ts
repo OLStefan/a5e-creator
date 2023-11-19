@@ -20,6 +20,7 @@ export enum EquipmentQuality {
 }
 
 export const equipmentPieceModel = types.compose(
+	'equipmentPiece',
 	sourcedDescriptionModel,
 	types.model({
 		weight: types.optional(types.number, 0),
@@ -28,7 +29,7 @@ export const equipmentPieceModel = types.compose(
 	}),
 );
 
-export const equipmentPieceReferenceModel = types.model({
+export const equipmentPieceReferenceModel = types.model('equipmentPieceReference', {
 	ref: types.reference(equipmentPieceModel),
 	quality: types.optional(types.enumeration(Object.values(EquipmentQuality)), EquipmentQuality.Normal),
 	amount: types.optional(

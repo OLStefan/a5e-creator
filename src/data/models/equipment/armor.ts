@@ -17,6 +17,7 @@ export enum ShieldType {
 }
 
 const baseArmorModel = types.compose(
+	'baseArmor',
 	equipmentPieceModel,
 	types.model({
 		type: types.literal(EquipmentType.Armor),
@@ -26,6 +27,7 @@ const baseArmorModel = types.compose(
 );
 
 const armorModel = types.compose(
+	'armor',
 	baseArmorModel,
 	types.model({
 		armorType: types.enumeration([ArmorType.Light, ArmorType.Medium, ArmorType.Heavy]),
@@ -37,6 +39,7 @@ const armorModel = types.compose(
 );
 
 const shieldModel = types.compose(
+	'shield',
 	baseArmorModel,
 	types.model({
 		armorType: types.literal(ArmorType.Shield),
@@ -48,7 +51,7 @@ const shieldModel = types.compose(
 export const anyArmorModel = types.union(armorModel, shieldModel);
 
 export const armorReferenceModel = types.compose(
-	'Armor Reference',
+	'armorReference',
 	equipmentPieceReferenceModel,
 	types.model({
 		ref: types.reference(anyArmorModel),

@@ -5,7 +5,7 @@ import { sourcedDescriptionModel } from '../util';
 import { cultureModel } from './culture';
 
 export const heritageModel = types.compose(
-	'Heritage',
+	'heritage',
 	sourcedDescriptionModel,
 	types.model({
 		age: types.string,

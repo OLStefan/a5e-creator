@@ -3,6 +3,7 @@ import { anyAdventuringGearModel } from './adventuringGear';
 import { equipmentPieceModel, EquipmentType } from './base';
 
 export const equipmentPackModel = types.compose(
+	'equipmentPack',
 	equipmentPieceModel,
 	types.model({
 		type: types.literal(EquipmentType.EquipmentPack),

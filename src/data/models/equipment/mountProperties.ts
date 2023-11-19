@@ -1,3 +1,3 @@
 import { sourcedDescriptionModel } from '../util';
 
-export const mountPropertyModel = sourcedDescriptionModel;
+export const mountPropertyModel = sourcedDescriptionModel.named('mountProperty');

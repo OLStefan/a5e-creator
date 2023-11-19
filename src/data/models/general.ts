@@ -26,9 +26,9 @@ export enum Size {
 	Gargantuan = 'gargantuan',
 }
 
-export const dieSizeModel = types.enumeration(['d4', 'd6', 'd8', 'd10', 'd12', 'd100']);
+export const dieSizeModel = types.enumeration('dieSize', ['d4', 'd6', 'd8', 'd10', 'd12', 'd100']);
 
-const baseDamageDescriptionModel = types.model('Base Damage Description', {
+const baseDamageDescriptionModel = types.model('baseDamageDescription', {
 	die: dieSizeModel,
 	amount: types.optional(types.integer, 1),
 	static: types.optional(types.integer, 0),
@@ -36,7 +36,7 @@ const baseDamageDescriptionModel = types.model('Base Damage Description', {
 });
 
 export const damageDescriptionModel = types.compose(
-	'Standard Damage Description',
+	'damageDescription',
 	baseDamageDescriptionModel,
 	types.model({
 		type: types.maybe(types.literal('normal')),
@@ -44,7 +44,7 @@ export const damageDescriptionModel = types.compose(
 );
 
 export const specialDamageDescriptionModel = types.compose(
-	'Special Damage Description',
+	'specialDamageDescription',
 	partial(baseDamageDescriptionModel),
 	types.model({
 		type: types.literal('special'),

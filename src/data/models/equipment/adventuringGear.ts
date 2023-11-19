@@ -11,7 +11,8 @@ export enum AdventuringGearType {
 	Miscellaneous = 'miscellaneous gear',
 }
 
-const baseAdventuringGearSchema = types.compose(
+const baseAdventuringGearModel = types.compose(
+	'baseAdventuringGear',
 	equipmentPieceModel,
 	types.model({
 		type: types.literal(EquipmentType.AdventuringGear),
@@ -20,32 +21,37 @@ const baseAdventuringGearSchema = types.compose(
 );
 
 const medicineModel = types.compose(
-	baseAdventuringGearSchema,
+	'medecine',
+	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Medicine),
 	}),
 );
-const spellcastinFocuesModel = types.compose(
-	baseAdventuringGearSchema,
+const spellcastinFocusModel = types.compose(
+	'spellcastingFocus',
+	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.SpellcastingFocus),
 		defaultMaterial: types.reference(materialModel),
 	}),
 );
 const poisonModel = types.compose(
-	baseAdventuringGearSchema,
+	'poison',
+	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Poison),
 	}),
 );
 const survivalGearModel = types.compose(
-	baseAdventuringGearSchema,
+	'survivalGear',
+	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.SurvivalGear),
 	}),
 );
 const containerModel = types.compose(
-	baseAdventuringGearSchema,
+	'container',
+	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Container),
 		capacity: types.string,
@@ -53,7 +59,8 @@ const containerModel = types.compose(
 	}),
 );
 const miscAdventuringGearModel = types.compose(
-	baseAdventuringGearSchema,
+	'miscAdventuringGear',
+	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Miscellaneous),
 		defaultMaterial: types.maybe(types.reference(materialModel)),
@@ -62,7 +69,7 @@ const miscAdventuringGearModel = types.compose(
 
 export const anyAdventuringGearModel = types.union(
 	medicineModel,
-	spellcastinFocuesModel,
+	spellcastinFocusModel,
 	poisonModel,
 	survivalGearModel,
 	containerModel,
