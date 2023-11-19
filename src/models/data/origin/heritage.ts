@@ -1,7 +1,7 @@
+import { sourcedDescriptionModel } from '@/models/base';
 import { types } from 'mobx-state-tree';
 import { sourcedFeatureModel } from '../feature';
 import { Size } from '../general';
-import { sourcedDescriptionModel } from '../util';
 import { cultureModel } from './culture';
 
 export const heritageModel = types.compose(

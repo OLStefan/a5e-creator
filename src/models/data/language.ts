@@ -1,4 +1,4 @@
-import languageJson from '../resources/language.json';
+import languageJson from '@/resources/language.json';
 
 import { types } from 'mobx-state-tree';
 

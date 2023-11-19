@@ -1,9 +1,9 @@
 import { Instance, types } from 'mobx-state-tree';
+import { getSourceResources, sourceListModel } from '../base/source';
 import { equipmentDataModel, getEquipmentResources } from './equipment';
 import { getLanguageResources, languageModel } from './language';
 import { getOriginResources, originDataModel } from './origin';
 import { getSkillResources, skillListModel } from './skill';
-import { getSourceResources, sourceListModel } from './source';
 
 export const dataModel = types.model('data', {
 	sources: sourceListModel,

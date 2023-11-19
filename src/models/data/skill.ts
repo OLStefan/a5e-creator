@@ -1,7 +1,7 @@
-import skillsJson from '../resources/skills.json';
+import skillsJson from '@/resources/skills.json';
 
 import { Instance, SnapshotIn, types } from 'mobx-state-tree';
-import { sourcedDescriptionModel } from './util';
+import { sourcedDescriptionModel } from '../base';
 
 export const skillModel = types.compose(
 	'skill',

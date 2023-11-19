@@ -1,7 +1,7 @@
-import backgroundJson from '../../resources/origin/backgrounds.json';
-import cultureJson from '../../resources/origin/cultures.json';
-import destinyJson from '../../resources/origin/destinies.json';
-import heritageJson from '../../resources/origin/heritages.json';
+import backgroundJson from '@/resources/origin/backgrounds.json';
+import cultureJson from '@/resources/origin/cultures.json';
+import destinyJson from '@/resources/origin/destinies.json';
+import heritageJson from '@/resources/origin/heritages.json';
 
 import { Instance, SnapshotIn, types } from 'mobx-state-tree';
 import { backgroundModel } from './background';

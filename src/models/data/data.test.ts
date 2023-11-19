@@ -1,8 +1,8 @@
 import { IAnyComplexType, isValidReference } from 'mobx-state-tree';
+import { ReferenceProficiencyChoice, SourcedDescription } from '../base';
 import { dataModel, getResources } from './data';
 import { AdventuringGearType, Equipment } from './equipment';
 import { OriginData } from './origin';
-import { ReferenceProficiencyChoice, SourcedDescription } from './util';
 
 test('parseData', () => {
 	const data = dataModel.create(getResources());

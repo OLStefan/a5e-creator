@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree';
-import { partial } from './util/partial';
+import { partial } from '../base/partial';
 
 export enum DamageType {
 	Acid = 'acid',

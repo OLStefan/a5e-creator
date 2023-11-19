@@ -1,4 +1,4 @@
-import { additionalDescriptionModel, createAdditionalDescriptionReference } from '../util';
+import { additionalDescriptionModel, createAdditionalDescriptionReference } from '@/models/base';
 
 export const materialPropertyModel = additionalDescriptionModel.named('materialProperty');
 
