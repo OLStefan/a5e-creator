@@ -20,32 +20,37 @@ const baseAdventuringGearModel = types.compose(
 	}),
 );
 
-const medicineModel = types.compose('medecine',
+const medicineModel = types.compose(
+	'medecine',
 	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Medicine),
 	}),
 );
-const spellcastinFocusModel = types.compose('spellcastingFocus',
+const spellcastinFocusModel = types.compose(
+	'spellcastingFocus',
 	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.SpellcastingFocus),
 		defaultMaterial: types.reference(materialModel),
 	}),
 );
-const poisonModel = types.compose('poison',
+const poisonModel = types.compose(
+	'poison',
 	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Poison),
 	}),
 );
-const survivalGearModel = types.compose('survivalGear',
+const survivalGearModel = types.compose(
+	'survivalGear',
 	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.SurvivalGear),
 	}),
 );
-const containerModel = types.compose('container',
+const containerModel = types.compose(
+	'container',
 	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Container),
@@ -53,7 +58,8 @@ const containerModel = types.compose('container',
 		defaultMaterial: types.maybe(types.reference(materialModel)),
 	}),
 );
-const miscAdventuringGearModel = types.compose('miscAdventuringGear',
+const miscAdventuringGearModel = types.compose(
+	'miscAdventuringGear',
 	baseAdventuringGearModel,
 	types.model({
 		gearType: types.literal(AdventuringGearType.Miscellaneous),
