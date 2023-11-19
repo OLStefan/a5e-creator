@@ -1,6 +1,6 @@
 import skillsJson from '../resources/skills.json';
 
-import { types } from 'mobx-state-tree';
+import { Instance, SnapshotIn, types } from 'mobx-state-tree';
 import { sourcedDescriptionModel } from './util';
 
 export const skillModel = types.compose(
@@ -11,8 +11,11 @@ export const skillModel = types.compose(
 	}),
 );
 
+export interface SkillSnapshot extends SnapshotIn<typeof skillModel> {}
+export interface Skill extends Instance<typeof skillModel> {}
+
 export const skillListModel = types.array(skillModel);
 
 export function getSkillResources() {
-	return skillsJson as Array<NonNullable<Parameters<typeof skillModel.create>[0]>>;
+	return skillsJson satisfies Array<SkillSnapshot>;
 }

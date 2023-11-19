@@ -11,7 +11,7 @@ import vehiclesJson from '../../resources/equipment/vehicles.json';
 import weaponPropertiesJson from '../../resources/equipment/weaponProperties.json';
 import weaponsJson from '../../resources/equipment/weapons.json';
 
-import { Instance, types } from 'mobx-state-tree';
+import { Instance, SnapshotIn, types } from 'mobx-state-tree';
 import { anyAdventuringGearModel } from './adventuringGear';
 import { anyArmorModel } from './armor';
 import { equipmentPackModel } from './equipmentPacks';
@@ -56,6 +56,7 @@ export const equipmentDataModel = types.model('equipmentData', {
 	vehicles: types.array(vehicleModel),
 });
 
+export interface EquipmentSnapshot extends SnapshotIn<typeof equipmentDataModel> {}
 export interface Equipment extends Instance<typeof equipmentDataModel> {}
 
 export const anyEquipmentPieceModel = types.union(
@@ -82,5 +83,5 @@ export function getEquipmentResources() {
 		vehicles: vehiclesJson,
 		weaponProperties: weaponPropertiesJson,
 		weapons: weaponsJson,
-	} as NonNullable<Parameters<typeof equipmentDataModel.create>[0]>;
+	} as EquipmentSnapshot;
 }

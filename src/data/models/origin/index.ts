@@ -3,7 +3,7 @@ import cultureJson from '../../resources/origin/cultures.json';
 import destinyJson from '../../resources/origin/destinies.json';
 import heritageJson from '../../resources/origin/heritages.json';
 
-import { Instance, types } from 'mobx-state-tree';
+import { Instance, SnapshotIn, types } from 'mobx-state-tree';
 import { backgroundModel } from './background';
 import { cultureModel } from './culture';
 import { destinyModel } from './destiny';
@@ -21,7 +21,8 @@ export const originDataModel = types.model('originData', {
 	heritages: types.array(heritageModel),
 });
 
-export interface Origin extends Instance<typeof originDataModel> {}
+export interface OriginDataSnapshot extends SnapshotIn<typeof originDataModel> {}
+export interface OriginData extends Instance<typeof originDataModel> {}
 
 export function getOriginResources() {
 	return {
@@ -29,5 +30,5 @@ export function getOriginResources() {
 		destinies: destinyJson,
 		cultures: cultureJson,
 		heritages: heritageJson,
-	} as NonNullable<Parameters<typeof originDataModel.create>[0]>;
+	} as OriginDataSnapshot;
 }

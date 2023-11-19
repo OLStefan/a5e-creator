@@ -1,11 +1,14 @@
 import sourceJson from '../resources/sources.json';
 
-import { types } from 'mobx-state-tree';
+import { Instance, SnapshotIn, types } from 'mobx-state-tree';
 
 export const sourceModel = types.model('source', {
 	short: types.identifier,
 	name: types.string,
 });
+
+export interface SourceSnapshot extends SnapshotIn<typeof sourceModel> {}
+export interface Source extends Instance<typeof sourceModel> {}
 
 export const sourceReferenceModel = types.model('sourceReference', {
 	book: types.reference(sourceModel),
@@ -15,5 +18,5 @@ export const sourceReferenceModel = types.model('sourceReference', {
 export const sourceListModel = types.array(sourceModel);
 
 export function getSourceResources() {
-	return sourceJson as Array<NonNullable<Parameters<typeof sourceModel.create>[0]>>;
+	return sourceJson satisfies Array<SourceSnapshot>;
 }
