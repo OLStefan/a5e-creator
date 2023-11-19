@@ -12,6 +12,7 @@ export enum ToolType {
 }
 
 const baseToolModel = types.compose(
+	'baseTool',
 	equipmentPieceModel,
 	types.model({
 		type: types.literal(EquipmentType.Tool),
@@ -20,6 +21,7 @@ const baseToolModel = types.compose(
 );
 
 const artisanToolModel = types.compose(
+	'artisanTool',
 	baseToolModel,
 	types.model({
 		toolType: types.literal(ToolType.Artisan),
@@ -43,18 +45,21 @@ const artisanToolModel = types.compose(
 );
 
 const gamingSetModel = types.compose(
+	'gamingSet',
 	baseToolModel,
 	types.model({
 		toolType: types.literal(ToolType.Gaming),
 	}),
 );
 const musicalInstrumentModel = types.compose(
+	'muscicalInstrument',
 	baseToolModel,
 	types.model({
 		toolType: types.literal(ToolType.Musical),
 	}),
 );
 const miscToolModel = types.compose(
+	'miscTool',
 	baseToolModel,
 	types.model({
 		toolType: types.literal(ToolType.Other),

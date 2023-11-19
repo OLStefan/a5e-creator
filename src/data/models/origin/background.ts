@@ -11,7 +11,7 @@ import {
 } from '../util';
 
 export const backgroundModel = types.compose(
-	'Background',
+	'background',
 	sourcedDescriptionModel,
 	types.model({
 		feature: descriptionModel,

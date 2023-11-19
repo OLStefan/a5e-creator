@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree';
 import { damageDescriptionModel, specialDamageDescriptionModel } from '../general';
-import { equipmentPieceModel, equipmentPieceReferenceModel, EquipmentType } from './base';
+import { EquipmentType, equipmentPieceModel, equipmentPieceReferenceModel } from './base';
 import { materialModel } from './material';
 import { weaponPropertyReference } from './weaponProperties';
 
@@ -19,7 +19,7 @@ export enum WeaponType {
 
 const baseWeaponModel = types.compose(
 	equipmentPieceModel,
-	types.model('BaseWeapon', {
+	types.model('baseWeapon', {
 		proficiency: types.enumeration(Object.values(WeaponCategory)),
 		damage: types.union(damageDescriptionModel, specialDamageDescriptionModel),
 		properties: types.array(weaponPropertyReference),
@@ -30,19 +30,19 @@ const baseWeaponModel = types.compose(
 );
 
 const meleeWeaponModel = types.compose(
-	'Melee Weapon',
+	'meleeWeapon',
 	baseWeaponModel,
 	types.model({ weaponType: types.literal(WeaponType.Melee), damage: damageDescriptionModel }),
 );
 
 const rangedWeaponModel = types.compose(
-	'Ranged Weapon',
+	'rangedWeapon',
 	baseWeaponModel,
 	types.model({ weaponType: types.literal(WeaponType.Ranged), damage: damageDescriptionModel }),
 );
 
 const specialWeaponModel = types.compose(
-	'Special Weapon',
+	'specialWeapon',
 	baseWeaponModel,
 	types.model({ weaponType: types.literal(WeaponType.Special), damage: specialDamageDescriptionModel }),
 );
@@ -50,7 +50,7 @@ const specialWeaponModel = types.compose(
 export const anyWeaponModel = types.union(meleeWeaponModel, rangedWeaponModel, specialWeaponModel);
 
 export const weaponReferenceModel = types.compose(
-	'Weapon Reference',
+	'weaponReference',
 	equipmentPieceReferenceModel,
 	types.model({
 		ref: types.reference(anyWeaponModel),

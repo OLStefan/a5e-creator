@@ -4,6 +4,7 @@ import { types } from 'mobx-state-tree';
 import { sourcedDescriptionModel } from './util';
 
 export const skillModel = types.compose(
+	'skill',
 	sourcedDescriptionModel,
 	types.model({
 		specialties: types.array(types.string),

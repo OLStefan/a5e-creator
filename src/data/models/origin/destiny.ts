@@ -3,7 +3,7 @@ import { featureModel } from '../feature';
 import { descriptionModel, sourcedDescriptionModel } from '../util';
 
 export const destinyModel = types.compose(
-	'Destiny',
+	'destiny',
 	sourcedDescriptionModel,
 	types.model({
 		inspiration: types.model({

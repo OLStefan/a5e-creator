@@ -1,3 +1,4 @@
+import { upperFirst } from 'lodash';
 import { IAnyComplexType, IAnyType, Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree';
 
 export function createProficiency<Model extends IAnyComplexType, Category extends string>(
@@ -6,12 +7,12 @@ export function createProficiency<Model extends IAnyComplexType, Category extend
 	name: string,
 ) {
 	return types.union(
-		types.model(`Individual ${name} Proficiency`, {
-			type: types.literal('Individual'),
+		types.model(`individual${upperFirst(name)}Proficiency`, {
+			type: types.literal('individual'),
 			ref: types.reference(model),
 		}),
-		types.model(`Category ${name} Proficiency`, {
-			type: types.literal('Categtory'),
+		types.model(`category${upperFirst(name)}Proficiency`, {
+			type: types.literal('categtory'),
 			ref: types.enumeration(categories),
 		}),
 	);
@@ -30,7 +31,7 @@ export function createProficiencyChoice<Model extends IAnyType>(model: Model) {
 	type optionSnapshotOut = SnapshotOut<typeof optionArray>;
 	type optionInstance = Instance<typeof optionArray>;
 
-	return types.model({
+	return types.model(`${model.name}ProficiencyChoice`, {
 		allOf: types.array(model),
 		choice: types.maybe(
 			types.model({

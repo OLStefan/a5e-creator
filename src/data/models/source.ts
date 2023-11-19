@@ -2,12 +2,12 @@ import sourceJson from '../resources/sources.json';
 
 import { types } from 'mobx-state-tree';
 
-export const sourceModel = types.model({
+export const sourceModel = types.model('source', {
 	short: types.identifier,
 	name: types.string,
 });
 
-export const sourceReferenceModel = types.model({
+export const sourceReferenceModel = types.model('sourceReference', {
 	book: types.reference(sourceModel),
 	page: types.maybe(types.refinement(types.integer, (page) => page >= 1)),
 });

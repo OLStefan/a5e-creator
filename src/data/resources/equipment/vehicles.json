@@ -10,7 +10,7 @@
 		"vehicleType": "land",
 		"size": "large",
 		"ac": 15,
-		"speed": "Drawn",
+		"speed": "drawn",
 		"properties": ["drawn"],
 		"defaultMaterial": "wood"
 	}

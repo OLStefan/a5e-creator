@@ -4,7 +4,7 @@ import { languageModel } from '../language';
 import { createProficiencyChoice, sourcedDescriptionModel } from '../util';
 
 export const cultureModel = types.compose(
-	'Culture',
+	'culture',
 	sourcedDescriptionModel,
 	types.model({
 		features: types.array(sourcedFeatureModel),
