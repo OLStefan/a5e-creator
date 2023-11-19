@@ -1,7 +1,7 @@
 import { IAnyComplexType, isValidReference } from 'mobx-state-tree';
 import { dataModel, getResources } from './data';
 import { AdventuringGearType, Equipment } from './equipment';
-import { Origin } from './origin';
+import { OriginData } from './origin';
 import { ReferenceProficiencyChoice, SourcedDescription } from './util';
 
 test('parseData', () => {
@@ -56,7 +56,7 @@ function validateEquipment(equipment: Equipment) {
 	});
 }
 
-function validateOrigins(origin: Origin) {
+function validateOrigins(origin: OriginData) {
 	Object.values(origin)
 		.flatMap((list) => list)
 		.forEach((item: SourcedDescription) => {
