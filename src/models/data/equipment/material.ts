@@ -1,5 +1,5 @@
+import { sourcedDescriptionModel } from '@/models/base';
 import { types } from 'mobx-state-tree';
-import { sourcedDescriptionModel } from '../util';
 import { materialPropertyReferenceModel } from './materialProperties';
 
 export const materialModel = types.compose(

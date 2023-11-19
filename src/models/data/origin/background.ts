@@ -1,14 +1,14 @@
-import { types } from 'mobx-state-tree';
-import { attributeModel } from '../attribute';
-import { anyEquipmentPieceModel, anyToolModel } from '../equipment';
-import { languageModel } from '../language';
-import { skillModel } from '../skill';
 import {
 	createProficiencyChoice,
 	createReferenceProficiencyChoice,
 	descriptionModel,
 	sourcedDescriptionModel,
-} from '../util';
+} from '@/models/base';
+import { types } from 'mobx-state-tree';
+import { attributeModel } from '../attribute';
+import { anyEquipmentPieceModel, anyToolModel } from '../equipment';
+import { languageModel } from '../language';
+import { skillModel } from '../skill';
 
 export const backgroundModel = types.compose(
 	'background',

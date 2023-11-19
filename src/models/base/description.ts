@@ -1,5 +1,5 @@
 import { Instance, types } from 'mobx-state-tree';
-import { sourceReferenceModel } from '../source';
+import { sourceReferenceModel } from './source';
 
 export const descriptionModel = types.model('description', {
 	name: types.identifier,

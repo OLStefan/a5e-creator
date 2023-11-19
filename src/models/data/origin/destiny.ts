@@ -1,6 +1,6 @@
+import { descriptionModel, sourcedDescriptionModel } from '@/models/base';
 import { types } from 'mobx-state-tree';
 import { featureModel } from '../feature';
-import { descriptionModel, sourcedDescriptionModel } from '../util';
 
 export const destinyModel = types.compose(
 	'destiny',

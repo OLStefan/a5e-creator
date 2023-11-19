@@ -1,4 +1,4 @@
-import sourceJson from '../resources/sources.json';
+import sourceJson from '@/resources/sources.json';
 
 import { Instance, SnapshotIn, types } from 'mobx-state-tree';
 

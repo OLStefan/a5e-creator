@@ -1,5 +1,5 @@
+import { sourcedDescriptionModel } from '@/models/base';
 import { types } from 'mobx-state-tree';
-import { sourcedDescriptionModel } from '../util';
 
 export enum EquipmentType {
 	Weapon = 'weapon',

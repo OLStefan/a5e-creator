@@ -1,15 +1,15 @@
-import adventuringGearJson from '../../resources/equipment/adventuringGear.json';
-import armorsJson from '../../resources/equipment/armors.json';
-import equipmentPacksJson from '../../resources/equipment/equipmentPacks.json';
-import materialPropertiesJson from '../../resources/equipment/materialProperties.json';
-import materialsJson from '../../resources/equipment/materials.json';
-import mountPropertiesJson from '../../resources/equipment/mountProperties.json';
-import mountsJson from '../../resources/equipment/mounts.json';
-import toolsJson from '../../resources/equipment/tools.json';
-import vehiclePropertiesJson from '../../resources/equipment/vehicleProperties.json';
-import vehiclesJson from '../../resources/equipment/vehicles.json';
-import weaponPropertiesJson from '../../resources/equipment/weaponProperties.json';
-import weaponsJson from '../../resources/equipment/weapons.json';
+import adventuringGearJson from '@/resources/equipment/adventuringGear.json';
+import armorsJson from '@/resources/equipment/armors.json';
+import equipmentPacksJson from '@/resources/equipment/equipmentPacks.json';
+import materialPropertiesJson from '@/resources/equipment/materialProperties.json';
+import materialsJson from '@/resources/equipment/materials.json';
+import mountPropertiesJson from '@/resources/equipment/mountProperties.json';
+import mountsJson from '@/resources/equipment/mounts.json';
+import toolsJson from '@/resources/equipment/tools.json';
+import vehiclePropertiesJson from '@/resources/equipment/vehicleProperties.json';
+import vehiclesJson from '@/resources/equipment/vehicles.json';
+import weaponPropertiesJson from '@/resources/equipment/weaponProperties.json';
+import weaponsJson from '@/resources/equipment/weapons.json';
 
 import { Instance, SnapshotIn, types } from 'mobx-state-tree';
 import { anyAdventuringGearModel } from './adventuringGear';
