@@ -17,7 +17,7 @@
 		"copy-public": "cp -r public .next/standalone/",
 		"start": "next start",
 		"start:docker": "docker run -d -p 3000:3000 a5e-creator",
-		"clean": "rm -rf out node_modules .next",
+		"clean": "rm -rf node_modules .next out",
 		"test": "jest",
 		"test:watch": "yarn test --watch",
 		"check:types": "tsc --noEmit --incremental",
@@ -81,10 +81,5 @@
 		"typescript": "~5.3.3",
 		"typescript-plugin-css-modules": "~5.0.2"
 	},
-	"packageManager": "yarn@4.0.2",
-	"resolutions": {
-		"stylelint@npm:^14.5.1||^15.0.0": "16.0.1",
-		"stylelint@npm:^14.5.1": "16.0.1",
-		"stylelint@npm:^15.0.0": "16.0.1"
-	}
+	"packageManager": "yarn@4.0.2"
 }
