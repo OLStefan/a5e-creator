@@ -18,7 +18,7 @@ jobs:
       codeDiff: ${{steps.filter.outputs.code}}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout
         with:
           ref: ${{ github.event.ref }}
           fetch-depth: 0
@@ -40,7 +40,7 @@ jobs:
           git push --set-upstream origin ${{ env.BRANCH_NAME }}
 
       - name: Check for changes source files
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter
         id: filter
         with:
           filters: |
@@ -63,12 +63,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout
         with:
           ref: ${{ env.BRANCH_NAME }}
 
       - name: Setpup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node
         with:
           node-version: 16
           cache: 'yarn'
@@ -87,13 +87,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout
         with:
           ref: ${{ env.BRANCH_NAME }}
 
       - name: create pull request
         id: open-pr
-        uses: repo-sync/pull-request@v2
+        uses: repo-sync/pull-request
         with:
           destination_branch: ${{ github.event.repository.default_branch }}
           pr_title: '[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}'
@@ -101,7 +101,7 @@ jobs:
           pr_body: 'Automated Pull Request'
 
       - name: Merge Pull Request
-        uses: juliangruber/merge-pull-request-action@v1
+        uses: juliangruber/merge-pull-request-action
         with:
           github-token: ${{ secrets.PR_TOKEN }}
           number: ${{ steps.open-pr.outputs.pr_number }}
@@ -115,7 +115,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout develop
-        uses: actions/checkout@v3
+        uses: actions/checkout
         with:
           ref: ${{ github.event.ref }}
           fetch-depth: 0
