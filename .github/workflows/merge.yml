@@ -22,6 +22,7 @@ jobs:
         with:
           ref: ${{ github.event.ref }}
           fetch-depth: 0
+          node-version: 'lts/*'
 
       - name: Setup git
         run: |
@@ -70,7 +71,7 @@ jobs:
       - name: Setpup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: 'yarn'
 
       - name: Install Dependencies
