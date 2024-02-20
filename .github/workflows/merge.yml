@@ -40,7 +40,7 @@ jobs:
           git push --set-upstream origin ${{ env.BRANCH_NAME }}
 
       - name: Check for changes source files
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |
