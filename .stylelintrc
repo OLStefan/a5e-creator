@@ -4,6 +4,7 @@
 		"declaration-property-value-no-unknown": true,
 		"declaration-no-important": true,
 		"custom-property-empty-line-before": null,
-		"declaration-empty-line-before": null
+		"declaration-empty-line-before": null,
+		"selector-pseudo-class-no-unknown": [true, { "ignorePseudoClasses": ["global"] }]
 	}
 }
